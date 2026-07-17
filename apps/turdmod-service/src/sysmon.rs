@@ -14,7 +14,7 @@ pub struct SystemStats {
     pub mem_used_mb: u64,
     pub mem_total_mb: u64,
     pub svc_mem_mb: u64,     // this service process
-    pub scum_cpu_pct: f32,   // SCUMServer.exe
+    pub scum_cpu_pct: f32,   // GameServer.exe
     pub scum_mem_mb: u64,
     pub scum_running: bool,
     // Commit charge vs the commit LIMIT (RAM + pagefile). @ctx 2026-06-11: this — NOT physical

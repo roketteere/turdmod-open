@@ -1,10 +1,10 @@
 // Engine lifecycle: install + start/stop of the UE4SS + bridge + loader DLL
-// trio against a target SCUMServer.exe install.
+// trio against a target GameServer.exe install.
 //
 // Install step copies UE4SS.dll + TurdMODEngineBridge.dll into the canonical
 // UE4SS layout under the SCUMServer install. Start step shells out to
 // turdmod-launcher.exe which does suspended-process inject of UE4SS.dll +
-// turdmod_server_loader.dll into SCUMServer.exe.
+// turdmod_server_loader.dll into GameServer.exe.
 
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
@@ -232,9 +232,9 @@ pub async fn spawn_engine<R: Runtime>(
     }
 
     let win64 = server_install.join("SCUM").join("Binaries").join("Win64");
-    let scum_server = win64.join("SCUMServer.exe");
+    let scum_server = win64.join("GameServer.exe");
     if !scum_server.exists() {
-        return Err(format!("SCUMServer.exe not found at {}", scum_server.display()));
+        return Err(format!("GameServer.exe not found at {}", scum_server.display()));
     }
     // Critical: load UE4SS.dll from the INSTALLED location so UE4SS finds
     // its Mods/ folder (relative to the DLL's directory). If we pass the
@@ -255,13 +255,13 @@ pub async fn spawn_engine<R: Runtime>(
         inner.status = EngineStatus::Starting;
     }
 
-    // SCUMServer.exe requires elevation (requireAdministrator manifest), so the
+    // GameServer.exe requires elevation (requireAdministrator manifest), so the
     // launcher MUST run elevated for its CreateProcessW to succeed. We trigger
     // UAC via ShellExecuteExW with verb="runas". This crosses the elevation
     // boundary, so launcher stdout/stderr is not pipe-able — we lose live
     // launcher output but retain ue4ss.log + server-loader.log file tailers.
     emit_log(app, "launcher", "info",
-        "requesting Windows UAC elevation to launch SCUMServer.exe…".to_string());
+        "requesting Windows UAC elevation to launch GameServer.exe…".to_string());
 
     let launcher_path = resolved.launcher_exe.clone();
     let mut launcher_args: Vec<String> = vec![
@@ -297,16 +297,16 @@ pub async fn spawn_engine<R: Runtime>(
     // Launcher exited OK. The SCUM PID is no longer in our pipe (UAC boundary),
     // so find it by scanning the running process list.
     emit_log(app, "launcher", "info",
-        "launcher OK — locating SCUMServer.exe in process list".to_string());
+        "launcher OK — locating GameServer.exe in process list".to_string());
     let pid = find_scum_server_pid().ok_or_else(|| {
         let mut inner = state.inner.lock();
         inner.status = EngineStatus::Crashed { exit_code: Some(0) };
-        "launcher succeeded but SCUMServer.exe not visible in tasklist".to_string()
+        "launcher succeeded but GameServer.exe not visible in tasklist".to_string()
     })?;
 
     let started_at_iso = iso_now();
     emit_log(app, "launcher", "info",
-        format!("tracking SCUMServer.exe pid={}", pid));
+        format!("tracking GameServer.exe pid={}", pid));
 
     // File tailers for UE4SS log + loader log + SCUM's own engine log.
     // Adding SCUM.log so the Console shows raid manager spawns, quest
@@ -325,7 +325,7 @@ pub async fn spawn_engine<R: Runtime>(
         format!("spawning tailer for {}", scum_log.display()));
     let tail_scum = spawn_file_tailer(app.clone(), scum_log, "scum");
 
-    // Watcher — polls SCUMServer.exe; flips Running → Crashed when it dies.
+    // Watcher — polls GameServer.exe; flips Running → Crashed when it dies.
     let app_w = app.clone();
     let state_w = state.inner.clone();
     let watcher: JoinHandle<()> = tokio::spawn(async move {
@@ -333,7 +333,7 @@ pub async fn spawn_engine<R: Runtime>(
             tokio::time::sleep(Duration::from_millis(1500)).await;
             if let Some(code) = process_exit_code(pid) {
                 emit_log(&app_w, "launcher", "warn",
-                    format!("SCUMServer.exe (pid {}) exited with code {}", pid, code));
+                    format!("GameServer.exe (pid {}) exited with code {}", pid, code));
                 let mut inner = state_w.lock();
                 if matches!(inner.status, EngineStatus::Running { .. }) {
                     inner.status = EngineStatus::Crashed { exit_code: Some(code) };
@@ -441,7 +441,7 @@ fn terminate_process(pid: u32) {
             if ok != 0 { return; }
         }
     }
-    // Fallback: SCUMServer.exe is elevated — invoke taskkill via UAC.
+    // Fallback: GameServer.exe is elevated — invoke taskkill via UAC.
     let taskkill = PathBuf::from(r"C:\Windows\System32\taskkill.exe");
     let pid_str = pid.to_string();
     let _ = elevate_launch(&taskkill, &["/F", "/PID", &pid_str]);
@@ -525,14 +525,14 @@ fn elevate_launch(_exe: &Path, _args: &[&str]) -> Result<i32, String> {
     Err("UAC elevation only supported on Windows".to_string())
 }
 
-/// Find a running SCUMServer.exe via `tasklist`. Returns the first match.
+/// Find a running GameServer.exe via `tasklist`. Returns the first match.
 fn find_scum_server_pid() -> Option<u32> {
     let out = std::process::Command::new("tasklist")
-        .args(["/FI", "IMAGENAME eq SCUMServer.exe", "/FO", "CSV", "/NH"])
+        .args(["/FI", "IMAGENAME eq GameServer.exe", "/FO", "CSV", "/NH"])
         .output()
         .ok()?;
     let s = String::from_utf8_lossy(&out.stdout);
-    // Format: "SCUMServer.exe","8932","Services","0","..."
+    // Format: "GameServer.exe","8932","Services","0","..."
     for line in s.lines() {
         let parts: Vec<&str> = line.split("\",\"").collect();
         if parts.len() < 2 { continue; }

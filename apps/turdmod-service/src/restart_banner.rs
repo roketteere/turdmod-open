@@ -3,7 +3,7 @@
 // Notifications.json on each fire (no boot caching), so writing the file changes the
 // live banner with NO restart — fires on the manager's cycle (~30-60s granularity).
 // @inv path derived from cfg.scum_server_exe:
-//   ...\SCUM\Binaries\Win64\SCUMServer.exe -> ...\SCUM\Saved\Config\WindowsServer\Notifications.json
+//   ...\SCUM\Binaries\Win64\GameServer.exe -> ...\SCUM\Saved\Config\WindowsServer\Notifications.json
 // The second-level countdown (30/15/10/5s) stays as bottom-left chat in server.rs.
 // @dep [[reference_colored_banners]]. Best-effort: all fs errors swallowed (a failed
 // banner write must never block/abort the actual restart).

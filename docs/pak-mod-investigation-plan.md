@@ -51,7 +51,7 @@ Cheapest information first: **Q2 is testable on Joel's local SCUM Server today**
 
 ---
 
-### Q2 — Does SCUMServer.exe mount unsigned `_P.paks`?
+### Q2 — Does GameServer.exe mount unsigned `_P.paks`?
 
 **Hypothesis:** SCUM's shipped content paks are AES-encrypted (we have the key per memory `scum_aes_key`), but most UE4 games that encrypt their own content still allow unencrypted, unsigned user paks to mount side-by-side via the standard `_P.pak` priority suffix. SCUM-specific policy is unknown — they may have set `bRequireEncryptedSignatures = true` or wired `OnPakSignatureCheckFailure` to reject.
 

@@ -5,7 +5,7 @@ import { useEngineHost, setEngineHost } from '../lib/engineHost';
 
 // SCUM.db viewer — a clean, website-style window into all 161 game tables
 // (players, vehicles, squads, banks, quests, bunkers…). Reads the live DB via
-// the service /scumdb/* endpoints (local or OVH) — read-only, WAL-safe.
+// the service /scumdb/* endpoints (local or remote server) — read-only, WAL-safe.
 // @dep tauri cmds: scumdb_tables / scumdb_rows (remote_commands.rs → service).
 
 type Target = 'local' | 'remote';
@@ -93,7 +93,7 @@ export function ScumDbPage() {
                 target === t ? 'bg-turd-mustard-bright text-turd-bg-deep' : 'bg-turd-bg-deep/60 text-turd-cream-dim hover:text-turd-cream'
               }`}
             >
-              {t === 'local' ? '🏠 Local' : '☁ OVH'}
+              {t === 'local' ? '🏠 Local' : '☁ Remote'}
             </button>
           ))}
         </div>
@@ -114,7 +114,7 @@ export function ScumDbPage() {
             {tablesQuery.isPending && <p className="p-3 text-xs text-turd-cream-dim">Loading…</p>}
             {tablesQuery.isError && (
               <p className="p-3 text-xs text-turd-red">
-                {target === 'remote' ? 'OVH unreachable (start the tunnel).' : 'Local service not responding.'}
+                {target === 'remote' ? 'Remote server unreachable (check connection).' : 'Local service not responding.'}
               </p>
             )}
             {tables.map((t) => (

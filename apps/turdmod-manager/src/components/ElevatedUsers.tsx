@@ -6,7 +6,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { remoteElevatedGet, remoteElevatedSet, type ElevatedInfo } from '../lib/tauri-remote';
 import DraggablePanel from './DraggablePanel';
 
-const hostLabel = (t: string) => (t === 'local' ? 'Local' : 'OVH');
+const hostLabel = (t: string) => (t === 'local' ? 'Local' : 'Remote');
 const valid17 = (s: string) => /^\d{17}$/.test(s.trim());
 
 const inp = {

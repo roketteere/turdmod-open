@@ -11,7 +11,7 @@ the existing dispatcher when its SCUM UFunction is identified.
 ## The push path in one diagram
 
 ```
-┌── SCUMServer.exe (one process) ──────────────────────────────┐
+┌── GameServer.exe (one process) ──────────────────────────────┐
 │                                                              │
 │   UE4 game thread                                            │
 │        ↓                                                     │
@@ -144,7 +144,7 @@ To add a new event:
 5. Sync the canonical file to
    `C:/Development/RE-UE4SS/cppmods/TurdMODEngineBridge/src/dllmain.cpp`.
 6. Build via `tmp\build-bridge.cmd`, deploy via Manager → Engine →
-   Install, restart SCUMServer.exe.
+   Install, restart GameServer.exe.
 
 ---
 
@@ -231,7 +231,7 @@ node tools/engine-events-tail.mjs --filter smoke.tick
 ```
 
 If the tail sees `bridgeReady` once but no `smoke.tick`, the env var
-didn't reach SCUMServer.exe (Manager may launch via a different
+didn't reach GameServer.exe (Manager may launch via a different
 shell). Set TURDMOD_SMOKE_TICK in System Properties → Environment
 Variables, or pass it through the Manager's process spawn.
 

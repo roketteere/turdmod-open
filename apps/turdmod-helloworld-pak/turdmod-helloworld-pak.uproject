@@ -2,7 +2,7 @@
 	"FileVersion": 3,
 	"EngineAssociation": "4.27",
 	"Category": "TurdMOD",
-	"Description": "Phase C P1 Hello World pak — first BP class shipped via pak into SCUMServer.exe. See docs/runbooks/uproject-cook.md.",
+	"Description": "Phase C P1 Hello World pak — first BP class shipped via pak into GameServer.exe. See docs/runbooks/uproject-cook.md.",
 	"Modules": [
 		{
 			"Name": "HelloWorldPak",

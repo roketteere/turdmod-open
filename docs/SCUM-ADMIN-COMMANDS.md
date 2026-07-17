@@ -149,6 +149,6 @@ dev/single-player commands with no admin-file grant on a live MP server.
 **`#SetAttributes` (AdminCommand_SetPrisonerAttributes) is one of these** — gated above SuperAdmin.
 Bypass: write the values straight into the save. Base attributes (STR/CON/DEX/INT) live in
 `prisoner.body_simulation` — see **[PRISONER-BODYSIM-FORMAT.md](PRISONER-BODYSIM-FORMAT.md)** and
-`tools/scum-attrs.py`. Verified live on OVH 2026-06-07 (set TechyRican + Zilla to 8/5/5/5 with the
+`tools/scum-attrs.py`. Verified live on OVH 2026-06-07 (set YOUR_OWNER_NAME + Zilla to 8/5/5/5 with the
 server stopped, no `#` command). For commands that genuinely need the Elevated tier, try
 `#GrantElevatedStatus <steamid>` first (engine bridge: `grantElevatedStatus`).

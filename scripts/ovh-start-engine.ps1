@@ -15,7 +15,7 @@ $ErrorActionPreference = 'Continue'
 Write-Host "=== TurdMOD Engine Start (OVH Production) ===" -ForegroundColor Magenta
 
 $binDir = "C:\SCUMServer\SCUM\Binaries\Win64"
-$serverExe = "$binDir\SCUMServer.exe"
+$serverExe = "$binDir\GameServer.exe"
 $ue4ssDll = "$binDir\UE4SS\UE4SS.dll"
 $loaderDll = "$binDir\turdmod_server_loader.dll"
 
@@ -26,7 +26,7 @@ foreach ($f in @($serverExe, $ue4ssDll, $loaderDll)) {
 Write-Host "[OK] All DLLs present" -ForegroundColor Green
 
 # Kill existing
-$null = cmd /c "taskkill /F /IM SCUMServer.exe 2>nul"
+$null = cmd /c "taskkill /F /IM GameServer.exe 2>nul"
 Start-Sleep -Seconds 3
 
 Add-Type @"

@@ -1,6 +1,6 @@
 # turdmod-server-loader
 
-Server-side DLL for TurdMOD. Injects into `SCUMServer.exe`, hosts a
+Server-side DLL for TurdMOD. Injects into `GameServer.exe`, hosts a
 Lua 5.4 runtime, and (once Sprint 1 is complete) exposes:
 
 - **Admin RPC** (`admin_api.rs` / Part B — shipped) — named-pipe JSON-RPC
@@ -27,7 +27,7 @@ Use the existing `turdmod-launcher` binary — it is process-agnostic:
 
 ```powershell
 turdmod-launcher.exe `
-  --scum "C:\path\to\SCUMServer.exe" `
+  --scum "C:\path\to\GameServer.exe" `
   --dll  "C:\path\to\turdmod_server_loader.dll" `
   --skip-safety-check
 ```
@@ -36,12 +36,12 @@ turdmod-launcher.exe `
 looks for a `BattlEye/` directory relative to the EXE; server installs
 sometimes have this directory even when BE is not active.
 
-## Smoke-test without SCUMServer.exe
+## Smoke-test without GameServer.exe
 
 ```powershell
 $env:TURDMOD_FORCE_TEST = "1"
 # Then inject into any process (e.g. notepad.exe) via the launcher.
-# The DLL will skip the SCUMServer.exe guard and bring up the runtime.
+# The DLL will skip the GameServer.exe guard and bring up the runtime.
 ```
 
 ## Paths
@@ -56,7 +56,7 @@ $env:TURDMOD_FORCE_TEST = "1"
 ## Architecture
 
 ```
-SCUMServer.exe
+GameServer.exe
   └─ turdmod_server_loader.dll (this crate)
        ├─ detect.rs     — is_scum_server_process() guard
        ├─ runtime.rs    — mlua Lua 5.4 VM

@@ -1,5 +1,5 @@
 // Admin Users editor — view/edit AdminUsers.ini + ServerSettingsAdminUsers.ini on
-// the selected host (OVH / local) with per-permission checkboxes. Reads/writes via
+// the selected host (remote / local) with per-permission checkboxes. Reads/writes via
 // the service's /admin/file endpoint (RemoteClient). SCUM reads these at boot, so
 // changes need a server restart to apply — the page offers "Save & Restart".
 //
@@ -60,7 +60,7 @@ function serializeSettingsAdmins(rows: AdminRow[]): string {
 }
 
 export function AdminUsersPage() {
-  const target = useEngineHost(); // 'local' | 'remote'(OVH)
+  const target = useEngineHost(); // 'local' | 'remote'
   const [rows, setRows] = useState<AdminRow[]>([]);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -174,7 +174,7 @@ export function AdminUsersPage() {
     [rows, target],
   );
 
-  const hostLabel = target === 'local' ? '🏠 Local' : '☁ OVH';
+  const hostLabel = target === 'local' ? '🏠 Local' : '☁ Remote';
 
   return (
     <div className="mx-auto max-w-5xl text-turd-cream">

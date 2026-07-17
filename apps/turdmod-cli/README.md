@@ -94,7 +94,7 @@ The sidecar is a small JSON file:
   "id": "sample-mod",
   "name": "Sample Mod",
   "version": "1.0.0",
-  "author": "TechyRican",
+  "author": "YOUR_OWNER_NAME",
   "mode": "pak-content",
   "description": "...",
   "minBuild": "23128448",

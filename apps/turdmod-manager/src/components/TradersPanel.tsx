@@ -22,7 +22,7 @@ const setBtn = (disabled?: boolean): CSSProperties => ({
 });
 
 export default function TradersPanel({ target, onClose }: { target: string; onClose?: () => void }) {
-  const host = target === 'local' ? 'Local' : 'OVH';
+  const host = target === 'local' ? 'Local' : 'Remote';
   const [rows, setRows] = useState<TraderRow[]>([]);
   const [err, setErr] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);

@@ -45,7 +45,7 @@ isn't allowed in the current environment. Example for the manifest spec
 id: my-loot-tweak
 name: "Better TEC1 Loot"
 version: 1.0.0
-author: "TechyRican"
+author: "YOUR_OWNER_NAME"
 mode: server-side          # pak-content | server-side | offline-only | external-tool
 min_build: "23128448"
 max_build: ""              # empty = no upper bound

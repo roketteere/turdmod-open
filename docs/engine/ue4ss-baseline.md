@@ -1,7 +1,7 @@
 # UE4SS Baseline — Empirical Stage 2 Results
 
 **Date:** 2026-05-15
-**Verdict:** **GO** — UE4SS v3.0.1 runs cleanly on `SCUMServer.exe` (UE4 4.27, dedicated server) with zero graphics-init errors despite the binary's D3D/DXGI imports.
+**Verdict:** **GO** — UE4SS v3.0.1 runs cleanly on `GameServer.exe` (UE4 4.27, dedicated server) with zero graphics-init errors despite the binary's D3D/DXGI imports.
 
 Captured UE4SS log: [`tools/engine-validation/ue4ss-bootstrap.log`](../../tools/engine-validation/ue4ss-bootstrap.log)
 Verdict JSON: [`tools/engine-validation/ue4ss-verdict.json`](../../tools/engine-validation/ue4ss-verdict.json)
@@ -78,7 +78,7 @@ Full table in the log.
 
 ## Sprint 2 revised plan
 
-1. **(no rust work)** Document operator deployment: drop `UE4SS.dll` + `UE4SS-settings.ini` + `Mods/` next to `SCUMServer.exe`, then launch via `turdmod-launcher --dll turdmod_server_loader.dll --extra-dll UE4SS.dll`.
+1. **(no rust work)** Document operator deployment: drop `UE4SS.dll` + `UE4SS-settings.ini` + `Mods/` next to `GameServer.exe`, then launch via `turdmod-launcher --dll turdmod_server_loader.dll --extra-dll UE4SS.dll`.
 2. **(small rust work)** Make `turdmod-server-loader` detect whether `UE4SS.dll` is loaded in-process. If yes, use UE4SS's C++ ABI (via `GetProcAddress` on the loaded module) to access `UObject`s. If no, fall back to our own sig-scan path.
 3. **(medium rust work)** Implement `EngineApi` methods (`broadcastChat`, `teleportPlayer`, `getOnlinePlayers`, `spawnVehicle`) on top of UE4SS's `UObjectGlobals::FindFirstOf`, `UFunction::ProcessEvent`, and friends.
 4. **(small rust work)** Bridge UE4SS events (chat, login) into our `admin_api::EventBroadcaster` so the companion gets them over the named pipe.

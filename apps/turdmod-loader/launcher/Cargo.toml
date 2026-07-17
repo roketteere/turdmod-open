@@ -18,7 +18,7 @@ path = "src/main.rs"
 
 # Companion binary for at-runtime DLL injection (Phase B / Phase B-Client
 # Dumper-7 step). Runs elevated via ShellExecuteEx so it can OpenProcess
-# even targets that require admin (SCUMServer.exe). Manager invokes it
+# even targets that require admin (GameServer.exe). Manager invokes it
 # from the Dump Management page's "Inject Dumper-7" button.
 [[bin]]
 name = "turdmod-injector"

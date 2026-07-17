@@ -97,7 +97,7 @@ banner appears across the top of the window linking here.
    into the canonical `<install>\SCUM\Binaries\Win64\UE4SS\…` layout,
    writes `mods.txt` + `UE4SS-settings.ini` if missing. Idempotent.
 3. **Start Engine** — UAC prompts, then the elevated launcher injects
-   UE4SS + the loader DLL into a suspended SCUMServer.exe and resumes
+   UE4SS + the loader DLL into a suspended GameServer.exe and resumes
    it. Manager tails `UE4SS.log`, `server-loader.log`, and `SCUM.log`
    into the in-app log pane.
 4. **Stop Engine** — terminates the server cleanly.

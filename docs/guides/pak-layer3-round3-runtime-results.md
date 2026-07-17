@@ -10,7 +10,7 @@ wall.
 - Bridge shipped 4 new read-only handlers: `readMemory`, `dumpVTable`,
   `imageBase`, `findUInt64`. All page-protection-checked. Deployed via
   autonomous `shutdownServer` + `schtasks` cycle.
-- ASLR delta computed: SCUMServer.exe loads at `0x7ff792360000`
+- ASLR delta computed: GameServer.exe loads at `0x7ff792360000`
   (preferred base `0x140000000`); delta `0x7ff652360000`.
 - L3's actual call signature confirmed:
   ```

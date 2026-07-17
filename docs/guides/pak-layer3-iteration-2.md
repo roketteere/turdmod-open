@@ -199,7 +199,7 @@ This is achievable in 2–4 hours with the live trace and static disassembly. It
 
 | Time | Activity |
 |------|----------|
-| 0:00–0:30 | Set up x64dbg, load SCUMServer.exe, attach to a server process, set breakpoints at L3 entry and vtable call. Use probe pak to capture success trace. |
+| 0:00–0:30 | Set up x64dbg, load GameServer.exe, attach to a server process, set breakpoints at L3 entry and vtable call. Use probe pak to capture success trace. |
 | 0:30–1:00 | Run with a production pak (e.g., `GameData.pak`), capture failure trace. Record vtable address, method address, register states, and the flag `rdi+0x20`. |
 | 1:00–2:00 | Static disassembly of the vtable method (or the non‑virtual call if the method is too complex). Use capstone+Python or IDA/Ghidra to decompile. |
 | 2:00–3:00 | Identify the exact comparison/check that fails. Look for data table references, SHA256 calls, or HMAC routines. Compare the probe pak’s header with production – byte‑by‑byte diff. |

@@ -261,7 +261,7 @@ TurdMOD was originally developed inside the [scummymap monorepo](https://github.
 ## Acknowledgments
 
 - **HELLZONE** — original idea for **MapZoom**.
-- **a community contributor** — community contributor credited in the early overlay history that became this repo.
+- **PlayerAlpha** — community contributor credited in the early overlay history that became this repo.
 - **Gamepires** — for SCUM. Courtesy mention; TurdMOD is not affiliated with or endorsed by Gamepires or KRAFTON.
 - The open-source projects this engine stands on:
   - [Next.js](https://nextjs.org) · [React](https://react.dev) · [Drizzle ORM](https://orm.drizzle.team) · [Tailwind CSS](https://tailwindcss.com)

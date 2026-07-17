@@ -70,7 +70,7 @@ Each is BattlEye-safe by construction. A given mod chooses one in its manifest.
 ### Strategy B — Server-side mods
 
 - Mod runs **on the dedicated server**, not the client.
-- The dedicated server (`SCUMServer.exe`) does not run BattlEye — BE is a
+- The dedicated server (`GameServer.exe`) does not run BattlEye — BE is a
   client-side anti-cheat protecting players, not servers.
 - We can do anything: spawn rate tweaks, custom drop tables, weather control,
   custom NPCs, faction logic, scripted events, economy rules, custom RCON
@@ -149,7 +149,7 @@ Every mod declares its delivery mode and the loader/manager enforces compatibili
 id: my-loot-tweak
 name: "Better TEC1 Loot"
 version: 1.0.0
-author: "TechyRican"
+author: "YOUR_OWNER_NAME"
 mode: server-side          # pak-content | server-side | offline-only | external-tool
 min_build: "23128448"
 max_build: ""              # empty = no upper bound

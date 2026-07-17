@@ -18,7 +18,7 @@ try {
     if (-not (Test-Path $rel)) { throw "build first: cargo build --release in apps/turdmod-service" }
 
     Write-Host "[1] Stopping existing server + service..."
-    cmd /c "taskkill /F /IM SCUMServer.exe 2>nul" | Out-Null
+    cmd /c "taskkill /F /IM GameServer.exe 2>nul" | Out-Null
     & sc.exe stop TurdMODService | Out-Null
     cmd /c "taskkill /F /IM turdmod-service.exe 2>nul" | Out-Null
     Start-Sleep -Seconds 3

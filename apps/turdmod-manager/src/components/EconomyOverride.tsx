@@ -9,7 +9,7 @@ import DraggablePanel from './DraggablePanel';
 import ItemBrowser from './ItemBrowser';
 import TRADER_CATALOG from '../data/trader-catalog.json';
 
-const hostLabel = (t: string) => (t === 'local' ? 'Local' : 'OVH');
+const hostLabel = (t: string) => (t === 'local' ? 'Local' : 'Remote');
 const FILE = 'EconomyOverride.json';
 
 type FieldType = 'bool' | 'num';

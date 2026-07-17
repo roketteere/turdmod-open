@@ -3,7 +3,7 @@
   "id": "vac-screening",
   "name": "VAC Screening",
   "version": "0.1.0-alpha",
-  "author": "TechyRican",
+  "author": "YOUR_OWNER_NAME",
   "description": "Screens joining players against the Steam Web API for VAC and game bans. Alerts via Discord embed and optionally auto-kicks.",
   "mode": "server-side",
   "minBuild": "23128448",

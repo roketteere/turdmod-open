@@ -186,7 +186,7 @@ export function dumpListBuilds(): Promise<string[]> {
 // ---------------------------------------------------------------------------
 // DLL injection — always elevated. Manager invokes turdmod-injector.exe
 // via ShellExecuteEx runas so it works against both non-elevated client
-// processes and elevated SCUMServer.exe uniformly. UAC will prompt.
+// processes and elevated GameServer.exe uniformly. UAC will prompt.
 // ---------------------------------------------------------------------------
 
 export interface InjectResult {

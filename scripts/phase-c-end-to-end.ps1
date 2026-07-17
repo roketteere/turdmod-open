@@ -84,7 +84,7 @@ Write-Host '  flag: OK    pak: OK    sig: OK'
 # 3. Launch
 Write-Host "`nLaunching SCUMServer with v3.1 bridge + probe pak + flag..."
 Remove-Item $pipeFile -Force -ErrorAction SilentlyContinue
-$argString = "--scum `"C:\Program Files (x86)\Steam\steamapps\common\SCUM Server\SCUM\Binaries\Win64\SCUMServer.exe`" --dll `"C:\Program Files (x86)\Steam\steamapps\common\SCUM Server\SCUM\Binaries\Win64\UE4SS\UE4SS.dll`" --extra-dll `"C:\Development\Claude\turdmod\apps\turdmod-server-loader\target\release\turdmod_server_loader.dll`""
+$argString = "--scum `"C:\Program Files (x86)\Steam\steamapps\common\SCUM Server\SCUM\Binaries\Win64\GameServer.exe`" --dll `"C:\Program Files (x86)\Steam\steamapps\common\SCUM Server\SCUM\Binaries\Win64\UE4SS\UE4SS.dll`" --extra-dll `"C:\Development\Claude\turdmod\apps\turdmod-server-loader\target\release\turdmod_server_loader.dll`""
 Start-Process -FilePath $launcher -ArgumentList $argString -Verb RunAs -PassThru | Out-Null
 Write-Host '  ** APPROVE UAC PROMPT NOW **' -ForegroundColor Yellow
 

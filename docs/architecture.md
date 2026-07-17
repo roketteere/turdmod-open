@@ -59,7 +59,7 @@ TurdMOD Pro (admin's box, anywhere)
    ┌───────────────────────────────────────┐
    │ Remote VPS / dedicated (admin owns)   │
    │                                       │
-   │  SCUMServer.exe                       │
+   │  GameServer.exe                       │
    │   └── UE4SS injected at startup       │
    │        └── TurdMODEngineBridge.dll    │
    │             ├── named pipe RPC server │
@@ -103,7 +103,7 @@ is how third-party tools can interop with TurdMOD.
 ## The engine bridge
 
 `apps/turdmod-engine-bridge/` is the C++ DLL that lives inside
-`SCUMServer.exe` (loaded by UE4SS). It is the **only piece that
+`GameServer.exe` (loaded by UE4SS). It is the **only piece that
 actually has access to SCUM's running game state** — everything Pro
 does ultimately calls a handler in this DLL.
 

@@ -360,7 +360,7 @@ pub async fn assist_summarize_diff(
 const PHASE_LOG_SYSTEM: &str = "\
 You are an Unreal Engine modding assistant. The user gives you the \
 last N lines of stdout/stderr from a Phase A/B/C extraction run \
-against SCUMServer.exe or SCUM.exe. In 3-5 bullets, tell them: \
+against GameServer.exe or SCUM.exe. In 3-5 bullets, tell them: \
 (1) what phase did, (2) whether it succeeded or what went wrong, \
 (3) the next step. Keep each bullet under 25 words.";
 

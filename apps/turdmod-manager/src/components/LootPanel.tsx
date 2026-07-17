@@ -76,7 +76,7 @@ export default function LootPanel({ target }: { target: string }) {
     finally { setBusy(false); setTimeout(() => setMsg(null), 9000); }
   };
 
-  const host = target === 'local' ? 'Local' : 'OVH';
+  const host = target === 'local' ? 'Local' : 'Remote';
   const shown = filter ? leaves.filter((l) => String(l.Name).toLowerCase().includes(filter.toLowerCase())) : leaves;
 
   return (

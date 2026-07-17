@@ -14,7 +14,7 @@ Legend: `[ ]` untested · `[~]` typed, awaiting my log-confirm · `[x]` ✅✅ P
 ## G1 — Economy / banking  (`banking.rs`, `economy.rs`)
 - [ ] `!bal`  — show your coin balance
 - [ ] `!daily` — claim daily login reward (loyalty)
-- [ ] `!transfer <player> 100` — send coins (Lilac↔TechyRican)
+- [ ] `!transfer <player> 100` — send coins (Lilac↔YOUR_OWNER_NAME)
 
 ## G2 — Lottery / gambling  (`lottery.rs`)
 - [ ] `!lottery` — lottery status / buy ticket

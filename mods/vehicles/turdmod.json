@@ -3,7 +3,7 @@
   "id": "vehicles",
   "name": "Personal Vehicles",
   "version": "0.1.0-alpha",
-  "author": "TechyRican",
+  "author": "YOUR_OWNER_NAME",
   "description": "Rust-style personal vehicle registration, spawning, despawning, and insurance.",
   "mode": "server-side",
   "minBuild": "23128448",

@@ -3,7 +3,7 @@
   "id": "radial-quick-actions",
   "name": "Radial Quick Actions",
   "version": "0.0.1",
-  "author": "TechyRican",
+  "author": "YOUR_OWNER_NAME",
   "description": "Hold a hotkey to bring up a radial menu of common actions: heal, eat, drink, repair.",
   "mode": "offline-only",
   "minBuild": "23128448",

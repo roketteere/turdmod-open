@@ -78,7 +78,7 @@ public:
 
     /**
      * Returns the Prisoner object whose name matches 'PlayerName'.
-     * Names are the in‑game display names (e.g., "TechyRican").
+     * Names are the in‑game display names (e.g., "YOUR_OWNER_NAME").
      */
     UFUNCTION(BlueprintCallable, Category = "TurdMOD")
     static UObject* FindPrisonerByName(const FString& PlayerName);
@@ -298,7 +298,7 @@ If found, the pak has mounted and the BP is registered.
 ### 5.3. Call the Function
 
 ```cmd
-node tools/engine-rpc-test.mjs runQuartermasterSpawn --playerName TechyRican --itemClass BPC_MP5 --count 1
+node tools/engine-rpc-test.mjs runQuartermasterSpawn --playerName YOUR_OWNER_NAME --itemClass BPC_MP5 --count 1
 ```
 
 > **Note:** The bridge must have a handler `runQuartermasterSpawn` that calls `BP_TurdMODQuartermaster::SpawnAndGiveItem` via `ProcessEvent`. If the handler does not exist yet, the recipe assumes the team will add it in a follow‑up. For the current smoke test, just verifying reachability is sufficient.

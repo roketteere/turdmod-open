@@ -827,7 +827,7 @@ function EngineEventFirehose() {
           <p className="p-3 text-turd-cream-dim/60">
             {paused
               ? 'Paused — resume to receive new events.'
-              : 'No events yet. Bridge emits will appear here when SCUMServer.exe is running and the engine bridge is loaded.'}
+              : 'No events yet. Bridge emits will appear here when GameServer.exe is running and the engine bridge is loaded.'}
           </p>
         ) : (
           <ul className="divide-y divide-turd-bronze/15">

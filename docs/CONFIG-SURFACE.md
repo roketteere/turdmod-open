@@ -1,7 +1,7 @@
 # SCUM server config surface (build 23451409)
 
 Every config file the server/BattlEye reads, and the keys each accepts. Generated from
-SCUMServer.exe strings. ServerSettings.ini holds the 580 `scum.*` keys below.
+GameServer.exe strings. ServerSettings.ini holds the 580 `scum.*` keys below.
 
 ## Config files
 

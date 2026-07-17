@@ -68,7 +68,7 @@ fn write_servers_cache(servers: &[ServerDto]) {
 
 /// A joinable entry for the SCUM server on THIS box (the local turdmod-service
 /// dev server on 127.0.0.1:7042). Dev-only: surfaced in debug builds so we can
-/// test the modded client against local before OVH. Never shipped to players.
+/// test the modded client against local before the remote server. Never shipped to players.
 /// Override the IP via TURDMOD_LOCAL_SERVER_IP (e.g. a LAN address) if needed.
 fn local_dev_server() -> ServerDto {
     let ip = std::env::var("TURDMOD_LOCAL_SERVER_IP").unwrap_or_else(|_| "127.0.0.1".to_string());
@@ -118,7 +118,7 @@ async fn fetch_remote_servers() -> Result<Vec<ServerDto>, String> {
 }
 
 /// Server list shown in the launcher. In DEBUG builds, the local dev box is
-/// prepended so we can join it alongside OVH (the remote cache never includes
+/// prepended so we can join it alongside the remote server (the remote cache never includes
 /// it). In release, only the turdmod.com allowlist is returned.
 #[tauri::command]
 pub async fn launcher_list_servers() -> Result<Vec<ServerDto>, String> {

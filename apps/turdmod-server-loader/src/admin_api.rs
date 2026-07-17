@@ -1,11 +1,11 @@
 //! RPC server — bridges the companion process (Node.js, separate PID) to the
-//! engine DLL living inside SCUMServer.exe.
+//! engine DLL living inside GameServer.exe.
 //!
 //! ## Transport
 //!
 //! Windows named pipe: `\\.\pipe\turdmod-engine-<server-pid>`.
 //! Chosen over TCP because:
-//!   - We're Windows-only (SCUMServer.exe is Win64).
+//!   - We're Windows-only (GameServer.exe is Win64).
 //!   - Named pipes are kernel-mediated; no port collision, no firewall.
 //!   - Pipe name encodes the server PID so multiple SCUM instances on the
 //!     same box don't collide.
@@ -222,7 +222,7 @@ pub async fn start_rpc(
 /// Build a SECURITY_ATTRIBUTES with a NULL DACL — "allow any client on this
 /// machine to open the pipe regardless of integrity level".
 ///
-/// Without this, the loader runs inside SCUMServer.exe (elevated; created
+/// Without this, the loader runs inside GameServer.exe (elevated; created
 /// via UAC), and the kernel applies the default DACL from SCUMServer's
 /// token — which restricts non-admin clients' access to pipe data. Tokio's
 /// named-pipe client gets ERROR_ACCESS_DENIED opening the pipe from the

@@ -1,6 +1,6 @@
 # Pak Layer 3 — Round 2 class-identification results (2026-05-23)
 
-Static analysis run on `SCUMServer.exe` (124,348,416 bytes, 8 sections,
+Static analysis run on `GameServer.exe` (124,348,416 bytes, 8 sections,
 `.text` at VA 0x140001000, image base 0x140000000). All findings are
 from python+capstone disassembly directly over the PE — no live RPCs,
 no PolyHook2, no dynamic risk.

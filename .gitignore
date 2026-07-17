@@ -103,3 +103,4 @@ apps/*/src-tauri/icons/_pre-turd-backup/
 
 # Batch scratch files
 tools/batch*.txt
+releases/

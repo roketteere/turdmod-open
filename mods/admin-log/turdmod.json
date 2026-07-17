@@ -3,7 +3,7 @@
   "id": "admin-log",
   "name": "Admin Log",
   "version": "0.1.0-alpha",
-  "author": "TechyRican",
+  "author": "YOUR_OWNER_NAME",
   "description": "Logs admin commands, chat, and login/logout events to Discord with rich embeds and dangerous-command detection.",
   "mode": "server-side",
   "minBuild": "23128448",

@@ -1,4 +1,4 @@
-# Start SCUMServer.exe with UE4SS injection (local testing)
+# Start GameServer.exe with UE4SS injection (local testing)
 # Creates process suspended, injects UE4SS.dll, resumes.
 param(
     [string]$ServerDir = "C:\Program Files (x86)\Steam\steamapps\common\SCUM Server",
@@ -8,12 +8,12 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
-$serverExe = "$ServerDir\SCUM\Binaries\Win64\SCUMServer.exe"
+$serverExe = "$ServerDir\SCUM\Binaries\Win64\GameServer.exe"
 
-if (-not (Test-Path $serverExe)) { throw "SCUMServer.exe not found: $serverExe" }
+if (-not (Test-Path $serverExe)) { throw "GameServer.exe not found: $serverExe" }
 if (-not (Test-Path $UE4SSDLL)) { throw "UE4SS.dll not found: $UE4SSDLL" }
 
-Write-Host "[start] SCUMServer.exe: $serverExe" -ForegroundColor Cyan
+Write-Host "[start] GameServer.exe: $serverExe" -ForegroundColor Cyan
 Write-Host "[start] UE4SS.dll: $UE4SSDLL" -ForegroundColor Cyan
 
 Add-Type @"
@@ -52,9 +52,9 @@ public class Injector {
 }
 "@
 
-# Start SCUMServer.exe with command line args
+# Start GameServer.exe with command line args
 $args = "-log -port=$GamePort -QueryPort=$QueryPort"
-Write-Host "[start] Starting SCUMServer.exe with: $args" -ForegroundColor Yellow
+Write-Host "[start] Starting GameServer.exe with: $args" -ForegroundColor Yellow
 
 $psi = New-Object System.Diagnostics.ProcessStartInfo
 $psi.FileName = $serverExe

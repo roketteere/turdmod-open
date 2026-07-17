@@ -44,7 +44,7 @@ The return-null at L3 suggests signature validation fails or structural integrit
 
 **Command:**
 ```bash
-patternsleuth xref --rva 0x03b61be0 -e SCUMServer.exe -d 200
+patternsleuth xref --rva 0x03b61be0 -e GameServer.exe -d 200
 ```
 **What to look for:**
 
@@ -64,7 +64,7 @@ UE stores the RSA public key as a binary blob (DER/PKCS#1) inside the executable
 
 **Command:**
 ```bash
-patternsleuth find --bytes "30 82 ? ? 02 82 ? ? 02 82 ? ? 02 03 01 00 01" --wildcard --search-data --file SCUMServer.exe
+patternsleuth find --bytes "30 82 ? ? 02 82 ? ? 02 82 ? ? 02 03 01 00 01" --wildcard --search-data --file GameServer.exe
 ```
 
 **If first pattern fails** (exponent typically 0x010001, but could be 3), try:
@@ -84,7 +84,7 @@ patternsleuth find --bytes "30 82 ? ? 02 82 ? ? 02 82 ? ? 02 03 01 00 01" --wild
 
 ### Move #3: Trace L3 calls from x64dbg with a production pak
 
-Live attach to SCUMServer.exe when it fails on boot. Set breakpoint at 0x03b61be0. Run until break. Use `bp 0x03b61be0`. On break:
+Live attach to GameServer.exe when it fails on boot. Set breakpoint at 0x03b61be0. Run until break. Use `bp 0x03b61be0`. On break:
 
 - Look at the first argument (RCX in Windows x64 calling convention). It should be a `FString` pointer (`TArray<wchar_t>` with length and data). Dump the string to confirm it's our production pak path.
 - Step over (F10) and observe registers after each `call` instruction – look for return values (RAX = null/non-null). When a subcall returns 0, that’s likely the failing validation.
@@ -96,7 +96,7 @@ Live attach to SCUMServer.exe when it fails on boot. Set breakpoint at 0x03b61be
 
 **Command:**
 ```bash
-patternsleuth xref --target-rva 0x03b61be0 -e SCUMServer.exe
+patternsleuth xref --target-rva 0x03b61be0 -e GameServer.exe
 ```
 **Expected:** At least one caller in the mount path (e.g., `FPakPlatformFile::MountAllPakFiles`). Possibly two: one for initial mount and another for dynamic pak loading (mod support?). If SCUM has a custom pak loader, there may be fewer callers.
 
@@ -130,7 +130,7 @@ Check the caller’s logic: Does it retry? Does it log an error? Knowing the cal
 
 **Idea:** Create a `.sig` file that tells L3 the signature is valid. There are two variants:
 
-1. **If SCUM uses the default UE test key:** We already have the private key (`TestPrivateKey` in UE source). We can sign any pak using `UnrealPak.exe -Create -Sign` with our own certificate/key. Actually, UE’s `SigCreator` tool can produce a `.sig` file for a given pak. We just need the exact same public key embedded in SCUMServer.exe. If it’s the default test key, we are done – just sign our pak with the matching private key.
+1. **If SCUM uses the default UE test key:** We already have the private key (`TestPrivateKey` in UE source). We can sign any pak using `UnrealPak.exe -Create -Sign` with our own certificate/key. Actually, UE’s `SigCreator` tool can produce a `.sig` file for a given pak. We just need the exact same public key embedded in GameServer.exe. If it’s the default test key, we are done – just sign our pak with the matching private key.
 
    **Check:** After extracting the embedded pub key (Move #2), compare modulus to the known default test key modulus (`DA 35 55 7A ...` / `A3 3B F2 ...`). If match, bingo.
 
@@ -150,7 +150,7 @@ This produces `MyProductionPak.sig`. Place it next to the pak in the `Content/Pa
 
 **Effort:** Medium (1–2 sessions) | **Risk:** Medium | **Likelihood of success:** High (if we can find the key data)
 
-**Idea:** Replace the RSA public key blob in SCUMServer.exe with our own public key (for which we have the private key). Then sign our paks with our private key.
+**Idea:** Replace the RSA public key blob in GameServer.exe with our own public key (for which we have the private key). Then sign our paks with our private key.
 
 **Steps:**
 1. Extract the original public key blob (Move #2). Note its RVA and size.
@@ -189,7 +189,7 @@ This produces `MyProductionPak.sig`. Place it next to the pak in the `Content/Pa
 
 1. Locate the embedded public key blob.
    ```bash
-   patternsleuth find --bytes "30 82 01 0A 02 82 01 01 00" --search-data --file SCUMServer.exe --output-rva
+   patternsleuth find --bytes "30 82 01 0A 02 82 01 01 00" --search-data --file GameServer.exe --output-rva
    ```
    (The pattern `30 82 01 0A` is typical for a 2048-bit RSA public key DER: SEQUENCE length 0x010A, followed by INTEGER length 0x0101). The exact pattern may vary – adjust length bytes as needed (0x010A for 2048-bit, 0x0202 for 4096-bit). Use wildcards: `30 82 ? ? 02 82 ? ?`.
 

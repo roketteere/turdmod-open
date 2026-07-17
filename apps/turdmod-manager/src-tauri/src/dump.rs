@@ -173,7 +173,7 @@ pub struct DumpMeta {
     pub scum_build: Option<String>,
     #[serde(default)]
     pub results: PhaseAResults,
-    // Server-side Dumper-7 SDK (target = SCUMServer.exe). Existing.
+    // Server-side Dumper-7 SDK (target = GameServer.exe). Existing.
     #[serde(default)]
     pub phase_b: Option<PhaseBMeta>,
     // Client-side Dumper-7 SDK (target = SCUM.exe). Added 2026-05-21

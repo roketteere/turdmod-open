@@ -44,7 +44,7 @@ Each is verified against the **live** server and marked. No claim here is unveri
 
 | Handler | Status | Notes |
 |---|---|---|
-| `getOnlinePlayers` | ✅ | count=1 (TechyRican) |
+| `getOnlinePlayers` | ✅ | count=1 (YOUR_OWNER_NAME) |
 | `getPlayerPositions` | ✅ | name+coords |
 | `getServerStats` | ✅ | cpu/mem/io |
 | `getActorPopulation` | ✅ | 40 classes |
@@ -74,7 +74,7 @@ Each is verified against the **live** server and marked. No claim here is unveri
 
 | Handler | Status | Notes |
 |---|---|---|
-| `teleportPlayer` | ✅ | `K2_TeleportTo`. **PROVEN 2026-06-07** (teleported Lilac→TechyRican). ⚠️ Parser bug: coords passed as **bare numbers** OR nested `pos:{}` zero out x/y (only z reads). **WORKAROUND (proven): pass `x`/`y`/`z` as STRING-QUOTED top-level args** (`"x":"-509502"`) → routes through the tested `extract_json_str` path, parses correctly. Param is `name`/`ptr` (not `playerName`). |
+| `teleportPlayer` | ✅ | `K2_TeleportTo`. **PROVEN 2026-06-07** (teleported Lilac→YOUR_OWNER_NAME). ⚠️ Parser bug: coords passed as **bare numbers** OR nested `pos:{}` zero out x/y (only z reads). **WORKAROUND (proven): pass `x`/`y`/`z` as STRING-QUOTED top-level args** (`"x":"-509502"`) → routes through the tested `extract_json_str` path, parses correctly. Param is `name`/`ptr` (not `playerName`). |
 | `setGodMode` | ❓ | prisoner flag |
 | `setImmortal` | ❓ | prisoner flag |
 | `setInfiniteAmmo` | ❓ | prisoner flag |

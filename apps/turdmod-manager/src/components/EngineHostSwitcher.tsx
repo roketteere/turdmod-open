@@ -1,5 +1,5 @@
 // Sidebar dropdown — picks which SCUM server every page talks to (Local box
-// or OVH production). Backs the module-level engineHost store, so all pages
+// or remote production). Backs the module-level engineHost store, so all pages
 // that call engineRpc() (chat console, monitor, admin commands, map, db…)
 // route to the selected host. Flipping it invalidates all queries so live
 // views refetch against the new server immediately.

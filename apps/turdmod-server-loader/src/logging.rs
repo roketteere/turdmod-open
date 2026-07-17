@@ -2,7 +2,7 @@
 //! `%PROGRAMDATA%\TurdMOD\server-loader.log`.
 //!
 //! Uses %PROGRAMDATA% (typically `C:\ProgramData`) rather than
-//! %LOCALAPPDATA% because SCUMServer.exe commonly runs under a service
+//! %LOCALAPPDATA% because GameServer.exe commonly runs under a service
 //! account or a dedicated user whose LOCALAPPDATA differs from the
 //! operator's desktop session. ProgramData is machine-wide and always
 //! writable by processes running under a standard server user.

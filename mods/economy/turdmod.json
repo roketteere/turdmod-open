@@ -3,7 +3,7 @@
   "id": "economy",
   "name": "Economy",
   "version": "0.1.0-alpha",
-  "author": "TechyRican",
+  "author": "YOUR_OWNER_NAME",
   "description": "Server-side coin economy with time-based accrual, chat commands, login streaks, player transfers, and Discord transaction logging.",
   "mode": "server-side",
   "minBuild": "23128448",

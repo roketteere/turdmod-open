@@ -2,7 +2,7 @@
 name = "turdmod-server-loader"
 version = "0.1.0"
 edition = "2021"
-description = "TurdMOD server-side loader DLL — injects into SCUMServer.exe, hosts the LuaJIT runtime, exposes the admin RPC surface for companion write-back."
+description = "TurdMOD server-side loader DLL — injects into GameServer.exe, hosts the LuaJIT runtime, exposes the admin RPC surface for companion write-back."
 license = "MIT"
 
 [lib]

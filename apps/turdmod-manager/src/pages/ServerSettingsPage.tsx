@@ -8,8 +8,8 @@ import { KEY_META, humaniseKey } from '../schemas/serverSettings';
 import { useEngineHost } from '../lib/engineHost';
 import { HostToggle } from '../components/HostToggle';
 
-// OVH's ServerSettings.ini lives at a fixed path; read read-only over SSH.
-const OVH_INI_PATH = 'C:\\SCUMServer\\SCUM\\Saved\\Config\\WindowsServer\\ServerSettings.ini';
+// the remote server's ServerSettings.ini lives at a fixed path; read read-only over SSH.
+const REMOTE_INI_PATH = 'C:\\SCUMServer\\SCUM\\Saved\\Config\\WindowsServer\\ServerSettings.ini';
 
 // Comprehensive editor for SCUM's ServerSettings.ini. Loads the live file
 // from <server>/SCUM/Saved/Config/WindowsServer/ServerSettings.ini, renders
@@ -281,7 +281,7 @@ function KeyRow({
 export function ServerSettingsPage() {
   const queryClient = useQueryClient();
   const host = useEngineHost();
-  const readOnly = host === 'remote'; // OVH config is view-only from here.
+  const readOnly = host === 'remote'; // remote server config is view-only from here.
   const [loadState, setLoadState] = useState<LoadState>('loading');
   const [settings, setSettings] = useState<SettingsState | null>(null);
   const [activeSection, setActiveSection] = useState<string>('');
@@ -294,25 +294,25 @@ export function ServerSettingsPage() {
       setLoadState('loading');
       setError(null);
 
-      // Fetch the raw .ini from the active host: OVH over SSH (read-only) or
+      // Fetch the raw .ini from the active host: remote server over SSH (read-only) or
       // the local install via the detected path.
       let iniPath = '';
       let rawText = '';
       if (host === 'remote') {
-        iniPath = OVH_INI_PATH;
+        iniPath = REMOTE_INI_PATH;
         try {
           const res = await invoke<{ content: string; existed: boolean }>(
             'read_remote_text_file',
             { path: iniPath },
           );
           if (!res.existed) {
-            setError(`OVH ServerSettings.ini not readable (tunnel/SSH down?): ${iniPath}`);
+            setError(`Remote ServerSettings.ini not readable (check connection): ${iniPath}`);
             setLoadState('parse-error');
             return null;
           }
           rawText = res.content;
         } catch (e) {
-          setError(`OVH read failed: ${String(e)}`);
+          setError(`Remote read failed: ${String(e)}`);
           setLoadState('parse-error');
           return null;
         }
@@ -524,12 +524,12 @@ export function ServerSettingsPage() {
         </div>
         <p className="text-turd-cream-dim text-sm mt-1">
           {readOnly
-            ? 'Viewing the OVH production ServerSettings.ini (read-only). To change OVH config use the controlled stop→edit→start deploy, not a live edit.'
+            ? 'Viewing the remote production ServerSettings.ini (read-only). To change remote server config use the controlled stop→edit→start deploy, not a live edit.'
             : "Edit your SCUM server's ServerSettings.ini. All keys, organized by section."}
         </p>
         <p className="font-mono text-xs text-turd-cream-dim opacity-60 mt-1 truncate">
           {settings.iniPath}
-          {readOnly && <span className="ml-2 text-turd-bronze">· ☁ OVH · read-only</span>}
+          {readOnly && <span className="ml-2 text-turd-bronze">· ☁ Remote · read-only</span>}
         </p>
       </div>
 
@@ -577,7 +577,7 @@ export function ServerSettingsPage() {
             type="button"
             onClick={() => saveMutation.mutate()}
             disabled={!isDirty || saveMutation.isPending || readOnly}
-            title={readOnly ? 'OVH config is read-only here — use the controlled deploy to change it' : undefined}
+            title={readOnly ? 'Remote config is read-only here — use the controlled deploy to change it' : undefined}
             className={`px-4 py-1.5 rounded text-sm font-semibold transition-colors disabled:opacity-40 ${
               isDirty && !readOnly
                 ? 'bg-turd-bronze text-turd-bg-deep hover:bg-turd-mustard-bright'

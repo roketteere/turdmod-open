@@ -39,10 +39,10 @@ the symptom→cause history is how the next session avoids re-diagnosing.
 ### B-009 — Companion example mod (welcome-screen) crashes SCUMServer on first login
 **Opened:** 2026-05-22 22:27 PDT
 **Symptom:** First player to log in triggered a SCUMServer crash with
-all-`SCUMServer.exe!UnknownFunction` callstack. Trigger sequence
+all-`GameServer.exe!UnknownFunction` callstack. Trigger sequence
 recorded in UE4SS.log:
-1. `getOnlinePlayers: count=1` — TechyRican joined.
-2. `sendChatLineToPlayer: player="TechyRican" channel=2 text="Welcome to the server, TechyRican!"` — companion's `examples/turdmod/welcome-screen/scripts/main.ts` fires on login event.
+1. `getOnlinePlayers: count=1` — YOUR_OWNER_NAME joined.
+2. `sendChatLineToPlayer: player="YOUR_OWNER_NAME" channel=2 text="Welcome to the server, YOUR_OWNER_NAME!"` — companion's `examples/turdmod/welcome-screen/scripts/main.ts` fires on login event.
 3. `[HOOK] event-dispatch enabled for HandleStartingNewPlayer (kind=2)` — bridge sees the login UFunction.
 4. SCUM.log callstack dump → `LogExit: Executing StaticShutdownAfterError`.
 5. Client reconnect attempt fails with `NetErrorUnauthorized`, server exits.

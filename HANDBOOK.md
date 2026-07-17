@@ -46,8 +46,8 @@ L2  UE OBJECTS       Unreal's live object graph in RAM — what the bridge manip
                        Data at fixed offsets: PC+0xe8 (admin role), Prisoner+0x1D58 (flags),
                        WeatherCtrl+0x2A8 (time-of-day).
         ▲ created at runtime from…
-L1  THE BINARY       SCUMServer.exe — machine code + constants, the RE surface
-   (RE layer)        └ <Steam>\common\SCUM Server\SCUM\Binaries\Win64\SCUMServer.exe (127 MB PE)
+L1  THE BINARY       GameServer.exe — machine code + constants, the RE surface
+   (RE layer)        └ <Steam>\common\SCUM Server\SCUM\Binaries\Win64\GameServer.exe (127 MB PE)
                        sections .text/.rdata/.data; read with tools/re/*.py + capstone
         ▲ loaded/relocated by Windows to…
 L0  CPU + RAW BYTES  x86-64 instructions; preferred base 0x140000000, loaded at an

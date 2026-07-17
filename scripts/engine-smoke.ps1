@@ -6,7 +6,7 @@
 #      install (canonical UE4SS layout).
 #   3. Writes a minimal UE4SS-settings.ini if one doesn't exist.
 #   4. Tails ue4ss.log, server-loader.log, and companion stdout in parallel.
-#   5. Launches SCUMServer.exe via turdmod-launcher with both DLLs injected.
+#   5. Launches GameServer.exe via turdmod-launcher with both DLLs injected.
 #
 # Usage:
 #   .\scripts\engine-smoke.ps1 `
@@ -132,7 +132,7 @@ $LaunchTarget = if ($NotepadTarget) {
     $env:TURDMOD_FORCE_TEST = "1"
     "C:\Windows\System32\notepad.exe"
 } elseif ($ServerInstall) {
-    Join-Path $ServerInstall "SCUM\Binaries\Win64\SCUMServer.exe"
+    Join-Path $ServerInstall "SCUM\Binaries\Win64\GameServer.exe"
 } else {
     throw "Need either -ServerInstall <path> or -NotepadTarget"
 }

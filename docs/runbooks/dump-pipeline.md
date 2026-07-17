@@ -14,11 +14,11 @@ or the Manager's Dump Management tab.
 ## 1. Architecture in 30 seconds
 
 ```
-SCUMServer.exe ─┐
+GameServer.exe ─┐
                 ├── Phase A (live)   UE4SS bridge RPC → reflection JSON
 SCUM.exe       ─┘                    14507 classes, 1717 enums, 3372 structs
 
-SCUMServer.exe ─┐
+GameServer.exe ─┐
                 ├── Phase B (SDK)    Dumper-7 inject → C++ headers
 SCUM.exe       ─┘                    server = 9006 files / 569 MB
                                      client = 4475 files / 85.6 MB
@@ -59,7 +59,7 @@ file-count summaries — one line per discovery, dedup'd on
 | Bridge build output | `C:/Development/RE-UE4SS/build/Game__Shipping__Win64/bin/TurdMODEngineBridge.dll` |
 | Bridge deploy target | `C:/Program Files (x86)/Steam/steamapps/common/SCUM Server/SCUM/Binaries/Win64/UE4SS/Mods/TurdMODEngineBridge/dlls/main.dll` |
 | SCUM client install | `C:/Program Files (x86)/Steam/steamapps/common/SCUM/SCUM/Binaries/Win64/SCUM.exe` |
-| SCUM server install | `C:/Program Files (x86)/Steam/steamapps/common/SCUM Server/SCUMServer.exe` |
+| SCUM server install | `C:/Program Files (x86)/Steam/steamapps/common/SCUM Server/GameServer.exe` |
 
 The Manager doesn't have its own copy of any tool — it shells out
 to scumdump's CLI for every phase. Single source of truth.
@@ -74,7 +74,7 @@ to scumdump's CLI for every phase. Single source of truth.
 - `structs.json` (3372)
 
 **Prerequisites.**
-- SCUMServer.exe running with UE4SS loaded
+- GameServer.exe running with UE4SS loaded
 - `TurdMODEngineBridge.dll` injected and the named pipe alive
 - Pipe path is at `%LOCALAPPDATA%/TurdMOD/engine/pipe.txt` —
   **never hardcode** the pipe name; it's `\\.\pipe\turdmod-engine-<pid>`.
@@ -89,7 +89,7 @@ Or from the Manager GUI: Dump Management → Phase A row → Run.
 **Gotcha — serial RPCs only.** Every bridge handler runs on the
 game thread through a single named pipe. **Never** issue parallel
 `dumpClasses` / `findFunctions` / `readClassValues` calls — they
-will crash SCUMServer.exe. We verified this empirically on
+will crash GameServer.exe. We verified this empirically on
 2026-05-17 (10 concurrent → crash). See memory file
 `feedback_bridge_rpc_one_at_a_time.md`.
 
@@ -100,7 +100,7 @@ will crash SCUMServer.exe. We verified this empirically on
 This is the largest source of pitfalls. Read the gotcha box even
 if you think you remember.
 
-### Phase B: server target (`SCUMServer.exe`)
+### Phase B: server target (`GameServer.exe`)
 
 ```powershell
 cd C:/Development/Claude/scumdump
@@ -151,7 +151,7 @@ exit code 4). Both steps required:
 Stop-Service BEService
 Start-Process 'C:/.../SCUM.exe' -ArgumentList '-NoBattleye'
 ```
-The server doesn't have BattlEye, so SCUMServer.exe injects with no
+The server doesn't have BattlEye, so GameServer.exe injects with no
 prep.
 
 **4. The Manager's "Inject Dumper-7" button always elevates.**
@@ -159,7 +159,7 @@ Implemented via `turdmod-injector.exe` standalone bin under
 `apps/turdmod-loader/launcher/src/bin/`, invoked via
 `ShellExecuteExW(verb="runas")` from
 `engine::elevate_launch`. UAC prompts on every click. This is
-intentional — works for both elevated SCUMServer.exe and
+intentional — works for both elevated GameServer.exe and
 non-elevated SCUM.exe uniformly. The in-process `inject.rs` is dead
 code kept for reference.
 
@@ -197,7 +197,7 @@ pnpm phase-c
 ```
 
 - Requires AES-256 key. Extract via `pnpm extract-aes` (runs
-  `AESDumpster` against `SCUMServer.exe`); key persists in
+  `AESDumpster` against `GameServer.exe`); key persists in
   `scumdump.config.json` (gitignored).
 - Output: `extracted/v<build>/widgets/`, `datatables/`, `strings/`
   as JSON. ~496 widget classes for SCUM build 23128915.
@@ -274,10 +274,10 @@ cd C:/Development/Claude/scumdump
 pnpm extract-aes
 
 # 3. Phase A — live reflection (server-side; cheap, ~30s)
-#    Requires SCUMServer.exe + bridge running.
+#    Requires GameServer.exe + bridge running.
 pnpm phase-a
 
-# 4. Phase B server — inject Dumper-7 into SCUMServer.exe
+# 4. Phase B server — inject Dumper-7 into GameServer.exe
 #    Either: Manager → Dump Management → Phase B server row → Run
 #    Or:     pnpm phase-b   (then inject manually with the injector)
 pnpm phase-b
@@ -372,7 +372,7 @@ written output minutes earlier. Fixed in commit `f739442`.
 
 **Elevated injection via standalone exe.** Manager's Inject button
 shells to `turdmod-injector.exe` via `ShellExecuteExW(verb=runas)`.
-Works for both elevated SCUMServer.exe and non-elevated SCUM.exe.
+Works for both elevated GameServer.exe and non-elevated SCUM.exe.
 In-process injector (`inject.rs`) is dead code kept for reference.
 
 **Four-feature arsenal landed.** Phase B-Client, forensic archive,
@@ -386,7 +386,7 @@ this session.
 ```powershell
 # Dump pipeline (scumdump)
 pnpm phase-a              # live reflection (server bridge required)
-pnpm phase-b              # Dumper-7 inject → SCUMServer.exe
+pnpm phase-b              # Dumper-7 inject → GameServer.exe
 pnpm phase-b-client       # Dumper-7 inject → SCUM.exe (90s warmup!)
 pnpm phase-c              # CUE4Parse pak extraction
 pnpm extract-aes          # rerun on every SCUM update
@@ -402,7 +402,7 @@ pnpm typecheck            # tsc + cargo check
 ```powershell
 # Inject (standalone, elevated — UAC prompts)
 & 'C:/Development/Claude/turdmod/apps/turdmod-loader/launcher/target/release/turdmod-injector.exe' `
-    --target SCUMServer.exe `
+    --target GameServer.exe `
     --dll  'C:/Development/Claude/scumdump/tools/Dumper-7/x64/Release/Dumper-7.dll'
 
 # Stop BattlEye + relaunch SCUM client without it

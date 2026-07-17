@@ -40,7 +40,7 @@ Web browser version: only **Browse** + a read-only mirror of **Installed**
 │                                                          │
 │ ┌──────────────────────────────────────────────────────┐ │
 │ │ Better TEC1 Loot                       [SERVER] ✓142 │ │
-│ │ better-tec1-loot · by TechyRican · v1.0.0 · ★4.6     │ │
+│ │ better-tec1-loot · by YOUR_OWNER_NAME · v1.0.0 · ★4.6     │ │
 │ │ Boosts Gold Memory Module drop rate in Depository... │ │
 │ │ [loot] [tec1] [server-side]              [INSTALL]   │ │
 │ └──────────────────────────────────────────────────────┘ │

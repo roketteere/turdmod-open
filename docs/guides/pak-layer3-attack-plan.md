@@ -7,7 +7,7 @@
 ## 1. Why PolyHook2 Failed and Alternative Hooking Strategies  
 
 **PolyHook2 failure** at `0x143b61be0` likely due to:  
-- `VirtualProtect` failure on the SCUMServer.exe code section (page protections not writable, or the section is `PAGE_EXECUTE_READ` only with no write allowed).  
+- `VirtualProtect` failure on the GameServer.exe code section (page protections not writable, or the section is `PAGE_EXECUTE_READ` only with no write allowed).  
 - The prologue at `0x143b61be0` is too short for a 6‑byte JMP trampoline (only 5 bytes: `48 89 5c 24 08` = `mov [rsp+8], rbx`). PolyHook expects at least 5 bytes, but the allocation of the trampoline might have failed or the hook manager rejected it because of insufficient length for a full detour.  
 - The code is in a `.text` section that is marked `MEM_IMAGE` with no write access; PolyHook tries to change it but might get `ERROR_NOACCESS` or similar.  
 
@@ -58,7 +58,7 @@ We need to know the class of the `this` pointer passed to L3 (stored in r15). Th
    From previous analysis: at `0x143b67410` (let’s verify with capstone).  
    Open IDA or use patternsleuth:  
    ```
-   patternsleuth execute --file SCUMServer.exe --pattern "48 8b 55 08 48 8b ce e8 ?? ?? ?? ?? 84 c0 75" --rva 0x143b67410
+   patternsleuth execute --file GameServer.exe --pattern "48 8b 55 08 48 8b ce e8 ?? ?? ?? ?? 84 c0 75" --rva 0x143b67410
    ```
    This will capture the instruction `mov rdx, [r13+8]`.  
    If not exact, search for the sequence `48 8b 55 08 48 8b ce e8` (mov rdx,[rbp+8]? but previous doc said r13).  
@@ -71,7 +71,7 @@ We need to know the class of the `this` pointer passed to L3 (stored in r15). Th
 
    **Alternative**: scan the binary for all functions that contain the string reference to “Unable to create pak \"%s\" handle” (found at `.rdata` VA `0x14620cdb0`).  
    ```
-   patternsleuth xref --file SCUMServer.exe --rdata-va 0x14620cdb0
+   patternsleuth xref --file GameServer.exe --rdata-va 0x14620cdb0
    ```
    That gives the single reference in L3. Corroborate that L3 is the only consumer.
 
@@ -80,7 +80,7 @@ We need to know the class of the `this` pointer passed to L3 (stored in r15). Th
    ```
    python -c "
    from capstone import *
-   code = open('SCUMServer.exe','rb').read()
+   code = open('GameServer.exe','rb').read()
    md = Cs(CS_ARCH_X86, CS_MODE_64)
    start = 0x143b67410 - 0x140000000  (adjust base)
    end = start + 0x200

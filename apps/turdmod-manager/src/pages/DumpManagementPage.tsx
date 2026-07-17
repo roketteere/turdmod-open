@@ -288,7 +288,7 @@ function CurrentPhaseCard({ status }: { status: BufferedLogLine | null }) {
             >
               {injectMutation.isPending
                 ? `Injecting Dumper-7 into ${targetFromGroup}…`
-                : `Inject Dumper-7.dll into ${targetFromGroup === 'server' ? 'SCUMServer.exe' : 'SCUM.exe'}`}
+                : `Inject Dumper-7.dll into ${targetFromGroup === 'server' ? 'GameServer.exe' : 'SCUM.exe'}`}
             </button>
             {injectResult && (
               <span
@@ -712,7 +712,7 @@ export function DumpManagementPage() {
             </div>
           </dl>
           <p className="mt-3 text-xs text-turd-cream-dim/80">
-            Dumper-7 inject; target SCUMServer.exe.
+            Dumper-7 inject; target GameServer.exe.
           </p>
           <div className="mt-3">
             <Button

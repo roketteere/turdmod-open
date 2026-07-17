@@ -49,7 +49,7 @@ The companion has the discovery-file pattern that we'd mirror for an inbound nam
 - Loader writes the pipe name on startup
 - External callers read the discovery file and connect
 
-The `turdmod-engine-bridge` (in `SCUMServer.exe`) has its own inbound named pipe (`\\.\pipe\turdmod-engine-{pid}`) that the Manager already uses via Tauri's `engine_rpc` command. That's the pattern to clone for the client-side loader.
+The `turdmod-engine-bridge` (in `GameServer.exe`) has its own inbound named pipe (`\\.\pipe\turdmod-engine-{pid}`) that the Manager already uses via Tauri's `engine_rpc` command. That's the pattern to clone for the client-side loader.
 
 ---
 
@@ -140,7 +140,7 @@ The existing `enqueue_panel` accepts arbitrary `JsonValue` so the V1 spec is wha
 - NEW C++ `handle_loader_send_panel` in TurdMODEngineBridge.cpp
 - Connects to `\\.\pipe\turdmod-loader` (same machine as bridge, since both run on the server box when the loader is on a player client this gets weirder — see open question)
 
-**Risk:** Medium. Bridge runs in `SCUMServer.exe`; the loader runs in `SCUMClient.exe`. For a server admin to push a panel to a connected player, the bridge needs to know the player's client machine, and the loader needs to be reachable from there. Probably involves an outbound channel from the loader (already exists — SSE subscriber to companion) being repurposed for inbound commands.
+**Risk:** Medium. Bridge runs in `GameServer.exe`; the loader runs in `SCUMClient.exe`. For a server admin to push a panel to a connected player, the bridge needs to know the player's client machine, and the loader needs to be reachable from there. Probably involves an outbound channel from the loader (already exists — SSE subscriber to companion) being repurposed for inbound commands.
 
 **Open Q:** Architecture for server-admin → connected-player flow. May need a companion-mediated push: Manager → companion → companion forwards to client loaders via existing SSE channel.
 

@@ -10,7 +10,7 @@ import { ENGINE_CAPABILITIES, type TierCapabilities } from '../tier.js';
 // SSH-tunneled named pipe (remote). The Engine tier's primary adapter.
 //
 // File access on the Engine tier still goes through the local-or-remote
-// filesystem (the bridge runs in-process with SCUMServer.exe); the
+// filesystem (the bridge runs in-process with GameServer.exe); the
 // distinguishing feature is `engineRpc` which calls UFunctions directly.
 
 export interface EngineRpcAdapterConfig {

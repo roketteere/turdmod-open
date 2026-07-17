@@ -1,7 +1,7 @@
 //! C-ABI surface for in-process C++ UE4SS mods to plug into the engine.
 //!
 //! The C++ mod (see `apps/turdmod-engine-bridge/`) loads into the same
-//! SCUMServer.exe process as this DLL. It calls our exported
+//! GameServer.exe process as this DLL. It calls our exported
 //! `turdmod_engine_register_handler` to register handler function pointers
 //! for RPC methods, and calls `turdmod_engine_emit_event` to push UE4
 //! events outbound via the named-pipe `EventBroadcaster`.

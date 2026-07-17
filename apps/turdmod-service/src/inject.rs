@@ -1,4 +1,4 @@
-// DLL injection — injects UE4SS + turdmod_server_loader into SCUMServer.exe.
+// DLL injection — injects UE4SS + turdmod_server_loader into GameServer.exe.
 // Uses CreateRemoteThread + LoadLibraryA pattern. Called by engine.rs after
 // CREATE_SUSPENDED process creation.
 

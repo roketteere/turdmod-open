@@ -1,5 +1,5 @@
 // Typed wrappers for remote service API commands.
-// These talk to turdmod-service running on OVH via the Tauri backend.
+// These talk to turdmod-service running on remote server via the Tauri backend.
 
 import { invoke } from '@tauri-apps/api/core';
 
@@ -39,7 +39,7 @@ export function remoteStatus(): Promise<RemoteStatus> {
   return invoke<RemoteStatus>('remote_status');
 }
 
-// Server lifecycle — target-aware ("local" or "remote"/OVH), matching the
+// Server lifecycle — target-aware ("local" or "remote"), matching the
 // Admin Map host toggle. countdown (secs) on restart fires a player-warning banner.
 export interface ServerStatus {
   server_running: boolean;

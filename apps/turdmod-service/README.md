@@ -135,7 +135,7 @@ Every 30 seconds: `setZombiePassive` + `setAnimalPassive` — all creatures pass
 {
   "port": 9090,
   "token": "your-secret-token",
-  "scum_server_exe": "C:\\SCUMServer\\SCUM\\Binaries\\Win64\\SCUMServer.exe",
+  "scum_server_exe": "C:\\SCUMServer\\SCUM\\Binaries\\Win64\\GameServer.exe",
   "scum_server_args": ["-log", "-port=7042", "-QueryPort=7044", "-NoBattlEye"],
   "inject_dlls": [
     "C:\\SCUMServer\\SCUM\\Binaries\\Win64\\turdmod_server_loader.dll",
@@ -170,7 +170,7 @@ All module state persists to `C:\TurdMOD\data\`:
 ## Preconditions
 
 - Windows Server (elevated)
-- SCUMServer.exe + UE4SS + TurdMODEngineBridge DLL deployed
+- GameServer.exe + UE4SS + TurdMODEngineBridge DLL deployed
 - OVH firewall: TCP 9090 (API), UDP 7042 (game), TCP 7044 (Steam query)
 - Token set to something non-default before production use
 - Ollama (optional): CPU mode for AI features (!ask, DIMs NPCs)

@@ -6,7 +6,7 @@ import { invoke } from '@tauri-apps/api/core';
 // ReflectionDatabasePage — disk-read browser for the scumdump pipeline.
 //
 // SchemaPage reads live UE state via the bridge RPC (named pipe →
-// SCUMServer.exe) and is therefore capped + server-dependent.
+// GameServer.exe) and is therefore capped + server-dependent.
 // This page reads scumdump's on-disk output (~14.5k classes, ~1.7k enums,
 // ~3.4k structs from Phase A, plus Phase B/C summaries) so the full type
 // system is browsable with no live server required.

@@ -16,7 +16,7 @@ if (-not (Test-Path $sourceSig)) { Write-Host '[ERROR] Sig not found - run cook.
 $scumProc = $null
 try { $scumProc = Get-Process -Name 'SCUMServer' -ErrorAction Stop } catch {}
 if ($scumProc) {
-    Write-Host "[WARN] SCUMServer.exe is running - files may be locked" -ForegroundColor Yellow
+    Write-Host "[WARN] GameServer.exe is running - files may be locked" -ForegroundColor Yellow
 }
 
 Write-Host '=== Deploying pak + sig ===' -ForegroundColor Cyan

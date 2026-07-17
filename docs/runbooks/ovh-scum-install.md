@@ -141,22 +141,22 @@ works — no Steam login needed for dedicated server.
 **Verify:**
 
 ```powershell
-Test-Path 'C:\SCUMServer\SCUM\Binaries\Win64\SCUMServer.exe'
+Test-Path 'C:\SCUMServer\SCUM\Binaries\Win64\GameServer.exe'
 # Should output True.
-Get-Item 'C:\SCUMServer\SCUM\Binaries\Win64\SCUMServer.exe' |
+Get-Item 'C:\SCUMServer\SCUM\Binaries\Win64\GameServer.exe' |
   Select-Object Length, LastWriteTime
 # Length should be ~125 MB (current build).
 ```
 
 ## 4. First boot — generate default config files
 
-SCUMServer.exe needs to run once to generate
+GameServer.exe needs to run once to generate
 `ServerSettings.ini`, `GameUserSettings.ini`, the `Saved/` tree,
 etc. We'll start it, let it initialize, then stop it.
 
 ```powershell
 # Start SCUMServer in a background job so we can stop it cleanly.
-$scum = Start-Process -FilePath 'C:\SCUMServer\SCUM\Binaries\Win64\SCUMServer.exe' `
+$scum = Start-Process -FilePath 'C:\SCUMServer\SCUM\Binaries\Win64\GameServer.exe' `
   -WorkingDirectory 'C:\SCUMServer\SCUM\Binaries\Win64' `
   -PassThru -WindowStyle Minimized
 
@@ -236,7 +236,7 @@ UE4SS loads via a proxy DLL or via the `turdmod-loader` injector.
 For first install, use the proxy approach (simpler):
 
 ```powershell
-# UE4SS standard install drops a dwmapi.dll proxy that SCUMServer.exe
+# UE4SS standard install drops a dwmapi.dll proxy that GameServer.exe
 # loads at startup (Windows looks for dwmapi.dll in the exe's
 # directory first). The proxy then loads UE4SS.dll.
 Test-Path 'C:\SCUMServer\SCUM\Binaries\Win64\dwmapi.dll'  # True
@@ -270,7 +270,7 @@ existing port assumptions Just Work.
 ```powershell
 # Start SCUMServer in the background. Tail UE4SS log to confirm
 # the bridge initialized.
-Start-Process -FilePath 'C:\SCUMServer\SCUM\Binaries\Win64\SCUMServer.exe' `
+Start-Process -FilePath 'C:\SCUMServer\SCUM\Binaries\Win64\GameServer.exe' `
   -WorkingDirectory 'C:\SCUMServer\SCUM\Binaries\Win64' `
   -WindowStyle Minimized
 
@@ -318,10 +318,10 @@ RDP into the OVH box and run the Manager there if you need its UI.
 ## 11. Lock down + auto-start
 
 ```powershell
-# Wrap SCUMServer.exe in a Windows Service so it survives reboots.
+# Wrap GameServer.exe in a Windows Service so it survives reboots.
 # Use NSSM (https://nssm.cc/) or sc.exe — example with sc.exe:
 sc.exe create SCUMServer `
-  binPath= '"C:\SCUMServer\SCUM\Binaries\Win64\SCUMServer.exe"' `
+  binPath= '"C:\SCUMServer\SCUM\Binaries\Win64\GameServer.exe"' `
   start= auto `
   DisplayName= 'SCUM Dedicated Server (TurdMOD)'
 sc.exe description SCUMServer 'SCUM dedicated game server with UE4SS + TurdMODEngineBridge.'
@@ -330,9 +330,9 @@ sc.exe description SCUMServer 'SCUM dedicated game server with UE4SS + TurdMODEn
 sc.exe failure SCUMServer reset= 86400 actions= restart/60000/restart/60000/restart/60000
 ```
 
-**Note:** running SCUMServer.exe via Windows Service has a known
+**Note:** running GameServer.exe via Windows Service has a known
 quirk — UE4SS may not initialize fully because the service account
-isn't an interactive session. If you hit issues, run SCUMServer.exe
+isn't an interactive session. If you hit issues, run GameServer.exe
 under a scheduled task triggered at boot under the Administrator
 account instead.
 

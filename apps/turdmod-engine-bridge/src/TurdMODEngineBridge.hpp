@@ -1,7 +1,7 @@
 // TurdMODEngineBridge.hpp
 //
 // UE4SS C++ mod that bridges the in-process side of the TurdMOD Engine.
-// Loads alongside SCUMServer.exe, registers C-ABI handlers with
+// Loads alongside GameServer.exe, registers C-ABI handlers with
 // turdmod_server_loader.dll, and forwards companion RPC into UE4SS's
 // reflection / hook APIs.
 //

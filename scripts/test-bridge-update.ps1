@@ -18,13 +18,13 @@ Write-Host "=== TurdMOD Bridge Test (build 23396794) ===" -ForegroundColor Magen
 
 # Config
 $binDir = "C:\Program Files (x86)\Steam\steamapps\common\SCUM Server\SCUM\Binaries\Win64"
-$serverExe = "$binDir\SCUMServer.exe"
+$serverExe = "$binDir\GameServer.exe"
 $ue4ssDll = "$binDir\UE4SS\UE4SS.dll"
 $ue4ssLog = "$binDir\UE4SS\UE4SS.log"
 
 # Step 0: Kill any existing server
 Write-Host "[0] Cleaning up..." -ForegroundColor Yellow
-$null = cmd /c "taskkill /F /IM SCUMServer.exe 2>nul"
+$null = cmd /c "taskkill /F /IM GameServer.exe 2>nul"
 Start-Sleep -Seconds 2
 
 # Remove fake dwmapi.dll if present
@@ -38,7 +38,7 @@ if (Test-Path $fakeDwmapi) {
 if (Test-Path $ue4ssLog) { Remove-Item $ue4ssLog -Force }
 
 # Step 1: Start server SUSPENDED
-Write-Host "[1] Starting SCUMServer.exe SUSPENDED..." -ForegroundColor Cyan
+Write-Host "[1] Starting GameServer.exe SUSPENDED..." -ForegroundColor Cyan
 
 Add-Type @"
 using System;

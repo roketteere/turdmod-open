@@ -2,7 +2,7 @@
 # SCUM Server Optimization Suite — Specification
 
 **Version**: 1.0  
-**Target**: SCUMServer.exe (UE 4.27) running UE4SS with PolyHook2  
+**Target**: GameServer.exe (UE 4.27) running UE4SS with PolyHook2  
 **Author**: turdmod senior performance engineer  
 **Status**: Draft for implementation  
 

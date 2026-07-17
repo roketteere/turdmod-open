@@ -1,4 +1,4 @@
-// Inline Local/OVH segmented toggle, bound to the global engineHost store.
+// Inline Local/Remote segmented toggle, bound to the global engineHost store.
 // Drop into any page header so the active server is visible + switchable
 // right on the tab. Stays in sync with the sidebar dropdown (one store).
 // Flipping invalidates all queries so live views refetch against the new host.

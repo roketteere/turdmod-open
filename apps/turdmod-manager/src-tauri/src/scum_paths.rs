@@ -104,7 +104,7 @@ fn fallback_steam_libraries() -> Vec<PathBuf> {
 // A SCUM install root looks like one of:
 //   <root>/SCUM_Launcher.exe                       (client install root marker)
 //   <root>/SCUM/Binaries/Win64/SCUM.exe            (client install — nested exe)
-//   <root>/SCUM/Binaries/Win64/SCUMServer.exe      (dedicated-server install)
+//   <root>/SCUM/Binaries/Win64/GameServer.exe      (dedicated-server install)
 fn is_scum_install_root(root: &Path) -> bool {
     if !root.is_dir() {
         return false;
@@ -113,7 +113,7 @@ fn is_scum_install_root(root: &Path) -> bool {
         return true;
     }
     let win64 = root.join("SCUM").join("Binaries").join("Win64");
-    win64.join("SCUM.exe").exists() || win64.join("SCUMServer.exe").exists()
+    win64.join("SCUM.exe").exists() || win64.join("GameServer.exe").exists()
 }
 
 fn game_install_under_library(library: &Path) -> Option<PathBuf> {

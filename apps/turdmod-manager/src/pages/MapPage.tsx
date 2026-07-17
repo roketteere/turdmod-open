@@ -339,7 +339,7 @@ export function MapPage() {
   // getOnlinePlayers (the old source) carries NO coords, so nothing rendered.
   const playersQuery = useQuery<{ players: OnlinePlayer[] }>({
     queryKey: ['map-positions', server],
-    // engineRpc routes to the active host (local pipe or OVH tunnel) and
+    // engineRpc routes to the active host (local pipe or remote server tunnel) and
     // returns the unwrapped {players} either way. queryKey carries `server`
     // so a host switch refetches automatically.
     queryFn: () => engineRpc<{ players: OnlinePlayer[] }>('getPlayerPositions'),
@@ -354,7 +354,7 @@ export function MapPage() {
   );
 
   // Full roster (online + offline) from SCUM.db user_profile, via the host-aware
-  // scumdb_rows endpoint (local or OVH). Refreshed lazily; merged with live feed.
+  // scumdb_rows endpoint (local or remote server). Refreshed lazily; merged with live feed.
   const rosterQuery = useQuery<{ rows: Record<string, unknown>[] }>({
     queryKey: ['map-roster', server],
     queryFn: () => invoke('scumdb_rows', { target: server, table: 'user_profile', limit: 500, offset: 0 }),
@@ -458,10 +458,10 @@ export function MapPage() {
   // Spawn via the REAL admin command (#SpawnItem / #SpawnVehicle) — the bridge
   // spawnItem RPC creates an orphan that never lands in inventory. Echo confirms.
   const handleSpawn = async (cls: string, count: number, veh: boolean) => {
-    const host = server === 'remote' ? 'OVH' : 'Local';
+    const host = server === 'remote' ? 'Remote' : 'Local';
     const targets = veh ? spawnTargets.slice(0, 1) : spawnTargets;
     const who = targets[0]?.name;
-    if (!who) { setActionResult(`No online player on ${host} — switch to ☁ OVH (top toggle)`); setTimeout(() => setActionResult(null), 5000); return; }
+    if (!who) { setActionResult(`No online player on ${host} — switch to ☁ Remote (top toggle)`); setTimeout(() => setActionResult(null), 5000); return; }
     const cmd = veh ? `SpawnVehicle ${cls}` : `SpawnItem ${cls} ${count}`;
     setActionResult(`${veh ? '🚗' : '🎁'} ${cls}…`);
     try {
@@ -927,7 +927,7 @@ export function MapPage() {
                 onClick={() => setEngineHost(s)}
                 className={`px-3 py-1 text-[11px] ${server === s ? 'bg-turd-mustard-bright text-turd-bg-deep' : 'bg-turd-bg-deep/60 text-turd-cream-dim hover:text-turd-cream'}`}
               >
-                {s === 'local' ? '🏠 Local' : '☁ OVH'}
+                {s === 'local' ? '🏠 Local' : '☁ Remote'}
               </button>
             ))}
           </div>

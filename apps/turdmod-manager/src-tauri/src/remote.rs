@@ -1,4 +1,4 @@
-// Remote service HTTP client — talks to turdmod-service on OVH (or any host).
+// Remote service HTTP client — talks to turdmod-service on remote server (or any host).
 // Config loaded from %LOCALAPPDATA%\TurdMOD\remote.json.
 
 use anyhow::{Context, Result};
@@ -59,7 +59,7 @@ impl RemoteClient {
     }
 
     /// Build a client for a named server: "local" reads C:\TurdMOD\service.json (localhost); any
-    /// other value uses the configured remote (OVH, remote.json). The control plane for both boxes.
+    /// other value uses the configured remote (remote server, remote.json). The control plane for both boxes.
     pub fn for_target(target: &str) -> Result<Self> {
         if target == "local" {
             let raw = std::fs::read_to_string(r"C:\TurdMOD\service.json")

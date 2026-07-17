@@ -11,7 +11,7 @@ if (-not (Test-Path $saveDir)) {
 }
 
 # Start with isolated save dir + different ports + no BattlEye
-Start-Process -FilePath "$binDir\SCUMServer.exe" -ArgumentList @(
+Start-Process -FilePath "$binDir\GameServer.exe" -ArgumentList @(
     "-log",
     "-port=7052",
     "-QueryPort=7054",

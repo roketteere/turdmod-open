@@ -22,7 +22,7 @@ type Section = 'funds' | 'economy';
 
 export function TradersConfigPage() {
   const target = useEngineHost();
-  const host = target === 'local' ? 'Local' : 'OVH';
+  const host = target === 'local' ? 'Local' : 'Remote';
   const [section, setSection] = useState<Section>('funds');
   const [rows, setRows] = useState<TraderRow[]>([]);
   const [err, setErr] = useState<string | null>(null);

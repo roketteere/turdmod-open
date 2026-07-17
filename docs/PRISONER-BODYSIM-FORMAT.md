@@ -1,6 +1,6 @@
 # SCUM `prisoner.body_simulation` — Metabolism / Base Attributes (CRACKED)
 
-Status: **decoded + write-verified live on OVH 2026-06-07** (TechyRican + Zilla set to 8/5/5/5).
+Status: **decoded + write-verified live on OVH 2026-06-07** (YOUR_OWNER_NAME + Zilla set to 8/5/5/5).
 Tool: `tools/scum-attrs.py`. @dep: `SCUM.db` (`prisoner` table). @related: `SCUM-ADMIN-COMMANDS.md`.
 
 ## Why this exists — `#SetAttributes` is gated above owner level

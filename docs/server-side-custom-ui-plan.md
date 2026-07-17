@@ -21,7 +21,7 @@ Full Q2 crash evidence + bypass-investigation scaffold lives in [pak-mod-investi
 
 ## What we learned 2026-05-19 (the architectural ceiling)
 
-The bridge running inside `SCUMServer.exe` **cannot** invoke SCUM's admin parser to fire admin commands:
+The bridge running inside `GameServer.exe` **cannot** invoke SCUM's admin parser to fire admin commands:
 
 - `Chat_Server_ProcessAdminCommand` is a UE4 `Server` RPC. Calling it via `ProcessEvent` server-side silently no-ops because there's no NetConnection metadata for UE4's RPC dispatch to validate.
 - `Test_ProcessAdminCommand` (the test/dev variant) also silently no-ops in shipped SCUM builds.
@@ -90,7 +90,7 @@ Full diagnosis in memory [`feedback_bridge_admin_rpc_blocker.md`](../../.claude/
 
 Both options require the bridge to dispatch RPCs that take **arguments referencing classes/assets that don't exist in vanilla SCUM**. We can't talk about "our notification asset" or "our panel widget" if vanilla SCUM doesn't have those classes in its `GUObjectArray`. So we have to ship them.
 
-The ONLY way to ship new classes into `SCUMServer.exe`'s UObject registry without a per-player install is via a `.pak` mounted at the server's `Content/Paks/` directory. UE4 4.27's pak loader is the documented moddability path — same one Steam Workshop uses for ARK / Conan / Squad / Squad 44 / dozens of others.
+The ONLY way to ship new classes into `GameServer.exe`'s UObject registry without a per-player install is via a `.pak` mounted at the server's `Content/Paks/` directory. UE4 4.27's pak loader is the documented moddability path — same one Steam Workshop uses for ARK / Conan / Squad / Squad 44 / dozens of others.
 
 So the dependency tree is one line:
 
@@ -147,7 +147,7 @@ Each phase has a clear go/no-go signal — don't invest in phase N+1 until N is 
 
 ## What we ARE doing first
 
-**Phase 0: the pak-mod Q2 probe.** Everything depends on it. The probe is testable on Joel's local SCUMServer today — no G-Portal needed for the gate question. See [pak-mod-investigation-plan.md](./pak-mod-investigation-plan.md) §"Q2 — Does SCUMServer.exe mount unsigned `_P.paks`?" for the exact 7-step sequence.
+**Phase 0: the pak-mod Q2 probe.** Everything depends on it. The probe is testable on Joel's local SCUMServer today — no G-Portal needed for the gate question. See [pak-mod-investigation-plan.md](./pak-mod-investigation-plan.md) §"Q2 — Does GameServer.exe mount unsigned `_P.paks`?" for the exact 7-step sequence.
 
 When Joel finishes the UE4 4.27.2 install (~30 GB Epic Games Launcher download), we run the probe in one focused session.
 

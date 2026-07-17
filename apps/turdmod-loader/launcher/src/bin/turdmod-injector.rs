@@ -3,7 +3,7 @@
 //! Standalone CLI that injects a DLL into a running Windows process by
 //! image name (or PID). Designed to be invoked **elevated** by the
 //! Manager (via ShellExecuteExW with verb="runas") so it can target
-//! processes that require admin — most notably `SCUMServer.exe`.
+//! processes that require admin — most notably `GameServer.exe`.
 //!
 //! Mirrors the flow in `paliaplay/scripts/inject-dll.py`:
 //!   1. Find PID by image name (CreateToolhelp32Snapshot).
@@ -56,7 +56,7 @@ use windows_sys::Win32::System::Threading::{
     version
 )]
 struct Cli {
-    /// Image name of the target process (e.g. SCUMServer.exe).
+    /// Image name of the target process (e.g. GameServer.exe).
     /// One of --target or --pid must be set.
     #[arg(long, conflicts_with = "pid")]
     target: Option<String>,

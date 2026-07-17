@@ -1,5 +1,5 @@
 // Clickable spawn browser — category tabs + search + icon grid. Built from the
-// real OVH item classes (spawn-catalog.json: 894 verified _ES_C classes with
+// real remote server item classes (spawn-catalog.json: 894 verified _ES_C classes with
 // matched icons). Click an item to spawn it on the target via the parent.
 
 import { useEffect, useMemo, useState } from 'react';

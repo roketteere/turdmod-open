@@ -3,7 +3,7 @@
   "id": "better-tec1-loot",
   "name": "Better TEC1 Loot",
   "version": "0.0.1",
-  "author": "TechyRican",
+  "author": "YOUR_OWNER_NAME",
   "description": "Boosts Memory Module Level 4 drop rate in TEC1 abandoned bunker depository chests. Server-side; no client changes needed.",
   "mode": "server-side",
   "minBuild": "23128448",

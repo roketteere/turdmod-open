@@ -10,7 +10,7 @@ import {
 } from '../lib/tauri-remote';
 import DraggablePanel from './DraggablePanel';
 
-const hostLabel = (t: string) => (t === 'local' ? 'Local' : 'OVH');
+const hostLabel = (t: string) => (t === 'local' ? 'Local' : 'Remote');
 
 function fmtDur(secs: number): string {
   if (!isFinite(secs)) return '—';

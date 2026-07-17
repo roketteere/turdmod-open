@@ -1,7 +1,7 @@
 --[[
     TurdMOD Bridge — production-grade UE4SS Lua mod.
 
-    Bridges between SCUMServer.exe (via UE4SS reflection / hooks) and
+    Bridges between GameServer.exe (via UE4SS reflection / hooks) and
     `turdmod-server-loader.dll` (which terminates the named-pipe RPC the
     companion talks to).
 
@@ -13,7 +13,7 @@
                                      │  shared FS dir (JSONL bridge)
         UE4SS.dll  +  this Lua mod  ─┘
             ↕ UE4SS reflection / hooks
-        SCUMServer.exe (UE4 4.27)
+        GameServer.exe (UE4 4.27)
 
     In-process bridge between the Rust DLL and this Lua mod is file-based
     JSONL polling in `%LOCALAPPDATA%/TurdMOD/engine/`:

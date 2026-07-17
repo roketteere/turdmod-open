@@ -45,7 +45,7 @@ foreach ($m in $map) {
 if ($toCopy.Count -eq 0) { Write-Host "All DLLs already in sync. Nothing to do." -ForegroundColor Green; exit 0 }
 
 Write-Host "[1] Stopping SCUMServer on OVH (unlock DLLs)..." -ForegroundColor Cyan
-ssh @ssh "taskkill /F /IM SCUMServer.exe 2>nul & ping -n 3 127.0.0.1 >nul"
+ssh @ssh "taskkill /F /IM GameServer.exe 2>nul & ping -n 3 127.0.0.1 >nul"
 
 Write-Host "[2] Copying $($toCopy.Count) DLL(s)..." -ForegroundColor Cyan
 foreach ($m in $toCopy) {

@@ -3,7 +3,7 @@
   "id": "permissions",
   "name": "Permissions & Tiers",
   "version": "0.1.0-alpha",
-  "author": "TechyRican",
+  "author": "YOUR_OWNER_NAME",
   "description": "Tier-based command permission system. Admins create plans (free/VIP/premium) with configurable command access.",
   "mode": "server-side",
   "minBuild": "23128448",

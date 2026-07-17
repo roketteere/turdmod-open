@@ -45,10 +45,10 @@ try { $rem = Invoke-RestMethod "http://${RemoteHost}:9090/health" -TimeoutSec 5;
 
 # BattlEye must be OFF on both: check the running SCUMServer command lines
 function BEoff($where, $cmd) { if ($cmd -match "-NoBattlEye") { Write-Host "  $where BattlEye: OFF (-NoBattlEye)" -ForegroundColor Green } else { Write-Host "  $where BattlEye: NOT confirmed off!" -ForegroundColor Red } }
-$locCmd = (Get-CimInstance Win32_Process -Filter "name='SCUMServer.exe'" -ErrorAction SilentlyContinue).CommandLine
+$locCmd = (Get-CimInstance Win32_Process -Filter "name='GameServer.exe'" -ErrorAction SilentlyContinue).CommandLine
 BEoff "local" $locCmd
 # wmic is more robust than nested-quoted Get-CimInstance over ssh
-$remCmd = (ssh @ssh 'wmic process where "name=''SCUMServer.exe''" get commandline' | Out-String)
+$remCmd = (ssh @ssh 'wmic process where "name=''GameServer.exe''" get commandline' | Out-String)
 BEoff "OVH  " $remCmd
 
 Write-Host ""

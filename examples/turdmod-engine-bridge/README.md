@@ -1,6 +1,6 @@
 # TurdMOD Engine Bridge — UE4SS Lua Mod
 
-The UE4SS-side half of the TurdMOD Engine. Runs inside `SCUMServer.exe`
+The UE4SS-side half of the TurdMOD Engine. Runs inside `GameServer.exe`
 alongside our `turdmod-server-loader.dll`; bridges between UE4SS's
 reflection API and the named-pipe RPC server the companion talks to.
 
@@ -60,7 +60,7 @@ Still TODO (Sprint 2.5):
 
 ```
 SCUMServer install root\SCUM\Binaries\Win64\
-├── SCUMServer.exe
+├── GameServer.exe
 ├── UE4SS.dll                     <- from UE4SS v3.0.1 release
 ├── dwmapi.dll                    <- UE4SS proxy DLL (only if using
 │                                    proxy-DLL install; not needed when
@@ -80,13 +80,13 @@ Then launch:
 
 ```powershell
 turdmod-launcher.exe `
-  --scum  "C:\Path\To\SCUMServer.exe" `
+  --scum  "C:\Path\To\GameServer.exe" `
   --dll   "C:\Path\To\turdmod_server_loader.dll" `
   --extra-dll "C:\Path\To\UE4SS.dll" `
   --skip-safety-check
 ```
 
-**Elevation required** — SCUMServer.exe has `requireAdministrator` in
+**Elevation required** — GameServer.exe has `requireAdministrator` in
 its manifest. Launch from an elevated PowerShell.
 
 ## Verify the bridge is up
@@ -160,7 +160,7 @@ To fill in the SCUM-specific hooks:
 
 1. Boot SCUMServer with this mod loaded.
 2. Press **Ctrl+H** (UE4SS keybind) to dump CXX headers, OR **Ctrl+J**
-   to dump all UObjects. Output lands next to `SCUMServer.exe`.
+   to dump all UObjects. Output lands next to `GameServer.exe`.
 3. Grep the dump for `SCUM_PlayerController`, `SCUM_GameMode`,
    `SCUM_Character` (or whatever prefix SCUM uses).
 4. Find UFunctions named like `ServerChat`, `Server_SendMessage`,

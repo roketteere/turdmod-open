@@ -25,11 +25,11 @@ if (-not $isAdmin) {
 Write-Host "[$ScriptName] Running elevated. Registering task '$TaskName'..."
 
 $Launcher = "C:\Development\Claude\turdmod\apps\turdmod-loader\launcher\target\release\turdmod-launcher.exe"
-$ScumServer = "C:\Program Files (x86)\Steam\steamapps\common\SCUM Server\SCUM\Binaries\Win64\SCUMServer.exe"
+$ScumServer = "C:\Program Files (x86)\Steam\steamapps\common\SCUM Server\SCUM\Binaries\Win64\GameServer.exe"
 $UE4SS_DLL = "C:\Program Files (x86)\Steam\steamapps\common\SCUM Server\SCUM\Binaries\Win64\UE4SS\UE4SS.dll"
 $LoaderDLL = "C:\Development\Claude\turdmod\apps\turdmod-server-loader\target\release\turdmod_server_loader.dll"
 
-foreach ($pair in @(@($Launcher, "turdmod-launcher.exe"), @($ScumServer, "SCUMServer.exe"), @($UE4SS_DLL, "UE4SS.dll"))) {
+foreach ($pair in @(@($Launcher, "turdmod-launcher.exe"), @($ScumServer, "GameServer.exe"), @($UE4SS_DLL, "UE4SS.dll"))) {
     if (-not (Test-Path $pair[0])) {
         Write-Host "[$ScriptName] FAILED - $($pair[1]) missing at $($pair[0])"
         exit 1
@@ -37,7 +37,7 @@ foreach ($pair in @(@($Launcher, "turdmod-launcher.exe"), @($ScumServer, "SCUMSe
 }
 
 # Build the argument string. Wrap each space-containing path in double quotes.
-# Everything AFTER `--` is forwarded by turdmod-launcher to SCUMServer.exe
+# Everything AFTER `--` is forwarded by turdmod-launcher to GameServer.exe
 # (per the launcher's main.rs:53 contract). Use that to pass -nullrhi which
 # forces SCUMServer into true headless mode (no RHI graphics init) -- the
 # fix for the GPU-driver-TDR crashes that killed boots ~3:30 in.
@@ -48,7 +48,7 @@ $action = New-ScheduledTaskAction -Execute $Launcher -Argument $argString
 
 # Principal: run as the current interactive user, but at HIGHEST privilege.
 # This avoids needing a saved password while still giving the launcher
-# the admin token it needs for spawning elevated SCUMServer.exe.
+# the admin token it needs for spawning elevated GameServer.exe.
 $principal_obj = New-ScheduledTaskPrincipal `
     -UserId "$env:USERDOMAIN\$env:USERNAME" `
     -LogonType Interactive `

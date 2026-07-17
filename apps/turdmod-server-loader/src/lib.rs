@@ -1,9 +1,9 @@
 //! TurdMOD server-side loader DLL.
 //!
-//! This DLL is injected into `SCUMServer.exe` via the existing
-//! `turdmod-launcher` binary (pass `--scum path/to/SCUMServer.exe` and
+//! This DLL is injected into `GameServer.exe` via the existing
+//! `turdmod-launcher` binary (pass `--scum path/to/GameServer.exe` and
 //! `--dll path/to/turdmod_server_loader.dll`). It does NOT use the
-//! dxgi-proxy technique — `SCUMServer.exe` has no rendering pipeline and
+//! dxgi-proxy technique — `GameServer.exe` has no rendering pipeline and
 //! therefore no DXGI imports. Instead the launcher uses the standard
 //! `CreateProcessW(CREATE_SUSPENDED) + inject_dll() + ResumeThread` path.
 //!
@@ -67,7 +67,7 @@ pub extern "system" fn DllMain(
             // CRITICAL: install bypass hooks SYNCHRONOUSLY before DllMain
             // returns. The suspended main thread can't resume until DllMain
             // exits, so installing here guarantees the hooks are in place
-            // before any SCUMServer.exe code (including pak enumeration)
+            // before any GameServer.exe code (including pak enumeration)
             // runs. If we moved this to init_thread, the spawned thread
             // would race the main thread and lose on some boots.
             server_hooks::install();
@@ -95,7 +95,7 @@ const BANNER: &str = concat!(
     "   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚═╝     ╚═╝ ╚═════╝ ╚═════╝\n",
     "\n",
     "               >>> TurdMOD SERVER-LOADER is running! <<<\n",
-    "              server-loader v0.1.0 — SCUMServer.exe in-process\n",
+    "              server-loader v0.1.0 — GameServer.exe in-process\n",
     "               github.com/roketteere/turdmod\n",
 );
 
@@ -115,7 +115,7 @@ fn init_thread() -> Result<(), String> {
     if std::env::var_os("TURDMOD_FORCE_TEST").is_none() {
         if !detect::is_scum_server_process() {
             logging::log(
-                "[server-loader] not running inside SCUMServer.exe — staying inert. \
+                "[server-loader] not running inside GameServer.exe — staying inert. \
                  Set TURDMOD_FORCE_TEST=1 to bypass in test harnesses.",
             );
             INIT_DONE.store(true, Ordering::SeqCst);

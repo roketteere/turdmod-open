@@ -12,7 +12,7 @@ import { engineRpc } from '../lib/tauri-engine';
 import DraggablePanel from './DraggablePanel';
 
 // The 21 per-skill XP-gain multipliers. CVar name = "scum.<key>SkillMultiplier"
-// (verified against the live OVH ServerSettings.ini, 2026-06-17).
+// (verified against the live remote server ServerSettings.ini, 2026-06-17).
 const SKILLS = [
   'Archery', 'Aviation', 'Awareness', 'Brawling', 'Camouflage', 'Cooking',
   'Demolition', 'Driving', 'Endurance', 'Engineering', 'Farming', 'Handgun',
@@ -35,7 +35,7 @@ const setBtn = (disabled?: boolean): CSSProperties => ({
 });
 
 export default function SkillSettings({ target, onClose }: { target: string; onClose?: () => void }) {
-  const host = target === 'local' ? 'Local' : 'OVH';
+  const host = target === 'local' ? 'Local' : 'Remote';
   const [vals, setVals] = useState<Record<string, number>>(
     () => Object.fromEntries(SKILLS.map((s) => [s, 10])),
   );

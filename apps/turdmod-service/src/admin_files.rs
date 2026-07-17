@@ -31,7 +31,7 @@ pub fn validate_filename(filename: &str) -> Result<&str> {
     }
 }
 
-// scum_server_exe = <root>\SCUM\Binaries\Win64\SCUMServer.exe
+// scum_server_exe = <root>\SCUM\Binaries\Win64\GameServer.exe
 //   -> config dir = <root>\SCUM\Saved\Config\WindowsServer
 fn config_dir(scum_server_exe: &str) -> Result<PathBuf> {
     let scum = Path::new(scum_server_exe)
@@ -225,7 +225,7 @@ mod tests {
     }
     #[test]
     fn config_dir_derives() {
-        let d = config_dir(r"C:\X\SCUM\Binaries\Win64\SCUMServer.exe").unwrap();
+        let d = config_dir(r"C:\X\SCUM\Binaries\Win64\GameServer.exe").unwrap();
         assert!(d.ends_with(r"SCUM\Saved\Config\WindowsServer"));
     }
 }

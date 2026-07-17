@@ -4,7 +4,7 @@
 //! Role compared to the client loader's ipc.rs: the client SUBSCRIBES to
 //! the companion (SSE consumer); the server loader PUBLISHES to it (HTTP
 //! POST producer). This mirrors the data-flow direction: game events
-//! originate inside SCUMServer.exe (via server_hooks.rs, Part C) and need
+//! originate inside GameServer.exe (via server_hooks.rs, Part C) and need
 //! to flow out to the companion, which in turn pushes them to connected
 //! browser clients.
 //!

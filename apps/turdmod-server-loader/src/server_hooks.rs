@@ -15,7 +15,7 @@
 //! console close) still work.
 //!
 //! This is over-broad — it suppresses ALL exit attempts during the guard.
-//! For Path A (surgical), see the SCUMServer.exe string offsets in
+//! For Path A (surgical), see the GameServer.exe string offsets in
 //! memory `scum-bypass-investigation-state` and use a disassembler to
 //! locate SCUM's specific helper function. Hook only that.
 //!
@@ -24,7 +24,7 @@
 //! If called from `init_thread()` (the worker that lib.rs spawns), the
 //! main thread can race ahead and reach pak enumeration before our hook
 //! is installed. Calling from DllMain guarantees the hooks are in place
-//! before any SCUMServer.exe code runs.
+//! before any GameServer.exe code runs.
 //!
 //! STORAGE NOTE: retour 0.3.1's `GenericDetour` and `RawDetour` don't
 //! expose a Send+Sync-safe path to the trampoline from a static, and the

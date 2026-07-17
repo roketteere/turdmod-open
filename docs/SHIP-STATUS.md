@@ -11,7 +11,7 @@ Three buckets:
 - **Partial** — half ships today (usually the Discord side); the in-game half waits for the Engine or the client loader.
 - **Engine-required** — preview only on stock SCUM. Needs the TurdMOD Engine (UE4SS C++ bridge + server-side loader DLL) to move bits in the running game. If the effect is **in-game visual only** (HUD panels, client-rendered overlays), it also needs the **TurdMOD client loader** (`turdmod-loader` / `turdmod-launcher`, the DayZ-style launcher that turns BattlEye off for our servers while leaving the Steam install untouched).
 
-The **TurdMOD Engine** is the **UE4SS C++ cppmod** (`TurdMODEngineBridge.dll`) loaded inside `SCUMServer.exe`, bridging UE4SS reflection ↔ `turdmod_server_loader.dll` over an **in-process C ABI** (direct function-pointer calls — no IPC between these two). The loader's named-pipe JSON-RPC server (`\\.\pipe\turdmod-engine-<pid>`, pipe path written to `%LOCALAPPDATA%\TurdMOD\engine\pipe.txt`) is the channel between **external clients** (Manager UI, Companion, Pro) and the loader; from the loader into the bridge is in-process only.
+The **TurdMOD Engine** is the **UE4SS C++ cppmod** (`TurdMODEngineBridge.dll`) loaded inside `GameServer.exe`, bridging UE4SS reflection ↔ `turdmod_server_loader.dll` over an **in-process C ABI** (direct function-pointer calls — no IPC between these two). The loader's named-pipe JSON-RPC server (`\\.\pipe\turdmod-engine-<pid>`, pipe path written to `%LOCALAPPDATA%\TurdMOD\engine\pipe.txt`) is the channel between **external clients** (Manager UI, Companion, Pro) and the loader; from the loader into the bridge is in-process only.
 
 **Status: shipped and proven running.** The engine is functional on Joel's local SCUMServer. 967,265 UObjects walked via `listClassInstances`; `setTimeOfDay` live-verified (`3.81 → 6`, i.e. 3:48am → sunrise in-game). The UEPseudo build blocker was resolved 2026-05-16 (commit `71b6512`). Pak-signature bypass is solved — hooks live in the cppmod constructor (earlier than SCUM's pak enumeration; proven by UE4SS.log vs SCUM.log timestamps). Deploy is via Manager → Engine page → **Install** button.
 
@@ -52,7 +52,7 @@ The Manager desktop app (`apps/turdmod-manager`) ships a **soft-RCON Admin tab**
 
 The TurdMOD Engine is **already deployed and proven running** on self-hosted servers. The full stack:
 
-1. `SCUMServer.exe` is launched with `turdmod_server_loader.dll` loaded (either via `turdmod-launcher.exe` injection or UE4SS proxy-DLL install).
+1. `GameServer.exe` is launched with `turdmod_server_loader.dll` loaded (either via `turdmod-launcher.exe` injection or UE4SS proxy-DLL install).
 2. `turdmod_server_loader.dll` (Rust) starts the named-pipe JSON-RPC server at `\\.\pipe\turdmod-engine-<pid>` and registers the C-ABI extern surface (`register_handler`, `emit_event`). The pipe path is written to `%LOCALAPPDATA%\TurdMOD\engine\pipe.txt`.
 3. UE4SS loads `TurdMODEngineBridge.dll` (C++ cppmod) from `UE4SS\Mods\TurdMODEngineBridge\dlls\main.dll`. The cppmod constructor installs the **pak-signature bypass hooks** (before SCUM's pak enumeration races UE4SS init). In `on_unreal_init`, it mirrors UE4SS globals (`GUObjectArray`, `FName::ToString`, `GMalloc`, ProcessEvent vtable) then calls `GetProcAddress` on the loader's C-ABI exports and registers all RPC handlers.
 4. **~101 RPC handlers** are registered (canonical source of truth: the `regs[]` table in `src/TurdMODEngineBridge.cpp`; cross-checked against `CAPABILITY-MAP.md`). A core set is **live-verified** — `ping`, `broadcastChat`, `sendChatLineToPlayer`, `teleportPlayer`, `setTimeOfDay`, `setFamePoints`, `setCurrencyBalance`, `broadcastRaidBanner`, `setEconomy`, `getOnlinePlayers`, `getServerStats`, `getActorPopulation`, `listClassInstances`, `dumpClasses`, `dumpWidgets`, `describeWidget`, `dumpUFunctions`, `findFunctions`, `dumpAdminCommands`, `applyRecipe`, `listHandlers`, … Others are registered but **pending deploy-verification** (e.g. `forceGC`, `runConsoleCommand` — see the memory-leak dossier).
@@ -91,7 +91,7 @@ Until Layers 2–3 land, client-side in-game visuals (HUD panels, map overlays, 
 The Sprint 1/2/3 Rust-DLL plan described in earlier versions of this document is **superseded**. The engine shipped as a UE4SS C++ cppmod, not as a standalone Rust injection DLL. Active work tracks as follows:
 
 **Engine tier (server-side) — working today:**
-- ✅ UE4SS C++ cppmod (`TurdMODEngineBridge.dll`) loaded inside `SCUMServer.exe`
+- ✅ UE4SS C++ cppmod (`TurdMODEngineBridge.dll`) loaded inside `GameServer.exe`
 - ✅ ~101 registered RPC handlers over in-process C ABI → named-pipe JSON-RPC (core set live-verified)
 - ✅ Pak-signature bypass (constructor hooks, proven stable)
 - ✅ UEPseudo build blocker resolved (commit `71b6512`, 2026-05-16)

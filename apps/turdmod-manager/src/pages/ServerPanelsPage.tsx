@@ -9,7 +9,7 @@ import { engineRpc } from '../lib/tauri-engine';
 //
 // Architecture:
 //   - Dispatch via runAdminCommand bridge handler (= SCUM's real admin
-//     parser). The bridge is in SCUMServer.exe; no per-player install.
+//     parser). The bridge is in GameServer.exe; no per-player install.
 //   - Recipient: a SteamID from the live online roster (getOnlinePlayers
 //     RPC), free-text fallback, or broadcast via the literal `-1`.
 //   - Type: integer 1..5. The visual mapping for each type is UNVERIFIED

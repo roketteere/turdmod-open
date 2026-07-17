@@ -1,4 +1,4 @@
-// Tauri commands for remote service API (turdmod-service on OVH).
+// Tauri commands for remote service API (turdmod-service on remote server).
 
 use crate::remote::{self, RemoteClient, RemoteConfig};
 use crate::tunnel::{self, TunnelConfig};
@@ -31,7 +31,7 @@ pub async fn remote_status() -> Result<serde_json::Value, String> {
     client.status().await.map_err(|e| e.to_string())
 }
 
-// Server lifecycle — target-aware ("local" = local pipe, else OVH), like the
+// Server lifecycle — target-aware ("local" = local pipe, else remote server), like the
 // monitor_* commands, so the Admin Map's host toggle drives which box we act on.
 #[tauri::command]
 pub async fn remote_server_start(target: String) -> Result<serde_json::Value, String> {
@@ -152,9 +152,9 @@ pub async fn remote_server_logs(lines: Option<usize>) -> Result<serde_json::Valu
     client.logs(lines.unwrap_or(100)).await.map_err(|e| e.to_string())
 }
 
-// Read a text file from OVH over SSH (reuses the tunnel's host/user/key). The
+// Read a text file from remote server over SSH (reuses the tunnel's host/user/key). The
 // service has no file endpoint, so config files (ServerSettings.ini) are read
-// directly. Read-only by design — writing OVH config should go through the
+// directly. Read-only by design — writing remote server config should go through the
 // controlled stop→edit→start deploy, not a live overwrite.
 #[tauri::command(rename_all = "camelCase")]
 pub async fn read_remote_text_file(path: String) -> Result<crate::commands::ReadTextResult, String> {
@@ -212,7 +212,7 @@ pub async fn remote_scumpilot_resume() -> Result<serde_json::Value, String> {
     client.scumpilot_resume().await.map_err(|e| e.to_string())
 }
 
-// ─── Monitoring + control (Live page). `target` = "local" or "remote" (OVH). ───
+// ─── Monitoring + control (Live page). `target` = "local" or "remote" (remote server). ───
 fn client_for(target: &str) -> Result<RemoteClient, String> {
     RemoteClient::for_target(target).map_err(|e| e.to_string())
 }
@@ -300,7 +300,7 @@ pub async fn scumdb_traders(target: String) -> Result<serde_json::Value, String>
     client_for(&target)?.scumdb_traders().await.map_err(|e| e.to_string())
 }
 
-// ─── SSH tunnel to OVH (so "remote" monitoring reaches its localhost:9090) ───
+// ─── SSH tunnel to remote server (so "remote" monitoring reaches its localhost:9090) ───
 #[tauri::command]
 pub async fn tunnel_get_config() -> Result<TunnelConfig, String> { Ok(TunnelConfig::load()) }
 
@@ -312,7 +312,7 @@ pub async fn tunnel_set_config(ssh_host: String, ssh_user: String, ssh_key: Stri
 #[tauri::command]
 pub async fn tunnel_start() -> Result<(), String> { tunnel::start(&TunnelConfig::load()) }
 
-// Ensure the OVH tunnel is up so "remote" controls/monitor reach OVH without a manual
+// Ensure the remote server tunnel is up so "remote" controls/monitor reach remote server without a manual
 // start. Probes the tunnel's local /health and only (re)starts if it's actually down —
 // avoids needlessly killing an already-working tunnel (e.g. one this Manager didn't spawn).
 // Returns true if it was already up, false if a fresh tunnel was started.

@@ -3,7 +3,7 @@
   "id": "events",
   "name": "Server Events",
   "version": "0.1.0-alpha",
-  "author": "TechyRican",
+  "author": "YOUR_OWNER_NAME",
   "description": "Scheduled server events: announcements, warzones with coin multipliers, and loot drops with Discord integration.",
   "mode": "server-side",
   "minBuild": "23128448",

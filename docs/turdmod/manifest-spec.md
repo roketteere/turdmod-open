@@ -32,7 +32,7 @@ the loader checks sidecars at load time.
   "mode":    "pak-content",            // pak-content | server-side | offline-only | external-tool
 
   // Optional metadata ----------------------------------------------------
-  "author":      "TechyRican",
+  "author":      "YOUR_OWNER_NAME",
   "description": "Higher Memory Module drop rates in TEC1 abandoned bunkers.",
   "homepage":    "https://github.com/me/my-loot-tweak",
   "tags":        ["loot", "tec1"],

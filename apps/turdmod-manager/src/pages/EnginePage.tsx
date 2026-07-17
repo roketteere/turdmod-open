@@ -376,7 +376,7 @@ function CompanionSection() {
 }
 
 // ---------------------------------------------------------------------------
-// Remote section — OVH service API control
+// Remote section — remote server service API control
 // ---------------------------------------------------------------------------
 
 function RemoteSection() {
@@ -444,14 +444,14 @@ function RemoteSection() {
       <section className="glass rounded-xl p-5">
         <div className="flex items-center justify-between">
           <h2 className="font-display text-sm uppercase tracking-widest text-turd-mustard">
-            Remote — OVH Service
+            Remote — Remote Service
           </h2>
           <button type="button" onClick={() => setEditing(true)} className={btnSecondary}>
             Configure
           </button>
         </div>
         <p className="mt-3 text-xs text-turd-cream-dim">
-          Connect to turdmod-service running on your OVH VPS for remote server management.
+          Connect to turdmod-service running on your your server for remote server management.
         </p>
       </section>
     );
@@ -461,7 +461,7 @@ function RemoteSection() {
     <section className="glass rounded-xl p-5">
       <div className="flex items-center justify-between">
         <h2 className="font-display text-sm uppercase tracking-widest text-turd-mustard">
-          Remote — OVH Service
+          Remote — Remote Service
         </h2>
         {healthQuery.data && (
           <div className="inline-flex items-center gap-2 rounded-full border border-turd-green/30 bg-turd-bg-soft px-4 py-2">
@@ -593,7 +593,7 @@ export function EnginePage() {
         <p className="mt-2 max-w-2xl text-sm text-turd-cream-dim">
           The Engine section installs and runs the in-process DLLs (UE4SS + bridge + loader) on
           your SCUMServer. The Companion section runs the log-tail / event dispatcher process that
-          delivers gameplay events to mods. Remote mode connects to OVH for production control.
+          delivers gameplay events to mods. Remote mode connects to remote server for production control.
         </p>
       </header>
 

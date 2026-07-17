@@ -182,8 +182,8 @@ export function App() {
   useEffect(() => {
     startConsoleStore();
     initWireStore();
-    // Auto-ensure the OVH SSH tunnel when targeting the remote host, so server
-    // controls / monitor / admin-users reach OVH without a manual tunnel start.
+    // Auto-ensure the remote server SSH tunnel when targeting the remote host, so server
+    // controls / monitor / admin-users reach remote server without a manual tunnel start.
     // Idempotent: only (re)starts the tunnel if its local /health is actually down.
     if (getEngineHost() === 'remote') {
       invoke('tunnel_ensure').catch(() => {});

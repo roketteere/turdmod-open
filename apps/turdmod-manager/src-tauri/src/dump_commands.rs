@@ -51,7 +51,7 @@ pub struct DumpStatus {
     /// Per-phase counts + timestamps.
     pub phase_a: Option<PhaseAResults>,
     pub phase_a_dumped_at: Option<String>,
-    /// Server-side Dumper-7 SDK (target = SCUMServer.exe).
+    /// Server-side Dumper-7 SDK (target = GameServer.exe).
     pub phase_b: Option<PhaseBMeta>,
     /// Client-side Dumper-7 SDK (target = SCUM.exe). Added 2026-05-21
     /// for full dual-target coverage.
@@ -319,7 +319,7 @@ pub async fn dump_open_folder() -> Result<String, String> {
 // Re-extract AES key (calls into scumdump's aes_finder tool).
 // ---------------------------------------------------------------------------
 
-/// Runs scumdump's `tools/aes_finder` against SCUMServer.exe and rewrites
+/// Runs scumdump's `tools/aes_finder` against GameServer.exe and rewrites
 /// `scumdump.config.json` with the discovered key. The tool itself is the
 /// canonical implementation — Manager just shells out and waits.
 #[tauri::command(rename_all = "camelCase")]
@@ -349,7 +349,7 @@ fn dumper7_dll_path(target: &str) -> Result<PathBuf, String> {
     let root = dump::scumdump_root()
         .ok_or_else(|| "scumdump repo not found".to_string())?;
     // Per-target Dumper-7 fork. The server build hardcodes GObjects RVA
-    // 0x712ED20 for SCUMServer.exe; the client build reverts to
+    // 0x712ED20 for GameServer.exe; the client build reverts to
     // auto-detect (or its own hardcoded RVA later) for SCUM.exe.
     // Mirrors scumdump's phase-b-sdk.ts dispatch.
     let repo = match target {
@@ -393,18 +393,18 @@ fn message_for_exit_code(code: i32) -> &'static str {
 }
 
 /// Inject Dumper-7.dll into the currently-running SCUM server or
-/// client process. `target` is `"server"` (SCUMServer.exe) or
+/// client process. `target` is `"server"` (GameServer.exe) or
 /// `"client"` (SCUM.exe / SCUM-Win64-Shipping.exe — tries both).
 ///
 /// **Always elevated** — invokes `turdmod-injector.exe` via
 /// ShellExecuteExW with verb="runas" so it works against both
-/// non-elevated client and elevated SCUMServer.exe uniformly. UAC
+/// non-elevated client and elevated GameServer.exe uniformly. UAC
 /// will prompt; the elevated child runs the actual CreateRemoteThread
 /// flow and exits with a status code mapped back to a user message.
 #[tauri::command(rename_all = "camelCase")]
 pub async fn dump_inject_dumper7(target: String) -> Result<InjectResult, String> {
     let (primary, fallback): (&str, Option<&str>) = match target.as_str() {
-        "server" => ("SCUMServer.exe", None),
+        "server" => ("GameServer.exe", None),
         "client" => ("SCUM-Win64-Shipping.exe", Some("SCUM.exe")),
         other => return Err(format!("unknown target '{}' (expected server|client)", other)),
     };

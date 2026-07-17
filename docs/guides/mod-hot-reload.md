@@ -12,7 +12,7 @@
 
 ## How It Works
 
-The **companion process** (`turdmod-companion`) hosts all TypeScript mods. It runs separately from SCUMServer.exe and communicates via log-tailing + engine pipe. Mods can be loaded/unloaded at any time without touching the game server.
+The **companion process** (`turdmod-companion`) hosts all TypeScript mods. It runs separately from GameServer.exe and communicates via log-tailing + engine pipe. Mods can be loaded/unloaded at any time without touching the game server.
 
 ## API Endpoints (companion IPC server)
 

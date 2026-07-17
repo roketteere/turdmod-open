@@ -1,5 +1,5 @@
 # Pak Layer 3 vtable[0xc0] Disassembly Recipe
-## Concrete Steps for UE 4.27.2 SCUMServer.exe
+## Concrete Steps for UE 4.27.2 GameServer.exe
 
 ## Overview
 
@@ -7,7 +7,7 @@ You are investigating why the Pak Layer 3 (L3) function at VA `0x143b61be0` retu
 **Goal**: Identify which function vtable slot 24 (0xc0) resolves to, and why production paks cause it to return null.
 
 This recipe assumes:
-- You have a copy of `SCUMServer.exe` (x64 PE).
+- You have a copy of `GameServer.exe` (x64 PE).
 - You can use **PatternSleuth** for scanning and **Capstone** (Python) for disassembly.
 - You have access to the probe-pak binary for testing (but not required for static analysis).
 
@@ -20,11 +20,11 @@ L3 is at VA `0x143b61be0`. Use PatternSleuth to locate all direct `call` instruc
 ### PatternSleuth Invocation
 
 ```bash
-patternsleuth scan --path SCUMServer.exe --xref 0x143b61be0 --summary -d
+patternsleuth scan --path GameServer.exe --xref 0x143b61be0 --summary -d
 ```
 
 **Parameters explained**:
-- `--path SCUMServer.exe` – target binary.
+- `--path GameServer.exe` – target binary.
 - `--xref 0x143b61be0` – find all instructions that refer to this address (default: calls, jumps).
 - `--summary` – print a compact list of xrefs.
 - `-d` – include disassembly context (shows a few lines around each xref).
@@ -52,14 +52,14 @@ We need to see how the caller prepares the second argument (`rdx`), which become
 ### Python Capstone Script
 
 Create a script `disasm_caller.py` that reads the binary, locates the caller, and disassembles its first ~30 instructions (enough to see argument setup). Below is a concrete template. You must adjust the base address if PatternSleuth reports offsets relative to image base (usually VA).  
-Assume the image base for `SCUMServer.exe` is `0x140000000` (common for x64 PE). If your VAs are as given (0x143...), you don’t need adjustment; they are already absolute VAs.
+Assume the image base for `GameServer.exe` is `0x140000000` (common for x64 PE). If your VAs are as given (0x143...), you don’t need adjustment; they are already absolute VAs.
 
 ```python
 import capstone
 import struct
 
 # Configuration
-BINARY_PATH = "SCUMServer.exe"
+BINARY_PATH = "GameServer.exe"
 IMAGE_BASE = 0x140000000   # Change to match your binary's base (check PE header)
 CALLER_VA = 0x143b61b00   # Replace with actual caller address from step 1
 CALLER_DISASM_SIZE = 100   # bytes to disassemble from start of function
@@ -103,7 +103,7 @@ def disasm_caller():
     # We'll show Option 3 concept.
 
     # Use PatternSleuth to dump bytes into a file. Example manual step:
-    # $ patternsleuth dump --path SCUMServer.exe --address 0x143b61b00 --size 0x100 -> output.bin
+    # $ patternsleuth dump --path GameServer.exe --address 0x143b61b00 --size 0x100 -> output.bin
     # Then read output.bin.
     
     with open("caller_chunk.bin", "rb") as f:
@@ -127,7 +127,7 @@ Since the user requested a **Capstone Python recipe**, we’ll give a script tha
 import pefile
 import capstone
 
-BINARY_PATH = "SCUMServer.exe"
+BINARY_PATH = "GameServer.exe"
 CALLER_VA = 0x143b61b00   # replace
 DISASM_LENGTH = 0x200
 

@@ -211,12 +211,12 @@ pub fn run() {
             app.manage(engine::EngineState::new());
             app.manage(settings::SettingsState);
 
-            // Auto-start the OVH monitoring tunnel if remote is configured + enabled, so the Live
-            // Monitor's "OVH" view works the moment the app opens — persistence without a system-
+            // Auto-start the remote server monitoring tunnel if remote is configured + enabled, so the Live
+            // Monitor's "remote server" view works the moment the app opens — persistence without a system-
             // level SSH task (the manager only needs the tunnel while it's running). Best-effort.
             if crate::remote::RemoteConfig::load().is_some() {
                 match crate::tunnel::start(&crate::tunnel::TunnelConfig::load()) {
-                    Ok(_) => tracing::info!("OVH monitoring tunnel auto-started"),
+                    Ok(_) => tracing::info!("remote server monitoring tunnel auto-started"),
                     Err(e) => tracing::warn!("tunnel auto-start failed: {}", e),
                 }
             }

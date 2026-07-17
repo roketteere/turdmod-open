@@ -1,6 +1,6 @@
 // Server lifecycle controls for the Admin Map, in a movable/resizable panel.
 // Wires the (already-existing) remote_server_* service plumbing to actual buttons.
-// Acts on the host passed in `target` ("remote"=OVH, "local"). @dep: tauri-remote.ts.
+// Acts on the host passed in `target` ("remote", "local"). @dep: tauri-remote.ts.
 import { useState, useEffect, useCallback, type CSSProperties } from 'react';
 import {
   remoteServerStart,
@@ -12,7 +12,7 @@ import {
 } from '../lib/tauri-remote';
 import DraggablePanel from './DraggablePanel';
 
-const hostLabel = (t: string) => (t === 'local' ? 'Local' : 'OVH');
+const hostLabel = (t: string) => (t === 'local' ? 'Local' : 'Remote');
 
 function fmtUptime(s?: number): string {
   if (!s || s < 0) return '—';
@@ -118,7 +118,7 @@ export default function ServerControls({ target }: { target: string }) {
             ⚠ Can’t reach {host}: {statusErr}
             {target !== 'local' && (
               <div style={{ color: '#bbb', marginTop: 3 }}>
-                The OVH SSH tunnel may be down. It auto-starts on app launch — reopen the
+                The remote server SSH tunnel may be down. It auto-starts on app launch — reopen the
                 Manager, or start it on the Engine page.
               </div>
             )}

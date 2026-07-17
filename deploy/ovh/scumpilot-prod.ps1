@@ -14,7 +14,7 @@ $env:GOD_ADMIN_ENABLED='true'; $env:STORYTELLER_ENABLED='false'; $env:LLM_PROVID
 $env:ENGINE_BRIDGE_ENABLED='true'
 $env:ENGINE_BRIDGE_DISCOVERY_PATH='C:\Windows\System32\config\systemprofile\AppData\Local\TurdMOD\engine\pipe.txt'
 $env:ENGINE_BRIDGE_CONNECT_RETRIES='30'; $env:REFRESH_ADMIN_CATALOG='true'
-$env:OWNER_STEAM_ID='YOUR_STEAM_ID_1'; $env:OWNER_DISPLAY_NAME='TechyRican'
+$env:OWNER_STEAM_ID='YOUR_STEAM_ID_1'; $env:OWNER_DISPLAY_NAME='YOUR_OWNER_NAME'
 $env:RUN_DIR=$rd; $env:MEMORY_DIR=(Join-Path $sb 'memory'); $env:RUNNER_TICK_HZ='0.1'
 # HTTP control (so the web manager / service proxy can drive the brain) + consent->Discord.
 $env:SCUMPILOT_HTTP_PORT=(M 'SCUMPILOT_HTTP_PORT'); $env:SCUMPILOT_HTTP_TOKEN=(M 'SCUMPILOT_HTTP_TOKEN')

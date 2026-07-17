@@ -2,7 +2,7 @@
 
 **Status:** Design / research document. Not yet implemented in `apps/turdmod-server-loader/src/server_hooks.rs` (currently a stub).
 
-**Why deferred:** Part C's design uses typed `EngineApi` methods + a typed `EngineEvent` enum, while Part B's `admin_api.rs` ships a JSON-RPC dispatch surface (`Result<Json, EngineError>` per method, string-named events via `EventBroadcaster::emit`). Reconciling the two requires either (a) a Json→typed adapter layer in `server_hooks` or (b) refactoring `admin_api.rs` to expose typed methods that get serialised at the wire boundary. **All AOB patterns and UE4 field offsets in the Part C draft are `TODO(stage2)` placeholders** — empirical validation against a live `SCUMServer.exe` (via `tools/engine-validation/`) must happen before the hook layer can compile against real targets.
+**Why deferred:** Part C's design uses typed `EngineApi` methods + a typed `EngineEvent` enum, while Part B's `admin_api.rs` ships a JSON-RPC dispatch surface (`Result<Json, EngineError>` per method, string-named events via `EventBroadcaster::emit`). Reconciling the two requires either (a) a Json→typed adapter layer in `server_hooks` or (b) refactoring `admin_api.rs` to expose typed methods that get serialised at the wire boundary. **All AOB patterns and UE4 field offsets in the Part C draft are `TODO(stage2)` placeholders** — empirical validation against a live `GameServer.exe` (via `tools/engine-validation/`) must happen before the hook layer can compile against real targets.
 
 This document preserves the Part C design so Sprint 2 can pick it up directly.
 
@@ -109,8 +109,8 @@ if let Some(bc) = BROADCASTER.get() {
 
 ## Stage 2 deliverables required before this can ship
 
-1. **Real AOB patterns** for every `SIGNATURES` entry (run `tools/engine-validation/sigscan_transfer.py` against `SCUMServer.exe` after deriving real bytes via IDA / Binary Ninja / patternsleuth).
-2. **Verified UE4 field offsets** (run `Dumper-7` against a running SCUMServer.exe, cross-reference against UE4 4.27 source).
+1. **Real AOB patterns** for every `SIGNATURES` entry (run `tools/engine-validation/sigscan_transfer.py` against `GameServer.exe` after deriving real bytes via IDA / Binary Ninja / patternsleuth).
+2. **Verified UE4 field offsets** (run `Dumper-7` against a running GameServer.exe, cross-reference against UE4 4.27 source).
 3. **Real FString layout offset** (verify `+8` for `len` field on Win64 — likely correct, but SCUM's fork may add padding).
 4. **Chat-receive function identity** — capture a live callstack when a player sends chat to identify the actual receiving function (`ServerSay` vs `BroadcastChatMessage` vs SCUM override).
 5. **Headshot damage type UClass name** — needed for `is_headshot_damage_type()` in the death hook.

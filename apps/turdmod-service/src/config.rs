@@ -68,7 +68,7 @@ impl Config {
                 instance_id: instance.to_string(),
                 port: 9090,
                 token: "changeme-alpha-token".into(),
-                scum_server_exe: r"C:\SCUMServer\SCUM\Binaries\Win64\SCUMServer.exe".into(),
+                scum_server_exe: r"C:\SCUMServer\SCUM\Binaries\Win64\GameServer.exe".into(),
                 scum_server_args: vec![
                     "-log".into(),
                     "-port=7042".into(),

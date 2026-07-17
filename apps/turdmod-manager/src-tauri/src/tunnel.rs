@@ -1,5 +1,5 @@
-// SSH tunnel to OVH — the manager spawns `ssh -N -L <local>:localhost:<remote> admin@<host>` so the
-// Live Monitor's "remote" target reaches OVH's localhost-bound turdmod-service (9090) WITHOUT
+// SSH tunnel to remote server — the manager spawns `ssh -N -L <local>:localhost:<remote> admin@<host>` so the
+// Live Monitor's "remote" target reaches remote server's localhost-bound turdmod-service (9090) WITHOUT
 // exposing it to the internet (Joel's choice: tunnel, not open firewall). On start it repoints
 // remote.json at 127.0.0.1:<local> (preserving the token) so /monitor/* "just works" over the tunnel.
 
@@ -56,7 +56,7 @@ fn child() -> &'static Mutex<Option<Child>> { CHILD.get_or_init(|| Mutex::new(No
 
 pub fn start(cfg: &TunnelConfig) -> Result<(), String> {
     stop();
-    // Forward to 127.0.0.1 (not "localhost") — avoids OVH resolving to ::1 where the service
+    // Forward to 127.0.0.1 (not "localhost") — avoids remote server resolving to ::1 where the service
     // (bound 0.0.0.0) isn't reachable. Verified working 2026-06-10.
     let fwd = format!("{}:127.0.0.1:{}", cfg.local_port, cfg.remote_port);
     let target = format!("{}@{}", cfg.ssh_user, cfg.ssh_host);

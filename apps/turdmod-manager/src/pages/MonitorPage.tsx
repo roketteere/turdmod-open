@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { invoke } from '@tauri-apps/api/core';
 
-// Live Monitor — consumes the turdmod-service /monitor + /control API for local or OVH.
+// Live Monitor — consumes the turdmod-service /monitor + /control API for local or remote server.
 // Per-mod 🟢🟡🔴 health + success/fail, the live activity feed (who/what/when/result), system
 // CPU/load, and per-mod enable/maintenance/disable control. The control plane Joel asked for.
 
@@ -100,7 +100,7 @@ export function MonitorPage() {
         <select value={target} onChange={(e) => setTarget(e.target.value as 'local' | 'remote')}
           style={{ background: '#222', color: '#eee', borderRadius: 6, padding: '4px 8px' }}>
           <option value="local">Local</option>
-          <option value="remote">OVH (remote)</option>
+          <option value="remote">Remote</option>
         </select>
         <button onClick={() => void refreshAll()} style={btn(false)}>Refresh</button>
         <button onClick={() => setAuto((a) => !a)} style={btn(auto)} title="Auto-refreshes the cheap stats only (mods/activity/system). Player count comes from the bridge and stays on-demand — Refresh to update it.">
@@ -108,7 +108,7 @@ export function MonitorPage() {
         </button>
         {target === 'remote' && (
           <button onClick={toggleTunnel} style={btn(tunnelOn)}>
-            {tunnelOn ? '⛓ OVH Tunnel ON' : 'Start OVH Tunnel'}
+            {tunnelOn ? '⛓ remote server Tunnel ON' : 'Start remote server Tunnel'}
           </button>
         )}
         {auto && <span style={{ color: '#999', fontSize: 12 }}>stats refresh in {countdown}s</span>}

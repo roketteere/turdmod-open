@@ -42,7 +42,7 @@ if (Test-Path $ideasPath) {
 
 # ─── 3. SCUMServer state ─────────────────────────────────────────────────────
 $scumState = "(could not check)"
-$tasklist = & tasklist /FI "IMAGENAME eq SCUMServer.exe" /NH 2>$null
+$tasklist = & tasklist /FI "IMAGENAME eq GameServer.exe" /NH 2>$null
 if ($tasklist -match "SCUMServer\.exe") {
     $scumState = "RUNNING (alive)"
 } else {
@@ -82,7 +82,7 @@ $commits
 $ideasTop
 ``````
 
-**SCUMServer.exe state:** $scumState
+**GameServer.exe state:** $scumState
 
 **Custom skills available (~/.claude/skills/):**
 $skillList

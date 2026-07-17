@@ -22,7 +22,7 @@ const KILL_SETTLE_SECS: u64 = 3;
 // @inv: serialize ALL SCUM lifecycle ops (start + stop). Two start_server calls racing — the
 // restart handler's start AND the monitor_loop's auto-restart (it snapshots the old pid as
 // "crashed" while a restart is killing it) — both passed kill_existing() before EITHER launched,
-// so BOTH spawned. Result: two ~10GB SCUMServer.exe, only one binds the port, the orphan eats
+// so BOTH spawned. Result: two ~10GB GameServer.exe, only one binds the port, the orphan eats
 // RAM until OOM (OVH near-crash 2026-06-17). Holding this lock for the WHOLE of start_server
 // (through setting running=true) + the alive-guard makes a duplicate launch impossible: the 2nd
 // caller acquires the lock only after the 1st finished, finds the process alive, and no-ops.
@@ -127,7 +127,7 @@ pub async fn start_server(cfg: &Config, state: SharedState) -> Result<u32> {
 }
 
 pub async fn stop_server(state: SharedState) -> Result<()> {
-    // Kill EVERY SCUMServer.exe (the tracked one + any orphan from a prior restart that didn't die)
+    // Kill EVERY GameServer.exe (the tracked one + any orphan from a prior restart that didn't die)
     // and VERIFY they're actually gone. @ctx 2026-06-11: an orphaned SCUM holding ~17.6GB of commit
     // alongside a freshly-launched one is what blew OVH past its commit limit and wedged the box.
     // Killing only the tracked PID would leave an orphan; we kill by image-name + confirm-dead.
@@ -150,10 +150,10 @@ pub async fn stop_server(state: SharedState) -> Result<()> {
     Ok(())
 }
 
-// True if any SCUMServer.exe is still alive (image-name check via tasklist).
+// True if any GameServer.exe is still alive (image-name check via tasklist).
 async fn scum_alive() -> bool {
     match tokio::process::Command::new("tasklist")
-        .args(["/FI", "IMAGENAME eq SCUMServer.exe", "/NH"])
+        .args(["/FI", "IMAGENAME eq GameServer.exe", "/NH"])
         .output()
         .await
     {
@@ -227,25 +227,25 @@ pub fn tail_log(cfg: &Config, lines: usize) -> Vec<String> {
 
 // ─── internals ───────────────────────────────────────────────────────────────
 
-// Kill all SCUMServer.exe and CONFIRM they're dead before returning, retrying a stubborn/orphaned
+// Kill all GameServer.exe and CONFIRM they're dead before returning, retrying a stubborn/orphaned
 // process. @inv: a new SCUM must never launch while an old one still holds its commit (the OVH
 // wedge). @brk: if a process survives all attempts (kernel-stuck), we log loudly — that orphan
 // would overcommit until a box reboot.
 async fn kill_existing() -> Result<()> {
     for attempt in 1..=8 {
         tokio::process::Command::new("taskkill")
-            .args(["/F", "/IM", "SCUMServer.exe"])
+            .args(["/F", "/IM", "GameServer.exe"])
             .output()
             .await
             .ok();
         sleep(Duration::from_millis(700)).await;
         if !scum_alive().await {
-            if attempt > 1 { tracing::info!("SCUMServer.exe confirmed dead after {} attempts", attempt); }
+            if attempt > 1 { tracing::info!("GameServer.exe confirmed dead after {} attempts", attempt); }
             return Ok(());
         }
-        tracing::warn!("SCUMServer.exe still alive after kill attempt {} — retrying", attempt);
+        tracing::warn!("GameServer.exe still alive after kill attempt {} — retrying", attempt);
     }
-    tracing::error!("SCUMServer.exe survived 8 kill attempts (possible kernel-stuck orphan) — \
+    tracing::error!("GameServer.exe survived 8 kill attempts (possible kernel-stuck orphan) — \
                      a new launch could overcommit; needs a box reboot");
     Ok(())
 }

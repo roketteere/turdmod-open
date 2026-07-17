@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 256" width="1024" height="256">
+  <rect width="1024" height="256" fill="#111418"/>
+  <rect x="0" y="0" width="1024" height="10" fill="#ED0000"/>
+  <rect x="0" y="246" width="1024" height="10" fill="#6CACE4"/>
+  <text x="512" y="170" text-anchor="middle" font-family="Arial Black, Arial, sans-serif"
+    font-size="150" font-weight="900" fill="#FFFFFF" stroke="#ED0000" stroke-width="4"
+    letter-spacing="2">TechyRican</text>
+</svg>
