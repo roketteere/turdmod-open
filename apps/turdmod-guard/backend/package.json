@@ -1,0 +1,26 @@
+{
+  "name": "@turdmod/turdmod-guard-backend",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "TurdMOD Guard backend — Hono REST API for cross-server flag history + shared ban-list.",
+  "scripts": {
+    "dev": "dotenv -e ../../../.env -- tsx watch src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "dotenv -e ../../../.env -- node dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test src/*.test.ts"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.2",
+    "@hono/zod-validator": "^0.4.1",
+    "hono": "^4.6.5",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.4",
+    "dotenv-cli": "^7.4.2",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.2"
+  }
+}

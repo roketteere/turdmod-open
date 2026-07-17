@@ -1,0 +1,213 @@
+{
+  "animals": [
+    {
+      "animal": "BP_Bear2_C",
+      "baits": [
+        "Honeycomb_ES_C",
+        "Catfish_Fillet_ES_C",
+        "Dish_Grilled_Fish_ES_C",
+        "Dish_Skewer_Fish_ES_C",
+        "Dish_SpitRoast_Fish_ES_C",
+        "Fish_Cuttlefish_ES_C",
+        "Fish_Monkfish_ES_C",
+        "Fish_Shark_ES_C",
+        "Fish_Squid_ES_C",
+        "Monkfish_Fillet_ES_C",
+        "Scorpionfish_Fillet_ES_C",
+        "Sardine_Fillet_ES_C",
+        "Tuna_Fillet_ES_C",
+        "Dish_Grilled_HotDog_ES_C",
+        "Big_Animal_Fat_ES_C",
+        "Small_Animal_Fat_ES_C",
+        "Zombie_Fat_ES_C",
+        "Dish_Cake_ApplePie_ES_C"
+      ],
+      "halfAngleDeg": 180,
+      "maxCm": 5000,
+      "minCm": 4000
+    },
+    {
+      "animal": "BP_Wolf3_C",
+      "baits": [
+        "RabbitLeg_ES_C",
+        "RabbitMeat_ES_C",
+        "ChickenMeat_ES_C",
+        "Bear_Steak_ES_C",
+        "Deer_Steak_ES_C",
+        "Doe_01_Steak_ES_C",
+        "Donkey_Steak_ES_C",
+        "Goat_Steak_ES_C",
+        "Horse_Steak_ES_C",
+        "Human_Steak_ES_C",
+        "Pork_Steak_ES_C",
+        "Wolf_Steak_ES_C"
+      ],
+      "halfAngleDeg": 180,
+      "maxCm": 5000,
+      "minCm": 4000
+    },
+    {
+      "animal": "BP_Deer2_C",
+      "baits": [
+        "Oak_Nuts_ES_C",
+        "Hazelnuts_ES_C",
+        "Walnut_ES_C",
+        "Blackberry_ES_C",
+        "Barberry_ES_C",
+        "Currant_ES_C",
+        "Wild_Cherry_ES_C",
+        "Pine_Cone_ES_C",
+        "Grapes_Raw_ES_C",
+        "Wild_Strawberry_ES_C",
+        "Corn_ES_C",
+        "Mulberry_ES_C",
+        "Blueberries_ES_C"
+      ],
+      "halfAngleDeg": 180,
+      "maxCm": 4500,
+      "minCm": 3500
+    },
+    {
+      "animal": "BP_Horse2_C",
+      "baits": [
+        "SugarBeet_ES_C",
+        "Pear_ES_C",
+        "Beet_ES_C",
+        "Peach_ES_C",
+        "Cabbage_ES_C",
+        "Pumpkin_ES_C",
+        "Cauliflower_ES_C",
+        "Celery_ES_C",
+        "Bell_Pepper_ES_C",
+        "Cucumber_ES_C",
+        "Zucchini_ES_C",
+        "Broccoli_ES_C"
+      ],
+      "halfAngleDeg": 180,
+      "maxCm": 4500,
+      "minCm": 4000
+    },
+    {
+      "animal": "BP_Goat2_C",
+      "baits": [
+        "Aloe_Vera_ES_C",
+        "Stinging_Nettle_ES_C",
+        "GuavaHalves_ES_C",
+        "Kiwi_ES_C",
+        "GrapeFruit_ES_C",
+        "Lemon_ES_C",
+        "Lime_ES_C",
+        "Pineapple_ES_C",
+        "Banana_ES_C",
+        "Orange_ES_C",
+        "CantaloupeMelon_ES_C",
+        "CantaloupeMelon_Slice_ES_C",
+        "Watermelon_ES_C",
+        "Watermelon_slice_ES_C",
+        "Chili_Pepper_ES_C"
+      ],
+      "halfAngleDeg": 180,
+      "maxCm": 3500,
+      "minCm": 3000
+    },
+    {
+      "animal": "BP_Boar_C",
+      "baits": [
+        "Potato_ES_C",
+        "Egg_ES_C",
+        "Cheese_ES_C",
+        "Richards_Cheese_ES_C",
+        "Tomato_ES_C",
+        "Onion_ES_C",
+        "Lycoperdon_Gigantea_ES_C",
+        "Lepiota_Procera_ES_C",
+        "Coprinus_Comatus_ES_C",
+        "Cantharellus_Cibarius_ES_C",
+        "Agaricus_Augustus_ES_C",
+        "Agaricus_Campestris_ES_C",
+        "Boletus_Edulis_ES_C"
+      ],
+      "halfAngleDeg": 180,
+      "maxCm": 4000,
+      "minCm": 3000
+    },
+    {
+      "animal": "BP_Rabbit_C",
+      "baits": [
+        "Carrot_ES_C",
+        "Dandelion_ES_C",
+        "Parsley_ES_C",
+        "Dog_Rose_ES_C",
+        "Apple_2_ES_C",
+        "Apple_ES_C",
+        "Crab_Apple_ES_C",
+        "Spinach_ES_C",
+        "Salsify_roots_ES_C",
+        "Ramsons_ES_C"
+      ],
+      "halfAngleDeg": 180,
+      "maxCm": 900,
+      "minCm": 400
+    },
+    {
+      "animal": "BP_Donkey2_C",
+      "baits": [
+        "Date_ES_C",
+        "Tangerine_ES_C",
+        "Coconut_ES_C",
+        "BlackOlives_ES_C",
+        "Olives_ES_C",
+        "Bag_of_Almonds_ES_C",
+        "Fig_ES_C",
+        "Opuntia_Fig_ES_C",
+        "Raisins_ES_C",
+        "Mango_ES_C"
+      ],
+      "halfAngleDeg": 180,
+      "maxCm": 4500,
+      "minCm": 4000
+    },
+    {
+      "animal": "BP_Chicken_C",
+      "baits": [
+        "Cricket_ES_C",
+        "Apple_Seeds_ES_C",
+        "Apricot_Seeds_ES_C",
+        "Broccoli_Seeds_ES_C",
+        "Cabbage_Seeds_ES_C",
+        "Cannabis_Seeds_ES_C",
+        "CantaloupeMelon_Seeds_ES_C",
+        "Carrot_Seeds_ES_C",
+        "Cherry_Seeds_ES_C",
+        "ChilliPeppers_Seeds_ES_C",
+        "Corn_Seeds_ES_C",
+        "Cucumber_Seeds_ES_C",
+        "Fig_Seeds_ES_C",
+        "Garlic_Seeds_ES_C",
+        "Lemon_Seeds_ES_C",
+        "Lettuce_Seeds_ES_C",
+        "Orange_Seeds_ES_C",
+        "Peach_Seeds_ES_C",
+        "Pear_Seeds_ES_C",
+        "Peppers_Seeds_ES_C",
+        "Plum_Seeds_ES_C",
+        "Potatoes_Seeds_ES_C",
+        "Pumpkin_Seeds_ES_C",
+        "RedOnion_Seeds_ES_C",
+        "Spinach_Seeds_ES_C",
+        "Tangerine_Seeds_ES_C",
+        "Tobacco_Seeds_ES_C",
+        "Tomato_Seeds_ES_C",
+        "Watermelon_Seeds_ES_C",
+        "Zucchini_Seeds_ES_C",
+        "Earthworm_ES_C",
+        "Grasshopper_ES_C"
+      ],
+      "halfAngleDeg": 180,
+      "maxCm": 2000,
+      "minCm": 1250
+    }
+  ],
+  "count": 9,
+  "ok": true
+}

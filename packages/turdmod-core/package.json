@@ -1,0 +1,25 @@
+{
+  "name": "@turdmod/turdmod-core",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "ServerAdapter abstraction over the three deployment routes: local filesystem, remote FTP (Lite tier), and named-pipe RPC into the engine bridge (Engine tier). Shared by Admin / Pro / Lite frontends.",
+  "exports": {
+    ".": "./src/index.ts",
+    "./adapter": "./src/adapter.ts",
+    "./adapters/local": "./src/adapters/local.ts",
+    "./adapters/remote-ftp": "./src/adapters/remote-ftp.ts",
+    "./adapters/engine-rpc": "./src/adapters/engine-rpc.ts",
+    "./tier": "./src/tier.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@turdmod/turdmod-api": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.4",
+    "typescript": "^5.6.2"
+  }
+}

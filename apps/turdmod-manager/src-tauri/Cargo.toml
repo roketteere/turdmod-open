@@ -1,0 +1,64 @@
+[package]
+name = "turdmod-manager"
+version = "0.0.1"
+description = "TurdMOD Manager — desktop command center for SCUM modding."
+edition = "2021"
+rust-version = "1.77"
+
+[lib]
+name = "turdmod_manager_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2.0", features = [] }
+
+[dependencies]
+tauri = { version = "2.1", features = [] }
+tauri-plugin-dialog = "2.0"
+tauri-plugin-fs = "2.0"
+tauri-plugin-http = "2.0"
+tauri-plugin-os = "2.0"
+tauri-plugin-shell = "2.0"
+tauri-plugin-store = "2.0"
+
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tokio = { version = "1.42", features = ["full"] }
+parking_lot = "0.12"
+reqwest = { version = "0.12", features = ["json", "stream", "rustls-tls"], default-features = false }
+sha2 = "0.10"
+zip = { version = "2.2", default-features = false, features = ["deflate"] }
+thiserror = "2.0"
+anyhow = "1.0"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+directories = "5.0"
+uuid = { version = "1", features = ["v4"] }
+futures-util = { version = "0.3", default-features = false, features = ["std", "io"] }
+keyring = { version = "3", features = ["apple-native", "windows-native", "sync-secret-service"] }
+
+# Server connector — SFTP/FTP/RCON for remote dedicated servers.
+russh = { version = "0.46", default-features = false, features = ["flate2"] }
+russh-sftp = "2.0"
+suppaftp = { version = "6", default-features = false, features = ["async-rustls"] }
+async-trait = "0.1"
+tokio-util = { version = "0.7", features = ["compat"] }
+
+[target.'cfg(windows)'.dependencies]
+winreg = "0.52"
+windows-sys = { version = "0.59", features = [
+    "Win32_Foundation",
+    "Win32_Security",
+    "Win32_System_Diagnostics_Debug",
+    "Win32_System_Diagnostics_ToolHelp",
+    "Win32_System_LibraryLoader",
+    "Win32_System_Memory",
+    "Win32_System_Registry",
+    "Win32_System_Threading",
+    "Win32_UI_Shell",
+    "Win32_UI_WindowsAndMessaging",
+] }
+
+[features]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]

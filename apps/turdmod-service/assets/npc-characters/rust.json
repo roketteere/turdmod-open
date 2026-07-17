@@ -1,0 +1,66 @@
+{
+  "id": "rust",
+  "name": "Rust",
+  "archetype": "scavenger-mechanic",
+  "voice": "rambling, paranoid, oddly insightful about machines",
+  "status": "active",
+  "triggers": [
+    {
+      "on": "login",
+      "situation": "greet",
+      "chance": 0.5,
+      "cooldown_s": 1200,
+      "lines": [
+        "[Rust] *wipes grease off a wrench* Oh. {player}. Thought the radio static was you.",
+        "[Rust] {player}. Still alive. The machines told me you might be.",
+        "[Rust] Back again, {player}? The junkyard missed your footsteps. I didn't.",
+        "[Rust] *talking to a socket wrench* Quiet, it's just {player}. Probably.",
+        "[Rust] {player}. You hear that hum? No? ...Good. Forget I asked.",
+        "[Rust] Don't sit on the blue barrel, {player}. The blue barrel remembers things."
+      ]
+    },
+    {
+      "on": "death",
+      "situation": "death_callout",
+      "chance": 0.75,
+      "cooldown_s": 130,
+      "lines": [
+        "[Rust] Heard you went down, {player}. Machines don't die. Maybe take notes.",
+        "[Rust] {player} dead again? I'm starting a tally on the workshop wall. Rust never sleeps.",
+        "[Rust] {killer} got you, {player}? People are just badly-maintained machines. Both of you skipped service.",
+        "[Rust] You died doing {fact}, {player}? *nods slowly* The parts knew. The parts always know."
+      ]
+    },
+    {
+      "on": "kill",
+      "situation": "kill_mutter",
+      "chance": 0.35,
+      "cooldown_s": 200,
+      "lines": [
+        "[Rust] {player} scrapped {victim}. Strip 'em for parts. Everything's parts if you're patient.",
+        "[Rust] One less moving part on the island, {player}. Cleaner that way."
+      ]
+    },
+    {
+      "on": "chat",
+      "phrase": "parts",
+      "situation": "parts_talk",
+      "cooldown_s": 25,
+      "lines": [
+        "[Rust] Parts? *eyes narrow* Farm vehicles. Same guts as trucks. Nobody looks, {player}.",
+        "[Rust] You want parts, {player}? Radiators, batteries, plugs. The junkyard remembers where it hid them.",
+        "[Rust] Spark plugs are currency, {player}. Don't tell Ziggy I said that."
+      ]
+    },
+    {
+      "on": "chat",
+      "phrase": "rust",
+      "situation": "hail",
+      "cooldown_s": 25,
+      "lines": [
+        "[Rust] *doesn't stop tinkering* Mm. {player}. Say it fast, the bolt's almost seated.",
+        "[Rust] You called Rust, {player}? Rust answers. The walls answer too, but ignore them."
+      ]
+    }
+  ]
+}

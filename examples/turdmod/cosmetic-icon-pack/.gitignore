@@ -1,0 +1,6 @@
+# TurdMOD mod project
+dist/
+*.pak
+*.utoc
+*.ucas
+.turdmod-cache/

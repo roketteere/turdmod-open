@@ -1,0 +1,35 @@
+{
+  "endpoints": [
+    {
+      "name": "local",
+      "url": "http://127.0.0.1:11434",
+      "tier": "local",
+      "host": "this-box",
+      "cost_per_hr": 0,
+      "warm": true,
+      "auth": null,
+      "preferred_models": ["qwen2.5-coder:7b", "qwen3.5:9b"],
+      "tags": ["fast", "free", "chatty-ok"]
+    },
+    {
+      "name": "wife-rig",
+      "url": "http://YOUR_LAN_IP:11434",
+      "tier": "lan",
+      "host": "wife-desktop",
+      "cost_per_hr": 0,
+      "warm": true,
+      "auth": null,
+      "preferred_models": ["qwen2.5-coder:7b"],
+      "tags": ["free", "second-brain", "code-work"]
+    }
+  ],
+  "routing": {
+    "default_policy": "code-to-wife-fallback-local",
+    "policies": {
+      "code-to-wife-fallback-local": "Route any task tagged 'code' to wife-rig; fall back to local if wife-rig is unreachable.",
+      "local-only": "Use local endpoint only.",
+      "round-robin": "Alternate between healthy endpoints."
+    }
+  },
+  "schema_version": 1
+}

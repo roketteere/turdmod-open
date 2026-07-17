@@ -1,0 +1,26 @@
+{
+  "name": "@turdmod/turdmod-companion",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "TurdMOD companion runtime — log-tail-based server-side mod host (until the loader DLL ships).",
+  "scripts": {
+    "dev": "dotenv -e ../../.env -- tsx watch src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "dotenv -e ../../.env -- node dist/index.js",
+    "demo": "tsx src/index.ts --demo",
+    "verify": "tsx src/verify.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test src/*.test.ts"
+  },
+  "dependencies": {
+    "@turdmod/turdmod-api": "workspace:*",
+    "@turdmod/turdmod-manifest": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.4",
+    "dotenv-cli": "^7.4.2",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.2"
+  }
+}

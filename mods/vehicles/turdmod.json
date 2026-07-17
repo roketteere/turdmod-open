@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "vehicles",
+  "name": "Personal Vehicles",
+  "version": "0.1.0-alpha",
+  "author": "TechyRican",
+  "description": "Rust-style personal vehicle registration, spawning, despawning, and insurance.",
+  "mode": "server-side",
+  "minBuild": "23128448",
+  "dependencies": {},
+  "capabilities": [{ "filesystem": "readwrite" }],
+  "entrypoint": "scripts/main.ts",
+  "tags": ["vehicles", "spawn", "despawn", "register", "insurance"]
+}

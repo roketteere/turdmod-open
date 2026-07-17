@@ -1,0 +1,41 @@
+[package]
+name = "turdmod-launcher"
+version = "0.1.0"
+edition = "2021"
+description = "Launches SCUM.exe and injects turdmod_loader.dll. Refuses to run if BattlEye is present."
+license = "MIT"
+
+# Shared launch + injection core. Both the CLI bin below and the desktop
+# launcher's Tauri backend (apps/turdmod-launcher) depend on this so the
+# unsafe injection lives in exactly one place.
+[lib]
+name = "turdmod_launcher_core"
+path = "src/lib.rs"
+
+[[bin]]
+name = "turdmod-launcher"
+path = "src/main.rs"
+
+# Companion binary for at-runtime DLL injection (Phase B / Phase B-Client
+# Dumper-7 step). Runs elevated via ShellExecuteEx so it can OpenProcess
+# even targets that require admin (SCUMServer.exe). Manager invokes it
+# from the Dump Management page's "Inject Dumper-7" button.
+[[bin]]
+name = "turdmod-injector"
+path = "src/bin/turdmod-injector.rs"
+
+[dependencies]
+windows-sys = { version = "0.59", features = [
+    "Win32_Foundation",
+    "Win32_Security",
+    "Win32_System_Diagnostics_Debug",
+    "Win32_System_Diagnostics_ToolHelp",
+    "Win32_System_LibraryLoader",
+    "Win32_System_Memory",
+    "Win32_System_ProcessStatus",
+    "Win32_System_Threading",
+    "Win32_System_SystemServices",
+    "Win32_Storage_FileSystem",
+] }
+chrono = { version = "0.4", default-features = false, features = ["clock", "std"] }
+clap = { version = "4", features = ["derive"] }

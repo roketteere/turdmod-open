@@ -1,0 +1,24 @@
+# UE4 project — track only Source/, Content/, Config/, and the
+# .uproject. Editor + UBT generate all the rest as build output.
+
+Binaries/
+Build/
+DerivedDataCache/
+Intermediate/
+Saved/
+
+# Visual Studio / Rider / VSCode local files
+*.sln
+*.suo
+*.user
+*.opensdf
+*.sdf
+*.VC.db
+*.VC.opendb
+.vs/
+.idea/
+.vscode/
+
+# Compiled lock files
+*.opensdf
+*.sdf

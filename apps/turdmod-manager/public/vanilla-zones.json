@@ -1,0 +1,54 @@
+{
+  "build": "v23128448",
+  "source": "data/extracted/v23128448/catalog.db",
+  "coord_system": "game_cm (matches apps/auto-map/src/scummy_auto_map/coords.py)",
+  "trader_safe_zones": [
+    {"kind": "safe_zone", "name": "A0 Outpost trader", "game_cm_x": -617086.8, "game_cm_y": -557763.8, "source_class": "BP_Outpost_Trader_building_C", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/A_0_Outpost_Ext_Trader"},
+    {"kind": "safe_zone", "name": "C2 Outpost trader", "game_cm_x": -149958.6, "game_cm_y":  293754.0, "source_class": "BP_Outpost_Trader_building_C", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/C_2_Outpost_Ext_Trader"},
+    {"kind": "safe_zone", "name": "Z3 Outpost trader", "game_cm_x":   26054.9, "game_cm_y": -674187.9, "source_class": "BP_Outpost_Trader_building_C", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/Z_3_Outpost_Ext_Trader"},
+    {"kind": "safe_zone", "name": "B4 Outpost trader", "game_cm_x":  566457.7, "game_cm_y": -224468.6, "source_class": "BP_Outpost_Trader_building_C", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/B_4_Outpost_Ext_Trader"}
+  ],
+  "fishing_traders": [
+    {"kind": "fishing_trader", "name": "A0 fishing trader", "game_cm_x": -628749.4, "game_cm_y": -564653.4, "source_class": "BP_FishingTrader_C", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/A_0_Outpost_Ext_Fisherman"},
+    {"kind": "fishing_trader", "name": "C2 fishing trader", "game_cm_x": -157385.9, "game_cm_y":  289704.0, "source_class": "BP_FishingTrader_C", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/C_2_Outpost_Ext_Fisherman"},
+    {"kind": "fishing_trader", "name": "Z3 fishing trader", "game_cm_x":   17753.1, "game_cm_y": -674827.4, "source_class": "BP_FishingTrader_C", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/Z_3_Outpost_Ext_Fisherman"},
+    {"kind": "fishing_trader", "name": "B4 fishing trader", "game_cm_x":  570983.6, "game_cm_y": -229639.1, "source_class": "BP_FishingTrader_C", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/B_4_Outpost_Ext_Fisherman"}
+  ],
+  "restricted_zones": [
+    {"kind": "restricted_zone", "name": "D0 Military Barracks",      "game_cm_x": -862164.0, "game_cm_y":  526844.0, "source_class": "BP_GuardedZoneManager_C", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/D_0_Military_Barracks"},
+    {"kind": "restricted_zone", "name": "Z0 (TV base entrance)",     "game_cm_x": -698751.0, "game_cm_y": -793030.0, "source_class": "BP_GuardedZoneManager_C", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/Z_0_Tv_Base_Entrance"},
+    {"kind": "restricted_zone", "name": "Z1 Weapons Factory",        "game_cm_x": -442170.0, "game_cm_y": -682255.0, "source_class": "BP_GuardedZoneManager_C", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/Z_1_WeaponsFactory"},
+    {"kind": "restricted_zone", "name": "B1 Factory (BASE_02)",      "game_cm_x": -409604.0, "game_cm_y":   -5351.0, "source_class": "BP_GuardedZoneManager_C", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/B_1_Factory_BASE_02"},
+    {"kind": "restricted_zone", "name": "B1 Factory (BASE)",         "game_cm_x": -406332.5, "game_cm_y":   -4936.2, "source_class": "GuardedZoneManager",       "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/B_1_Factory_BASE"},
+    {"kind": "restricted_zone", "name": "Z1 Trainyard",              "game_cm_x": -311560.7, "game_cm_y": -754073.2, "source_class": "GuardedZoneManager",       "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/Z_1_Trainyard_00"},
+    {"kind": "restricted_zone", "name": "B2 Airport",                "game_cm_x": -255823.0, "game_cm_y":  -39603.0, "source_class": "BP_GuardedZoneManager_C", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/B_2_Airport"},
+    {"kind": "restricted_zone", "name": "C2 Prison",                 "game_cm_x":  -68584.0, "game_cm_y":  154355.0, "source_class": "BP_GuardedZoneManager_C", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/C_2_Prison"},
+    {"kind": "restricted_zone", "name": "A2 Port",                   "game_cm_x":  -63859.0, "game_cm_y": -500713.0, "source_class": "BP_GuardedZoneManager_C", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/A_2_Port"},
+    {"kind": "restricted_zone", "name": "C2 Power Plant",            "game_cm_x":   -4691.0, "game_cm_y":  252775.0, "source_class": "BP_GuardedZoneManager_C", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/C_2_Power_Plant"},
+    {"kind": "restricted_zone", "name": "B3 Refinery",               "game_cm_x":   96911.0, "game_cm_y": -166864.0, "source_class": "BP_GuardedZoneManager_C", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/B_3_Refinery_BASE"},
+    {"kind": "restricted_zone", "name": "B3 Military Base",          "game_cm_x":  252272.0, "game_cm_y":  -34119.0, "source_class": "BP_GuardedZoneManager_C", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/B_3_Military_base"},
+    {"kind": "restricted_zone", "name": "A4 Military Base",          "game_cm_x":  482760.0, "game_cm_y": -551871.0, "source_class": "BP_GuardedZoneManager_C", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/A_4_Military_Base"},
+    {"kind": "restricted_zone", "name": "A4 Military Base (UG)",     "game_cm_x":  483019.0, "game_cm_y": -561544.0, "source_class": "BP_GuardedZoneManager_C", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/A_4_Military_Base_Underground"},
+    {"kind": "restricted_zone", "name": "D4 Zeljava (entrance)",     "game_cm_x":  499300.0, "game_cm_y":  573784.0, "source_class": "BP_GuardedZoneManager_C", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/D_4_Airport_Zeljava_Entrance"},
+    {"kind": "restricted_zone", "name": "D4 Zeljava Airport",        "game_cm_x":  510429.0, "game_cm_y":  572773.0, "source_class": "BP_GuardedZoneManager_C", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/D4_Airport_Zeljava"},
+    {"kind": "restricted_zone", "name": "A4 Military Harbour",       "game_cm_x":  512053.0, "game_cm_y": -544566.0, "source_class": "BP_GuardedZoneManager_C", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/A_4_Military_Harbour"}
+  ],
+  "abandoned_bunkers": [
+    {"kind": "abandoned_bunker", "name": "Abandoned bunker (Z1)", "game_cm_x": -565002.2, "game_cm_y": -723731.1, "source_class": "AbandonedBunkerZoneManagerComponent", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/Z_1_TV_Base_Entrance"},
+    {"kind": "abandoned_bunker", "name": "Abandoned bunker (D1)", "game_cm_x": -543499.6, "game_cm_y":  544489.1, "source_class": "AbandonedBunkerZoneManagerComponent", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/TV_Base_D_1_Abandoned"},
+    {"kind": "abandoned_bunker", "name": "Abandoned bunker (A1)", "game_cm_x": -341555.7, "game_cm_y": -470920.7, "source_class": "AbandonedBunkerZoneManagerComponent", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/TV_Base_A_1_Abandoned"},
+    {"kind": "abandoned_bunker", "name": "Abandoned bunker (C2)", "game_cm_x": -218427.9, "game_cm_y":  194182.1, "source_class": "AbandonedBunkerZoneManagerComponent", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/C_2_TV_Base_Entrance"},
+    {"kind": "abandoned_bunker", "name": "Abandoned bunker (A3)", "game_cm_x":  227063.9, "game_cm_y": -440710.7, "source_class": "AbandonedBunkerZoneManagerComponent", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/TV_Base_A_3_Abandoned"},
+    {"kind": "abandoned_bunker", "name": "Abandoned bunker (C4)", "game_cm_x":  448326.6, "game_cm_y":  269948.3, "source_class": "AbandonedBunkerZoneManagerComponent", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/TV_Base_C_4_Abandoned"}
+  ],
+  "bunker_entrances": [
+    {"kind": "bunker_entrance", "name": "Bunker entrance (D0)", "game_cm_x": -874261.0, "game_cm_y":  597291.0, "source_class": "BP_GuardedZoneManager_C", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/D_0_TV_Base_Entrance"},
+    {"kind": "bunker_entrance", "name": "Bunker entrance (B0)", "game_cm_x": -805317.1, "game_cm_y":  -87486.8, "source_class": "BP_GuardedZoneManager_C", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/B_0_TV_Base_Entrance"},
+    {"kind": "bunker_entrance", "name": "Bunker entrance (C1)", "game_cm_x": -398027.4, "game_cm_y":  216363.5, "source_class": "BP_GuardedZoneManager_C", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/C_1_TV_Base_Entrance"},
+    {"kind": "bunker_entrance", "name": "Bunker entrance (Z2)", "game_cm_x": -202247.5, "game_cm_y": -645721.7, "source_class": "BP_GuardedZoneManager_C", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/Z_2_TV_Base_Entrance"},
+    {"kind": "bunker_entrance", "name": "Bunker entrance (A2)", "game_cm_x":  -43039.0, "game_cm_y": -326461.0, "source_class": "BP_GuardedZoneManager_C", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/A_2_TV_Base_Entrance"},
+    {"kind": "bunker_entrance", "name": "Bunker entrance (D3)", "game_cm_x":  140864.0, "game_cm_y":  547070.0, "source_class": "BP_GuardedZoneManager_C", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/D_3_TV_Base_Entrance"},
+    {"kind": "bunker_entrance", "name": "Bunker entrance (B4)", "game_cm_x":  445568.0, "game_cm_y":  -13747.0, "source_class": "BP_GuardedZoneManager_C", "source_path": "SCUM/Content/ConZ_Files/Maps/The_Island/B_4_TV_Base_Entrance"}
+  ],
+  "radiation_zones_note": "NOT FOUND in catalog — no per-actor radiation/contamination zone records. BP_Radiation_Manager_C is a singleton manager with no location. Radiation overlay positions are likely stored in a datatable or playable-area boundary def, not in actors. Re-run extraction targeting datatables if needed."
+}

@@ -1,0 +1,59 @@
+{
+  "name": "healing-wheel",
+  "version": "0.1.0",
+  "description": "6-segment radial selector (default). Each segment fires a bridge action. Pairs with Doctor persona's heal/check/revive commands.",
+  "category": "ui",
+  "baseClass": "UTurdMODRadialWidget",
+  "parameters": [
+    {
+      "name": "segmentLabels",
+      "type": "string",
+      "description": "Comma-separated labels (e.g. \"Heal,Feed,Revive,Cure,Stamina,Banner\")",
+      "default": "Heal,Feed,Revive,Cure,Stamina,Banner"
+    },
+    {
+      "name": "segmentCount",
+      "type": "int",
+      "description": "Number of wheel segments",
+      "default": 6,
+      "min": 3,
+      "max": 12
+    },
+    {
+      "name": "wheelRadius",
+      "type": "int",
+      "description": "Outer radius in pixels",
+      "default": 220,
+      "min": 80,
+      "max": 600
+    },
+    {
+      "name": "hotkey",
+      "type": "string",
+      "description": "Key to open the wheel (any UE key name; e.g. 'H', 'LeftAlt')",
+      "default": "H"
+    },
+    {
+      "name": "primaryColor",
+      "type": "color",
+      "description": "Selected segment color",
+      "default": "#FFD700"
+    },
+    {
+      "name": "accentColor",
+      "type": "color",
+      "description": "Hover / unselected color",
+      "default": "#444444"
+    },
+    {
+      "name": "closeOnSelect",
+      "type": "bool",
+      "description": "Close wheel after picking a segment",
+      "default": true
+    }
+  ],
+  "outputs": [
+    "widgets/<name>/BP_<name>.uasset",
+    "widgets/<name>/<name>.json"
+  ]
+}

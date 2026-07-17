@@ -1,0 +1,26 @@
+{
+  "name": "@turdmod/turdmod-cli",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "TurdMOD CLI — manage SCUM pak content mods (~mods/ folder)",
+  "bin": {
+    "turdmod": "./dist/index.js"
+  },
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test src/*.test.ts"
+  },
+  "dependencies": {
+    "@turdmod/turdmod-manifest": "workspace:*",
+    "commander": "^12.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.4",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.2"
+  }
+}

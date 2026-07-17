@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "id": "economy",
+  "name": "Economy",
+  "version": "0.1.0-alpha",
+  "author": "TechyRican",
+  "description": "Server-side coin economy with time-based accrual, chat commands, login streaks, player transfers, and Discord transaction logging.",
+  "mode": "server-side",
+  "minBuild": "23128448",
+  "dependencies": {},
+  "capabilities": [
+    { "filesystem": "readwrite" }
+  ],
+  "entrypoint": "scripts/main.ts",
+  "tags": ["economy", "coins", "bank", "currency", "daily", "streak"]
+}

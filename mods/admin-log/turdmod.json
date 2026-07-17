@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "id": "admin-log",
+  "name": "Admin Log",
+  "version": "0.1.0-alpha",
+  "author": "TechyRican",
+  "description": "Logs admin commands, chat, and login/logout events to Discord with rich embeds and dangerous-command detection.",
+  "mode": "server-side",
+  "minBuild": "23128448",
+  "dependencies": {},
+  "capabilities": [
+    { "filesystem": "readwrite" }
+  ],
+  "entrypoint": "scripts/main.ts",
+  "tags": ["admin", "logging", "discord", "moderation"]
+}

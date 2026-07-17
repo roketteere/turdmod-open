@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "teleport",
+  "name": "Teleport System",
+  "version": "0.1.0-alpha",
+  "author": "TechyRican",
+  "description": "Named teleport locations, home system, and admin spawn-point management.",
+  "mode": "server-side",
+  "minBuild": "23128448",
+  "dependencies": {},
+  "capabilities": [{ "filesystem": "readwrite" }],
+  "entrypoint": "scripts/main.ts",
+  "tags": ["teleport", "home", "spawn", "tp"]
+}

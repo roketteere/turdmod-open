@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "permissions",
+  "name": "Permissions & Tiers",
+  "version": "0.1.0-alpha",
+  "author": "TechyRican",
+  "description": "Tier-based command permission system. Admins create plans (free/VIP/premium) with configurable command access.",
+  "mode": "server-side",
+  "minBuild": "23128448",
+  "dependencies": {},
+  "capabilities": [{ "filesystem": "readwrite" }],
+  "entrypoint": "scripts/main.ts",
+  "tags": ["permissions", "tiers", "roles", "access", "plans"]
+}

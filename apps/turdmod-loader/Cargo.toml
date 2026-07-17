@@ -1,0 +1,63 @@
+[package]
+name = "turdmod-loader"
+version = "0.1.0"
+edition = "2021"
+description = "TurdMOD in-game loader DLL — injects via dxgi.dll proxy, hosts the LuaJIT runtime, hooks UE4 internals."
+license = "MIT"
+
+[lib]
+crate-type = ["cdylib"]
+name = "turdmod_loader"
+
+[dependencies]
+windows-sys = { version = "0.59", features = [
+    "Win32_Foundation",
+    "Win32_Security",
+    "Win32_System_LibraryLoader",
+    "Win32_System_SystemInformation",
+    "Win32_System_SystemServices",
+    "Win32_System_Threading",
+    "Win32_System_ProcessStatus",
+    "Win32_System_Diagnostics_Debug",
+    "Win32_System_Memory",
+    "Win32_System_Pipes",
+    "Win32_System_IO",
+    "Win32_Storage_FileSystem",
+    "Win32_UI_WindowsAndMessaging",
+    "Win32_UI_Input_KeyboardAndMouse",
+] }
+once_cell = "1"
+parking_lot = "0.12"
+# Inline function detour (trampoline) for the UGameEngineTick hook — lets us run
+# native UMG ProcessEvent calls on the GAME thread (UMG/Slate are game-thread-only).
+retour = "0.3"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+chrono = { version = "0.4", default-features = false, features = ["clock", "std"] }
+# Lua bindings. `vendored` builds Lua 5.4 from source at build time so we
+# don't depend on a system install. `send` lets us hand the Lua state
+# across the init thread boundary without an extra mutex. Lua 5.4 chosen
+# over LuaJIT because LuaJIT's vendored build has a Windows-specific bug
+# (calls `minilua` instead of `minilua.exe` mid-build); the API surface
+# our mods touch is identical, and we can swap to LuaJIT later by changing
+# this single feature flag if the build issue ever clears up.
+mlua = { version = "0.10", features = ["lua54", "vendored", "send", "serialize"] }
+# hudhook collapses DXGI Present hook + ImGui rendering + WndProc forwarding
+# + vtable extraction + MinHook into one crate. Default features cover
+# dx11; we add dx12 too because some UE4 4.27 builds default to D3D12 and
+# the runtime feature-flips between them.
+hudhook = { version = "0.9", default-features = true }
+# HTTP client for the IPC subscriber (loader → companion /events SSE).
+ureq = { version = "2", default-features = false, features = ["tls"] }
+
+[build-dependencies]
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+strip = "symbols"
+
+[profile.dev]
+opt-level = 1

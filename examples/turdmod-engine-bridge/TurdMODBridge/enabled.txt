@@ -1,0 +1,2 @@
+; Presence of this file tells UE4SS to load TurdMODBridge.
+; Delete this file to disable the mod without uninstalling.

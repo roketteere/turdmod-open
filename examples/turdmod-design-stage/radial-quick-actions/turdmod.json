@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "id": "radial-quick-actions",
+  "name": "Radial Quick Actions",
+  "version": "0.0.1",
+  "author": "TechyRican",
+  "description": "Hold a hotkey to bring up a radial menu of common actions: heal, eat, drink, repair.",
+  "mode": "offline-only",
+  "minBuild": "23128448",
+  "dependencies": {},
+  "capabilities": [
+    {
+      "filesystem": "read"
+    }
+  ],
+  "entrypoint": "scripts/main.lua",
+  "tags": []
+}

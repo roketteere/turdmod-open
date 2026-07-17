@@ -1,0 +1,30 @@
+[package]
+name = "turdmod-launcher-app"
+version = "0.1.0"
+description = "TurdMOD Launcher — DayZ-style client launcher for BE-off TurdMOD servers."
+edition = "2021"
+rust-version = "1.77"
+
+[lib]
+name = "turdmod_launcher_app_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2.0", features = [] }
+
+[dependencies]
+tauri = { version = "2.1", features = ["tray-icon"] }
+tauri-plugin-shell = "2.0"
+
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tokio = { version = "1.42", features = ["full"] }
+reqwest = { version = "0.12", features = ["json", "rustls-tls"], default-features = false }
+
+# Shared launch + injection core — the SAME code the CLI launcher uses, so
+# the desktop path can never drift from the proven injection flow.
+turdmod-launcher = { path = "../../turdmod-loader/launcher" }
+
+[features]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]

@@ -1,0 +1,60 @@
+[package]
+name = "turdmod-server-loader"
+version = "0.1.0"
+edition = "2021"
+description = "TurdMOD server-side loader DLL — injects into SCUMServer.exe, hosts the LuaJIT runtime, exposes the admin RPC surface for companion write-back."
+license = "MIT"
+
+[lib]
+crate-type = ["cdylib"]
+name = "turdmod_server_loader"
+
+[dependencies]
+windows-sys = { version = "0.59", features = [
+    "Win32_Foundation",
+    "Win32_Security",
+    "Win32_System_LibraryLoader",
+    "Win32_System_SystemInformation",
+    "Win32_System_SystemServices",
+    "Win32_System_Threading",
+    "Win32_System_ProcessStatus",
+    "Win32_System_Diagnostics_Debug",
+    "Win32_System_Memory",
+    "Win32_Storage_FileSystem",
+] }
+once_cell = "1"
+parking_lot = "0.12"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+chrono = { version = "0.4", default-features = false, features = ["clock", "std"] }
+# Lua 5.4 vendored — same rationale as turdmod-loader (LuaJIT Windows build
+# bug with minilua.exe); swap to LuaJIT later by changing the feature flag.
+mlua = { version = "0.10", features = ["lua54", "vendored", "send", "serialize"] }
+# HTTP client for outbound event push to companion /ingest.
+# No TLS needed for localhost; kept default-features false for leaner build.
+ureq = { version = "2", default-features = false }
+
+# Part B: admin RPC server (named-pipe RPC for companion → engine write-back).
+tokio = { version = "1", features = ["rt-multi-thread", "net", "io-util", "sync", "time", "macros"] }
+async-trait = "0.1"
+uuid = { version = "1", features = ["v4"] }
+tracing = "0.1"
+# subscriber is needed at the binary level so tracing::info!/warn!/error!
+# calls inside admin_api + extern_api actually surface somewhere (we wire
+# it to write into our own logging::log line stream).
+tracing-subscriber = { version = "0.3", default-features = false, features = ["fmt"] }
+
+# Function-detour crate for the pak-signature-bypass hooks installed by
+# server_hooks.rs. Pure-Rust hooking with x64 trampolines; usable from
+# DllMain because it only does VirtualProtect + memcpy, no LoadLibrary.
+retour = "0.3"
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+strip = "symbols"
+
+[profile.dev]
+opt-level = 1

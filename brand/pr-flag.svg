@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" width="900" height="600">
+  <!-- Puerto Rican flag, light/sky-blue triangle (monoestrellada variant) -->
+  <rect width="900" height="600" fill="#ED0000"/>
+  <rect y="120" width="900" height="120" fill="#FFFFFF"/>
+  <rect y="360" width="900" height="120" fill="#FFFFFF"/>
+  <!-- sky-blue equilateral triangle on the hoist -->
+  <polygon points="0,0 0,600 519,300" fill="#6CACE4"/>
+  <!-- white 5-point star centered in the triangle -->
+  <polygon fill="#FFFFFF" transform="translate(173,300) scale(7.0)"
+    points="0,-12 2.82,-3.71 11.41,-3.71 4.45,1.42 7.05,9.71 0,4.85 -7.05,9.71 -4.45,1.42 -11.41,-3.71 -2.82,-3.71"/>
+</svg>

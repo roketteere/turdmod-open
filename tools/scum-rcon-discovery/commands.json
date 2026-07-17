@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "notes": "Candidate SCUM admin commands. The harness tries each one BOTH as-given AND prefixed with '#', recording which form (if either) elicits a non-error response. Commands that are destructive (kick, ban, vehicleDestroyAll, weather changes) are flagged 'destructive: true' and skipped by default — run with --include-destructive to include them.",
+  "commands": [
+    { "category": "info", "cmd": "Help", "args": "", "note": "List available commands" },
+    { "category": "info", "cmd": "ListPlayers", "args": "", "note": "List connected players + Steam64" },
+    { "category": "info", "cmd": "ShowAdminCommands", "args": "", "note": "Possibly an alias for Help" },
+    { "category": "info", "cmd": "PlayerCount", "args": "", "note": "" },
+    { "category": "info", "cmd": "GetPlayerCount", "args": "", "note": "" },
+    { "category": "info", "cmd": "ListBans", "args": "", "note": "" },
+    { "category": "info", "cmd": "ListAdmins", "args": "", "note": "" },
+    { "category": "info", "cmd": "ServerInfo", "args": "", "note": "" },
+    { "category": "info", "cmd": "ServerStatus", "args": "", "note": "" },
+    { "category": "info", "cmd": "Version", "args": "", "note": "" },
+    { "category": "info", "cmd": "Echo TurdMODProbe", "args": "", "note": "" },
+
+    { "category": "chat", "cmd": "Announce TurdMOD discovery probe", "args": "", "note": "Server-wide broadcast" },
+    { "category": "chat", "cmd": "Broadcast TurdMOD discovery probe", "args": "", "note": "" },
+    { "category": "chat", "cmd": "Say TurdMOD discovery probe", "args": "", "note": "Admin chat" },
+    { "category": "chat", "cmd": "ServerMessage TurdMOD discovery probe", "args": "", "note": "" },
+    { "category": "chat", "cmd": "GlobalMessage TurdMOD discovery probe", "args": "", "note": "" },
+
+    { "category": "vehicles", "cmd": "ListVehicles", "args": "", "note": "" },
+    { "category": "vehicles", "cmd": "ShowVehicles", "args": "", "note": "" },
+    { "category": "vehicles", "cmd": "GetVehicles", "args": "", "note": "" },
+    { "category": "vehicles", "cmd": "VehicleList", "args": "", "note": "" },
+    { "category": "vehicles", "cmd": "ListVehicleSpawnPoints", "args": "", "note": "" },
+    { "category": "vehicles", "cmd": "ShowVehicleSpawnPoints", "args": "", "note": "" },
+    { "category": "vehicles", "cmd": "GetVehicleSpawnPoints", "args": "", "note": "" },
+    { "category": "vehicles", "cmd": "VehicleSpawnPoints", "args": "", "note": "" },
+    { "category": "vehicles", "cmd": "ShowSpawnPoints vehicle", "args": "", "note": "" },
+    { "category": "vehicles", "cmd": "ListSpawners vehicle", "args": "", "note": "" },
+
+    { "category": "world", "cmd": "Time", "args": "", "note": "" },
+    { "category": "world", "cmd": "GetTime", "args": "", "note": "" },
+    { "category": "world", "cmd": "Weather", "args": "", "note": "" },
+    { "category": "world", "cmd": "GetWeather", "args": "", "note": "" },
+    { "category": "world", "cmd": "ListWeather", "args": "", "note": "" },
+
+    { "category": "puppets", "cmd": "ListPuppets", "args": "", "note": "" },
+    { "category": "puppets", "cmd": "GetPuppets", "args": "", "note": "" },
+    { "category": "puppets", "cmd": "ShowPuppets", "args": "", "note": "" },
+    { "category": "puppets", "cmd": "ListDrones", "args": "", "note": "" },
+    { "category": "puppets", "cmd": "GetDrones", "args": "", "note": "" },
+    { "category": "puppets", "cmd": "ListSentries", "args": "", "note": "" },
+
+    { "category": "loot", "cmd": "ListLootContainers", "args": "", "note": "" },
+    { "category": "loot", "cmd": "GetLootSpawners", "args": "", "note": "" },
+    { "category": "loot", "cmd": "ListLootSpawnPoints", "args": "", "note": "" },
+
+    { "category": "items", "cmd": "ListItems", "args": "", "note": "" },
+    { "category": "items", "cmd": "GetItemCount", "args": "", "note": "" },
+
+    { "category": "diagnostics", "cmd": "Stats", "args": "", "note": "" },
+    { "category": "diagnostics", "cmd": "Memory", "args": "", "note": "" },
+    { "category": "diagnostics", "cmd": "TickRate", "args": "", "note": "" },
+    { "category": "diagnostics", "cmd": "GetTickRate", "args": "", "note": "" }
+  ],
+  "destructive_commands": [
+    { "category": "moderation", "cmd": "Kick PLAYER_NAME", "args": "<name>", "note": "Skip unless --include-destructive" },
+    { "category": "moderation", "cmd": "Ban PLAYER_NAME reason", "args": "<name> <reason>", "note": "" },
+    { "category": "moderation", "cmd": "Unban STEAM64", "args": "<steam64>", "note": "" },
+    { "category": "moderation", "cmd": "Mute PLAYER_NAME", "args": "<name>", "note": "" },
+
+    { "category": "vehicles", "cmd": "VehicleDestroyAll", "args": "", "note": "" },
+    { "category": "vehicles", "cmd": "DespawnAllVehicles", "args": "", "note": "" },
+    { "category": "vehicles", "cmd": "RespawnAllVehicles", "args": "", "note": "" },
+    { "category": "vehicles", "cmd": "ResetVehicleSpawns", "args": "", "note": "" },
+
+    { "category": "world", "cmd": "SetTime 12", "args": "<0-24>", "note": "" },
+    { "category": "world", "cmd": "SetWeather Clear", "args": "<type>", "note": "" }
+  ]
+}

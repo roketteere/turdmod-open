@@ -1,0 +1,4574 @@
+{
+"Vehicles": [
+{
+"cls": "BPC_Laika",
+"name": "Laika",
+"icon": "/map-markers/vehicle/laika.png",
+"veh": true
+},
+{
+"cls": "BPC_WolfsWagen",
+"name": "WolfsWagen",
+"icon": "/map-markers/vehicle/wolfswagen.png",
+"veh": true
+},
+{
+"cls": "BPC_Cruiser",
+"name": "Cruiser",
+"icon": "/map-markers/vehicle/cruiser.png",
+"veh": true
+},
+{
+"cls": "BPC_Rager",
+"name": "Rager",
+"icon": "/map-markers/vehicle/car_4w.png",
+"veh": true
+},
+{
+"cls": "BPC_RIS",
+"name": "RIS",
+"icon": "/map-markers/vehicle/car_4w.png",
+"veh": true
+},
+{
+"cls": "BPC_Tractor",
+"name": "Tractor",
+"icon": "/map-markers/vehicle/tractor.png",
+"veh": true
+},
+{
+"cls": "BPC_Dinghy",
+"name": "Dinghy",
+"icon": "/map-markers/vehicle/dinghy.png",
+"veh": true
+},
+{
+"cls": "BPC_SUP",
+"name": "SUP",
+"icon": "/map-markers/vehicle/motorboat.png",
+"veh": true
+},
+{
+"cls": "BPC_Kinglet_Mariner",
+"name": "Kinglet Mariner",
+"icon": "/map-markers/vehicle/motorboat.png",
+"veh": true
+},
+{
+"cls": "BPC_Kinglet_Duster",
+"name": "Kinglet Duster",
+"icon": "/map-markers/vehicle/kinglet.png",
+"veh": true
+},
+{
+"cls": "BPC_Dirtbike",
+"name": "Dirtbike",
+"icon": "/map-markers/vehicle/motorcycle.png",
+"veh": true
+},
+{
+"cls": "BPC_SidecarBike",
+"name": "SidecarBike",
+"icon": "/map-markers/vehicle/sidecarbike.png",
+"veh": true
+},
+{
+"cls": "BPC_MountainBike",
+"name": "MountainBike",
+"icon": "/map-markers/vehicle/bicycle.png",
+"veh": true
+},
+{
+"cls": "BPC_CityBike",
+"name": "CityBike",
+"icon": "/map-markers/vehicle/bicycle.png",
+"veh": true
+}
+],
+"Weapons": [
+{
+"cls": "1H_Cleaver",
+"name": "1H Cleaver",
+"icon": "/item-icons/ico_cleaver_inhands.png"
+},
+{
+"cls": "1H_DannyMachete",
+"name": "1H DannyMachete",
+"icon": "/item-icons/ico_dannymachete_inhand.png"
+},
+{
+"cls": "1H_KitchenKnife",
+"name": "1H KitchenKnife",
+"icon": "/item-icons/ico_kitchen_knife.png"
+},
+{
+"cls": "1H_KitchenKnife_02",
+"name": "1H KitchenKnife 2",
+"icon": "/item-icons/ico_kitchen_knife.png"
+},
+{
+"cls": "1H_KitchenKnife_02_Deluxe",
+"name": "1H KitchenKnife 2 Deluxe",
+"icon": "/item-icons/ico_kitchen_knife.png"
+},
+{
+"cls": "1H_KitchenKnife_03",
+"name": "1H KitchenKnife 3",
+"icon": "/item-icons/ico_kitchen_knife.png"
+},
+{
+"cls": "1H_KitchenKnife_04",
+"name": "1H KitchenKnife 4",
+"icon": "/item-icons/ico_kitchen_knife.png"
+},
+{
+"cls": "1H_Military_Survival_Knife",
+"name": "1H Military Survival Knife",
+"icon": null
+},
+{
+"cls": "1H_Small_Axe",
+"name": "1H Small Axe",
+"icon": "/item-icons/ico_small_axe_inhands.png"
+},
+{
+"cls": "1H_Stone_Axe",
+"name": "1H Stone Axe",
+"icon": "/item-icons/ico_1h_stone_axe_head.png"
+},
+{
+"cls": "1H_Traynors_Axe",
+"name": "1H Traynors Axe",
+"icon": null
+},
+{
+"cls": "2H_Axe",
+"name": "2H Axe",
+"icon": null
+},
+{
+"cls": "2H_Baseball_Bat",
+"name": "2H Baseball Bat",
+"icon": "/item-icons/ico_baseball_bat.png"
+},
+{
+"cls": "2H_Baseball_Bat_Blaze",
+"name": "2H Baseball Bat Blaze",
+"icon": "/item-icons/ico_baseball_bat.png"
+},
+{
+"cls": "2H_Metal_Baseball_Bat",
+"name": "2H Metal Baseball Bat",
+"icon": "/item-icons/ico_baseball_bat_metal_inhands.png"
+},
+{
+"cls": "2H_Pickaxe",
+"name": "2H Pickaxe",
+"icon": "/item-icons/ico_pickaxe_inhands.png"
+},
+{
+"cls": "2H_ZhanMaDao_Sword",
+"name": "2H ZhanMaDao Sword",
+"icon": "/item-icons/ico_zhanmadao_inhands.png"
+},
+{
+"cls": "Ammo_Crossbow_Bolt_Carbon",
+"name": "Ammo Crossbow Bolt Carbon",
+"icon": null
+},
+{
+"cls": "Ammo_Crossbow_Bolt_Metal",
+"name": "Ammo Crossbow Bolt Metal",
+"icon": null
+},
+{
+"cls": "BowSilencer",
+"name": "BowSilencer",
+"icon": "/item-icons/ico_bow_silencer.png"
+},
+{
+"cls": "Compound_Bow",
+"name": "Compound Bow",
+"icon": "/item-icons/ico_bow_scope_01.png"
+},
+{
+"cls": "Compound_Bow_US_Scorpion",
+"name": "Compound Bow US Scorpion",
+"icon": "/item-icons/ico_compound_bow_us_scorpion_inhands.png"
+},
+{
+"cls": "Compound_Bow_Woodland",
+"name": "Compound Bow Woodland",
+"icon": "/item-icons/ico_compound_bow_woodland_inhands.png"
+},
+{
+"cls": "CompoundBowSight_3_Pin",
+"name": "CompoundBowSight 3 Pin",
+"icon": null
+},
+{
+"cls": "Knife_Sheath",
+"name": "Knife Sheath",
+"icon": "/item-icons/ico_knife_sheath.png"
+},
+{
+"cls": "Magazine_M9",
+"name": "Magazine M9",
+"icon": "/item-icons/ico_ruger_magazine_full.png"
+},
+{
+"cls": "Recurve_Bow_90",
+"name": "Recurve Bow 90",
+"icon": "/item-icons/ico_recurve_bow.png"
+},
+{
+"cls": "ScopeRail_AK47",
+"name": "ScopeRail AK47",
+"icon": "/item-icons/ico_trader_bp_scoperail_ak47.png"
+},
+{
+"cls": "Sledgehammer",
+"name": "Sledgehammer",
+"icon": "/item-icons/ico_sledgehammer_inhands.png"
+},
+{
+"cls": "Tactical_Handgun_Holster_03",
+"name": "Tactical Handgun Holster 3",
+"icon": "/item-icons/ico_police_handgunholster.png"
+},
+{
+"cls": "Tactical_Handgun_Holster_05",
+"name": "Tactical Handgun Holster 5",
+"icon": "/item-icons/ico_police_handgunholster.png"
+},
+{
+"cls": "Tactical_Handgun_Holster_07",
+"name": "Tactical Handgun Holster 7",
+"icon": "/item-icons/ico_police_handgunholster.png"
+},
+{
+"cls": "Weapon_590A11",
+"name": "Weapon 590A11",
+"icon": null
+},
+{
+"cls": "Weapon_AK15",
+"name": "Weapon AK15",
+"icon": "/item-icons/ico_trader_bp_weaponsuppressor_ak15.png"
+},
+{
+"cls": "Weapon_Cleaning_Kit",
+"name": "Weapon Cleaning Kit",
+"icon": "/item-icons/ico_trader_weaponcleaningkit.png"
+},
+{
+"cls": "Weapon_Hunter85_V2",
+"name": "Weapon Hunter85 V2",
+"icon": "/item-icons/ico_hunter_85_scope.png"
+},
+{
+"cls": "Weapon_M1911",
+"name": "Weapon M1911",
+"icon": "/item-icons/ico_m1911_gold_inhands.png"
+},
+{
+"cls": "Weapon_M9",
+"name": "Weapon M9",
+"icon": "/item-icons/ico_weaponrack.png"
+},
+{
+"cls": "Weapon_M9_Silver",
+"name": "Weapon M9 Silver",
+"icon": null
+},
+{
+"cls": "Weapon_Parts_Peacekeeper38",
+"name": "Weapon Parts Peacekeeper38",
+"icon": "/item-icons/ico_weaponparts_peacekeeper38.png"
+},
+{
+"cls": "Weapon_PeaceKeeper38",
+"name": "Weapon PeaceKeeper38",
+"icon": "/item-icons/ico_weaponparts_peacekeeper38.png"
+},
+{
+"cls": "Weapon_RPG7",
+"name": "Weapon RPG7",
+"icon": "/item-icons/ico_weaponrack.png"
+},
+{
+"cls": "Weapon_SF19",
+"name": "Weapon SF19",
+"icon": "/item-icons/ico_sf19_inhands.png"
+},
+{
+"cls": "Weapon_Serpent357",
+"name": "Weapon Serpent357",
+"icon": "/item-icons/ico_weaponparts_serpent357.png"
+},
+{
+"cls": "WeaponFlashlight_M9",
+"name": "WeaponFlashlight M9",
+"icon": null
+},
+{
+"cls": "WeaponScope_ACOG_01",
+"name": "WeaponScope ACOG 1",
+"icon": "/item-icons/ico_trader_weaponscope_acog_01.png"
+},
+{
+"cls": "WeaponScope_PU",
+"name": "WeaponScope PU",
+"icon": "/item-icons/ico_trader_weaponscope_specter.png"
+},
+{
+"cls": "WeaponSights_M16A4_FoldingSights",
+"name": "WeaponSights M16A4 FoldingSights",
+"icon": null
+},
+{
+"cls": "WeaponSights_RedDot_CA401B",
+"name": "WeaponSights RedDot CA401B",
+"icon": null
+},
+{
+"cls": "WeaponSights_Shark",
+"name": "WeaponSights Shark",
+"icon": "/item-icons/ico_trader_bp_weaponsights_improvisedscope.png"
+},
+{
+"cls": "WeaponSights_Snake",
+"name": "WeaponSights Snake",
+"icon": "/item-icons/ico_trader_bp_weaponsights_improvisedscope.png"
+},
+{
+"cls": "WeaponSuppressor_45ACP",
+"name": "WeaponSuppressor 45ACP",
+"icon": "/item-icons/ico_trader_bp_weaponsuppressor_m1.png"
+},
+{
+"cls": "WeaponSuppressor_AK15",
+"name": "WeaponSuppressor AK15",
+"icon": "/item-icons/ico_trader_bp_weaponsuppressor_ak15.png"
+},
+{
+"cls": "WeaponSuppressor_Handgun",
+"name": "WeaponSuppressor Handgun",
+"icon": "/item-icons/ico_trader_bp_weaponsuppressor_handgun.png"
+},
+{
+"cls": "WeaponSuppressor_Kar98k",
+"name": "WeaponSuppressor Kar98k",
+"icon": "/item-icons/ico_trader_bp_weaponsuppressor_kar98k.png"
+},
+{
+"cls": "WeaponSuppressor_M1891",
+"name": "WeaponSuppressor M1891",
+"icon": "/item-icons/ico_trader_bp_weaponsuppressor_m1891.png"
+},
+{
+"cls": "WeaponSuppressor_MAC10",
+"name": "WeaponSuppressor MAC10",
+"icon": "/item-icons/ico_trader_bp_weaponsuppressor_m1.png"
+},
+{
+"cls": "WeaponSuppressor_MK18",
+"name": "WeaponSuppressor MK18",
+"icon": "/item-icons/ico_trader_bp_weaponsuppressor_mk18.png"
+}
+],
+"Ammo": [
+{
+"cls": "12_Gauge_Birdshot",
+"name": "12 Gauge Birdshot",
+"icon": "/item-icons/ico_cal12gauge_birdshot.png"
+},
+{
+"cls": "12_Gauge_Buckshot",
+"name": "12 Gauge Buckshot",
+"icon": "/item-icons/ico_cal12gauge_buckshot.png"
+},
+{
+"cls": "12_Gauge_Slug",
+"name": "12 Gauge Slug",
+"icon": "/item-icons/ico_cal12gauge_slugs.png"
+},
+{
+"cls": "12_Gauge_Slug_Ammobox",
+"name": "12 Gauge Slug Ammobox",
+"icon": null
+},
+{
+"cls": "Armor_Tactical_Vest_01_02",
+"name": "Armor Tactical Vest 1 2",
+"icon": "/item-icons/ico_armor_tactical_vest_06.png"
+},
+{
+"cls": "Bulletproof_Vest_01",
+"name": "Bulletproof Vest 1",
+"icon": "/item-icons/ico_bulletproof_vest_01.png"
+},
+{
+"cls": "Cal_22",
+"name": "Cal 22",
+"icon": null
+},
+{
+"cls": "Cal_22_Ammobox",
+"name": "Cal 22 Ammobox",
+"icon": "/item-icons/ico_9x39_ammobox_closed.png"
+},
+{
+"cls": "Cal_22_TR",
+"name": "Cal 22 TR",
+"icon": null
+},
+{
+"cls": "Cal_30-06_TR",
+"name": "Cal 30-6 TR",
+"icon": null
+},
+{
+"cls": "Cal_338_Ammobox",
+"name": "Cal 338 Ammobox",
+"icon": "/item-icons/ico_9x39_ammobox_closed.png"
+},
+{
+"cls": "Cal_357_Ammobox",
+"name": "Cal 357 Ammobox",
+"icon": "/item-icons/ico_9x39_ammobox_closed.png"
+},
+{
+"cls": "Cal_357_Viper",
+"name": "Cal 357 Viper",
+"icon": null
+},
+{
+"cls": "Cal_357_Viper_TR",
+"name": "Cal 357 Viper TR",
+"icon": null
+},
+{
+"cls": "Cal_38",
+"name": "Cal 38",
+"icon": null
+},
+{
+"cls": "Cal_38_Ammobox",
+"name": "Cal 38 Ammobox",
+"icon": "/item-icons/ico_9x39_ammobox_closed.png"
+},
+{
+"cls": "Cal_38_Ammobox_AP",
+"name": "Cal 38 Ammobox AP",
+"icon": "/item-icons/ico_9x39_ammobox_closed.png"
+},
+{
+"cls": "Cal_38_Ammobox_TR",
+"name": "Cal 38 Ammobox TR",
+"icon": "/item-icons/ico_9x39_ammobox_closed.png"
+},
+{
+"cls": "Cal_38_TR",
+"name": "Cal 38 TR",
+"icon": null
+},
+{
+"cls": "Cal_44_Viper",
+"name": "Cal 44 Viper",
+"icon": null
+},
+{
+"cls": "Cal_44_Viper_AP",
+"name": "Cal 44 Viper AP",
+"icon": null
+},
+{
+"cls": "Cal_45",
+"name": "Cal 45",
+"icon": null
+},
+{
+"cls": "Cal_45_Ammobox_TR",
+"name": "Cal 45 Ammobox TR",
+"icon": "/item-icons/ico_9x39_ammobox_closed.png"
+},
+{
+"cls": "Cal_45_TR",
+"name": "Cal 45 TR",
+"icon": null
+},
+{
+"cls": "Cal_5_56x45mm",
+"name": "Cal 5 56x45mm",
+"icon": null
+},
+{
+"cls": "Cal_50_AE",
+"name": "Cal 50 AE",
+"icon": null
+},
+{
+"cls": "Cal_7_62x39mm",
+"name": "Cal 7 62x39mm",
+"icon": null
+},
+{
+"cls": "Cal_7_62x39mm_AP",
+"name": "Cal 7 62x39mm AP",
+"icon": null
+},
+{
+"cls": "Cal_7_92x57mm",
+"name": "Cal 7 92x57mm",
+"icon": "/item-icons/ico_7_92x57mm_ammo_box_closed.png"
+},
+{
+"cls": "Cal_9mm",
+"name": "Cal 9mm",
+"icon": "/item-icons/ico_cal9mm.png"
+},
+{
+"cls": "Cal_9mm_AP",
+"name": "Cal 9mm AP",
+"icon": "/item-icons/ico_cal9mm.png"
+},
+{
+"cls": "Cal_9mm_Ammobox",
+"name": "Cal 9mm Ammobox",
+"icon": "/item-icons/ico_9x39_ammobox_closed.png"
+},
+{
+"cls": "Cal_9mm_TR",
+"name": "Cal 9mm TR",
+"icon": "/item-icons/ico_cal9mm.png"
+},
+{
+"cls": "Cal_9x39mm",
+"name": "Cal 9x39mm",
+"icon": null
+},
+{
+"cls": "Carbon_Arrow",
+"name": "Carbon Arrow",
+"icon": "/item-icons/ico_explosive_carbon_arrow.png"
+},
+{
+"cls": "Electrical_Repair_Kit",
+"name": "Electrical Repair Kit",
+"icon": "/item-icons/ico_trader_electricalrepairkit.png"
+},
+{
+"cls": "FlareItem",
+"name": "FlareItem",
+"icon": "/item-icons/ico_trader_bp_flareitem.png"
+},
+{
+"cls": "FlareItem_Blue",
+"name": "FlareItem Blue",
+"icon": "/item-icons/ico_trader_bp_flareitem_blue.png"
+},
+{
+"cls": "FlareItem_Green",
+"name": "FlareItem Green",
+"icon": "/item-icons/ico_trader_bp_flareitem_green.png"
+},
+{
+"cls": "Magazine_AK15",
+"name": "Magazine AK15",
+"icon": "/item-icons/ico_ak15_magazine_full.png"
+},
+{
+"cls": "Magazine_AKS_74U",
+"name": "Magazine AKS 74U",
+"icon": "/item-icons/ico_aks_74u_magazine_full.png"
+},
+{
+"cls": "Magazine_AS_Val",
+"name": "Magazine AS Val",
+"icon": "/item-icons/ico_asval_magazine_full.png"
+},
+{
+"cls": "Magazine_Block21",
+"name": "Magazine Block21",
+"icon": null
+},
+{
+"cls": "Magazine_DEagle_357",
+"name": "Magazine DEagle 357",
+"icon": "/item-icons/ico_ruger_magazine_full.png"
+},
+{
+"cls": "Magazine_DEagle_50",
+"name": "Magazine DEagle 50",
+"icon": "/item-icons/ico_ruger_magazine_full.png"
+},
+{
+"cls": "Magazine_HS9",
+"name": "Magazine HS9",
+"icon": "/item-icons/ico_ruger_magazine_full.png"
+},
+{
+"cls": "Magazine_Hunter85_V2",
+"name": "Magazine Hunter85 V2",
+"icon": "/item-icons/ico_hunter_85_magazine_01_full.png"
+},
+{
+"cls": "Magazine_Krueger",
+"name": "Magazine Krueger",
+"icon": null
+},
+{
+"cls": "Magazine_M16",
+"name": "Magazine M16",
+"icon": "/item-icons/ico_m16_magazine_full.png"
+},
+{
+"cls": "Magazine_M1911",
+"name": "Magazine M1911",
+"icon": "/item-icons/ico_m1911_magazine_full.png"
+},
+{
+"cls": "Magazine_MAC10",
+"name": "Magazine MAC10",
+"icon": "/item-icons/ico_mac10_magazine_full.png"
+},
+{
+"cls": "Magazine_RPK",
+"name": "Magazine RPK",
+"icon": "/item-icons/ico_rpk_magazine_full.png"
+},
+{
+"cls": "Magazine_SF19",
+"name": "Magazine SF19",
+"icon": "/item-icons/ico_sf19_magazine_full.png"
+},
+{
+"cls": "Magazine_TommyGun",
+"name": "Magazine TommyGun",
+"icon": null
+},
+{
+"cls": "Magazine_VHS2",
+"name": "Magazine VHS2",
+"icon": "/item-icons/ico_vhs2_magazine_full.png"
+},
+{
+"cls": "Medical_Glove_01",
+"name": "Medical Glove 1",
+"icon": "/item-icons/ico_medical_gloves.png"
+},
+{
+"cls": "Metal_Arrow",
+"name": "Metal Arrow",
+"icon": "/item-icons/ico_explosive_metal_arrow.png"
+},
+{
+"cls": "Metal_BroadHead_Arrow",
+"name": "Metal BroadHead Arrow",
+"icon": "/item-icons/ico_arrow_metal_broadhead.png"
+},
+{
+"cls": "Pirate_Hat_Sparrow_02",
+"name": "Pirate Hat Sparrow 2",
+"icon": "/item-icons/ico_pirate_hat_sparrow.png"
+},
+{
+"cls": "Tactical_Gloves_01_03",
+"name": "Tactical Gloves 1 3",
+"icon": "/item-icons/ico_tactical_vest_01.png"
+},
+{
+"cls": "Tactical_Gloves_01_05",
+"name": "Tactical Gloves 1 5",
+"icon": "/item-icons/ico_tactical_vest_01.png"
+},
+{
+"cls": "Tactical_Gloves_01_06",
+"name": "Tactical Gloves 1 6",
+"icon": "/item-icons/ico_tactical_vest_01.png"
+},
+{
+"cls": "Tactical_Gloves_01_08",
+"name": "Tactical Gloves 1 8",
+"icon": "/item-icons/ico_tactical_vest_01.png"
+},
+{
+"cls": "Tactical_Jacket_01_04",
+"name": "Tactical Jacket 1 4",
+"icon": "/item-icons/ico_tactical_vest_01.png"
+},
+{
+"cls": "Tactical_Jacket_01_05",
+"name": "Tactical Jacket 1 5",
+"icon": "/item-icons/ico_tactical_vest_01.png"
+},
+{
+"cls": "Tactical_Sweater_06",
+"name": "Tactical Sweater 6",
+"icon": "/item-icons/ico_tactical_sweater_02.png"
+},
+{
+"cls": "Tactical_Vest_01",
+"name": "Tactical Vest 1",
+"icon": "/item-icons/ico_tactical_vest_01.png"
+},
+{
+"cls": "WheelBarrow_Metal",
+"name": "WheelBarrow Metal",
+"icon": "/item-icons/ico_wheelbarrow.png"
+},
+{
+"cls": "WheelBarrow_Metal_Item_Container",
+"name": "WheelBarrow Metal Item Container",
+"icon": null
+}
+],
+"Food / Drink": [
+{
+"cls": "Apple",
+"name": "Apple",
+"icon": "/item-icons/ico_apple_01.png"
+},
+{
+"cls": "Apple_Seeds",
+"name": "Apple Seeds",
+"icon": "/item-icons/ico_apple_seeds.png"
+},
+{
+"cls": "BakedBeans",
+"name": "BakedBeans",
+"icon": null
+},
+{
+"cls": "BakingSoda",
+"name": "BakingSoda",
+"icon": "/item-icons/ico_trader_bakingsoda.png"
+},
+{
+"cls": "Beer",
+"name": "Beer",
+"icon": null
+},
+{
+"cls": "Book_Cooking_Casseroles",
+"name": "Book Cooking Casseroles",
+"icon": "/item-icons/ico_burek_item_raw.png"
+},
+{
+"cls": "Book_Cooking_Drinks",
+"name": "Book Cooking Drinks",
+"icon": "/item-icons/ico_tea.png"
+},
+{
+"cls": "Book_Cooking_Pasta",
+"name": "Book Cooking Pasta",
+"icon": "/item-icons/ico_chow_mein_item.png"
+},
+{
+"cls": "Book_Cooking_Pizza",
+"name": "Book Cooking Pizza",
+"icon": "/item-icons/ico_bianca_raw_item.png"
+},
+{
+"cls": "Book_Cooking_Rice",
+"name": "Book Cooking Rice",
+"icon": "/item-icons/ico_fried_rice_raw.png"
+},
+{
+"cls": "Book_Cooking_Stew",
+"name": "Book Cooking Stew",
+"icon": "/item-icons/ico_beans_raw_item.png"
+},
+{
+"cls": "CannedFruitCocktail",
+"name": "CannedFruitCocktail",
+"icon": null
+},
+{
+"cls": "Carrot",
+"name": "Carrot",
+"icon": "/item-icons/ico_carrot.png"
+},
+{
+"cls": "Carrot_Seed_Bag",
+"name": "Carrot Seed Bag",
+"icon": "/item-icons/ico_trader_seedbags_carrot.png"
+},
+{
+"cls": "Carrot_Seeds",
+"name": "Carrot Seeds",
+"icon": "/item-icons/ico_carrot_seeds.png"
+},
+{
+"cls": "ChocolateCandy_01",
+"name": "ChocolateCandy 1",
+"icon": "/item-icons/ico_chocolatecandybar_01.png"
+},
+{
+"cls": "ChocolateCandy_06",
+"name": "ChocolateCandy 6",
+"icon": "/item-icons/ico_chocolatecandybar_01.png"
+},
+{
+"cls": "Coffee",
+"name": "Coffee",
+"icon": "/item-icons/ico_coffee_bag.png"
+},
+{
+"cls": "ColorCan_RedChocolate",
+"name": "ColorCan RedChocolate",
+"icon": "/item-icons/ico_spray_can_redchocolate.png"
+},
+{
+"cls": "Corn_Seeds",
+"name": "Corn Seeds",
+"icon": "/item-icons/ico_corn_seeds.png"
+},
+{
+"cls": "Corn_flakes",
+"name": "Corn flakes",
+"icon": "/item-icons/ico_trader_corn_flakes_n.png"
+},
+{
+"cls": "Icing_Sugar",
+"name": "Icing Sugar",
+"icon": "/item-icons/ico_icing_sugar.png"
+},
+{
+"cls": "Kitchen_Element_Asian_Corner",
+"name": "Kitchen Element Asian Corner",
+"icon": "/item-icons/ico_asiankitchen_cornerelement.png"
+},
+{
+"cls": "Kitchen_Element_Corner_WFP",
+"name": "Kitchen Element Corner WFP",
+"icon": "/item-icons/ico_asiankitchen_cornerelement.png"
+},
+{
+"cls": "Kitchen_Element_Improvised_Corner",
+"name": "Kitchen Element Improvised Corner",
+"icon": "/item-icons/ico_improvised_kitchen_bottom_corner_wood.png"
+},
+{
+"cls": "MRE_Cheeseburger",
+"name": "MRE Cheeseburger",
+"icon": "/item-icons/ico_trader_mre_cheeseburger.png"
+},
+{
+"cls": "MRE_Stew",
+"name": "MRE Stew",
+"icon": "/item-icons/ico_trader_mre_stew.png"
+},
+{
+"cls": "MRE_TunaSalad",
+"name": "MRE TunaSalad",
+"icon": "/item-icons/ico_trader_mre_tunasalad.png"
+},
+{
+"cls": "Mayonnaise",
+"name": "Mayonnaise",
+"icon": "/item-icons/ico_mayonnaise.png"
+},
+{
+"cls": "MeatSnack_01",
+"name": "MeatSnack 1",
+"icon": "/item-icons/ico_meatsnack_01.png"
+},
+{
+"cls": "MeatSnack_02",
+"name": "MeatSnack 2",
+"icon": "/item-icons/ico_meatsnack_01.png"
+},
+{
+"cls": "Military_Beanie_01",
+"name": "Military Beanie 1",
+"icon": "/item-icons/ico_ris_body_military.png"
+},
+{
+"cls": "Military_Beanie_02",
+"name": "Military Beanie 2",
+"icon": "/item-icons/ico_ris_body_military.png"
+},
+{
+"cls": "Military_Beanie_03",
+"name": "Military Beanie 3",
+"icon": "/item-icons/ico_ris_body_military.png"
+},
+{
+"cls": "Military_Beanie_07",
+"name": "Military Beanie 7",
+"icon": "/item-icons/ico_ris_body_military.png"
+},
+{
+"cls": "Milk",
+"name": "Milk",
+"icon": null
+},
+{
+"cls": "Potato",
+"name": "Potato",
+"icon": "/item-icons/ico_potato.png"
+},
+{
+"cls": "Potato_Seed_Bag",
+"name": "Potato Seed Bag",
+"icon": "/item-icons/ico_trader_seedbags_potato.png"
+},
+{
+"cls": "Potatoes_Seeds",
+"name": "Potatoes Seeds",
+"icon": "/item-icons/ico_dauphinoise_potatoes_item_raw.png"
+},
+{
+"cls": "RK_Beanie_01",
+"name": "RK Beanie 1",
+"icon": "/item-icons/ico_beanie_01.png"
+},
+{
+"cls": "Richards_Cheese",
+"name": "Richards Cheese",
+"icon": null
+},
+{
+"cls": "SeaSalt_01",
+"name": "SeaSalt 1",
+"icon": null
+},
+{
+"cls": "SeaSalt_02",
+"name": "SeaSalt 2",
+"icon": null
+},
+{
+"cls": "Sugar",
+"name": "Sugar",
+"icon": "/item-icons/ico_sugar_01.png"
+},
+{
+"cls": "SugarBeet",
+"name": "SugarBeet",
+"icon": "/item-icons/ico_trader_sugarbeet.png"
+},
+{
+"cls": "Tomato",
+"name": "Tomato",
+"icon": "/item-icons/ico_tomato.png"
+},
+{
+"cls": "Tomato_Seed_Bag",
+"name": "Tomato Seed Bag",
+"icon": "/item-icons/ico_trader_seedbags_tomato.png"
+},
+{
+"cls": "Tomato_Seeds",
+"name": "Tomato Seeds",
+"icon": "/item-icons/ico_tomato_seeds.png"
+},
+{
+"cls": "Water_05l",
+"name": "Water 05l",
+"icon": "/item-icons/ico_water_gelburn.png"
+},
+{
+"cls": "Watering_Can",
+"name": "Watering Can",
+"icon": "/item-icons/ico_watering_can_vicinity.png"
+},
+{
+"cls": "Watermelon_Seed_Bag",
+"name": "Watermelon Seed Bag",
+"icon": "/item-icons/ico_trader_seedbags_watermelon.png"
+},
+{
+"cls": "Watermelon_Seeds",
+"name": "Watermelon Seeds",
+"icon": "/item-icons/ico_watermelon_seeds.png"
+},
+{
+"cls": "WhiteFlour",
+"name": "WhiteFlour",
+"icon": "/item-icons/ico_trader_whiteflour.png"
+},
+{
+"cls": "Wine",
+"name": "Wine",
+"icon": null
+},
+{
+"cls": "WineCork",
+"name": "WineCork",
+"icon": "/item-icons/ico_winecork.png"
+}
+],
+"Clothing": [
+{
+"cls": "Backpack_02_01",
+"name": "Backpack 2 1",
+"icon": "/item-icons/ico_backpack_tyrone_01.png"
+},
+{
+"cls": "Backpack_02_02",
+"name": "Backpack 2 2",
+"icon": "/item-icons/ico_backpack_tyrone_01.png"
+},
+{
+"cls": "Backpack_02_03",
+"name": "Backpack 2 3",
+"icon": "/item-icons/ico_backpack_tyrone_01.png"
+},
+{
+"cls": "Backpack_02_04",
+"name": "Backpack 2 4",
+"icon": "/item-icons/ico_backpack_tyrone_01.png"
+},
+{
+"cls": "Backpack_02_05",
+"name": "Backpack 2 5",
+"icon": "/item-icons/ico_backpack_tyrone_01.png"
+},
+{
+"cls": "Baseball_Cap_10",
+"name": "Baseball Cap 10",
+"icon": "/item-icons/ico_baseball_cap_01.png"
+},
+{
+"cls": "Baseball_Cap_11",
+"name": "Baseball Cap 11",
+"icon": "/item-icons/ico_baseball_cap_01.png"
+},
+{
+"cls": "Baseball_Cap_12",
+"name": "Baseball Cap 12",
+"icon": "/item-icons/ico_baseball_cap_01.png"
+},
+{
+"cls": "Baseball_Cap_13",
+"name": "Baseball Cap 13",
+"icon": "/item-icons/ico_baseball_cap_01.png"
+},
+{
+"cls": "Baseball_Cap_02",
+"name": "Baseball Cap 2",
+"icon": "/item-icons/ico_baseball_cap_01.png"
+},
+{
+"cls": "Baseball_Cap_04",
+"name": "Baseball Cap 4",
+"icon": "/item-icons/ico_baseball_cap_01.png"
+},
+{
+"cls": "Baseball_Cap_05",
+"name": "Baseball Cap 5",
+"icon": "/item-icons/ico_baseball_cap_01.png"
+},
+{
+"cls": "Baseball_Cap_06",
+"name": "Baseball Cap 6",
+"icon": "/item-icons/ico_baseball_cap_01.png"
+},
+{
+"cls": "Baseball_Cap_07",
+"name": "Baseball Cap 7",
+"icon": "/item-icons/ico_baseball_cap_01.png"
+},
+{
+"cls": "Baseball_Cap_08",
+"name": "Baseball Cap 8",
+"icon": "/item-icons/ico_baseball_cap_01.png"
+},
+{
+"cls": "Boonie_Hat_01",
+"name": "Boonie Hat 1",
+"icon": "/item-icons/ico_trader_boonie_hat_15.png"
+},
+{
+"cls": "Boonie_Hat_02",
+"name": "Boonie Hat 2",
+"icon": "/item-icons/ico_trader_boonie_hat_15.png"
+},
+{
+"cls": "Boonie_Hat_03",
+"name": "Boonie Hat 3",
+"icon": "/item-icons/ico_trader_boonie_hat_15.png"
+},
+{
+"cls": "Boonie_Hat_05",
+"name": "Boonie Hat 5",
+"icon": "/item-icons/ico_trader_boonie_hat_15.png"
+},
+{
+"cls": "Boots_06_02",
+"name": "Boots 6 2",
+"icon": "/item-icons/ico_hh_boots_01.png"
+},
+{
+"cls": "Boots_07_01",
+"name": "Boots 7 1",
+"icon": "/item-icons/ico_hh_boots_01.png"
+},
+{
+"cls": "Boots_07_02",
+"name": "Boots 7 2",
+"icon": "/item-icons/ico_hh_boots_01.png"
+},
+{
+"cls": "Boxer_Briefs_01",
+"name": "Boxer Briefs 1",
+"icon": null
+},
+{
+"cls": "Broccoli_Seed_Bag",
+"name": "Broccoli Seed Bag",
+"icon": "/item-icons/ico_trader_seedbags_broccoli.png"
+},
+{
+"cls": "Camouflage_Jacket_01",
+"name": "Camouflage Jacket 1",
+"icon": null
+},
+{
+"cls": "Cannabis_Seed_Bag",
+"name": "Cannabis Seed Bag",
+"icon": "/item-icons/ico_trader_seedbags_cannabis.png"
+},
+{
+"cls": "Classic_Shirt_01",
+"name": "Classic Shirt 1",
+"icon": "/item-icons/ico_classic_shirt_01.png"
+},
+{
+"cls": "Classic_Shirt_02",
+"name": "Classic Shirt 2",
+"icon": "/item-icons/ico_classic_shirt_01.png"
+},
+{
+"cls": "Combat_Helmet_02",
+"name": "Combat Helmet 2",
+"icon": "/item-icons/ico_trader_combat_helmet_01.png"
+},
+{
+"cls": "Combat_Helmet_04",
+"name": "Combat Helmet 4",
+"icon": "/item-icons/ico_trader_combat_helmet_01.png"
+},
+{
+"cls": "CombatBoots",
+"name": "CombatBoots",
+"icon": "/item-icons/ico_combatboots.png"
+},
+{
+"cls": "Construction_Gloves_01_01",
+"name": "Construction Gloves 1 1",
+"icon": "/item-icons/ico_construction_gloves_01.png"
+},
+{
+"cls": "Construction_Gloves_01_02",
+"name": "Construction Gloves 1 2",
+"icon": "/item-icons/ico_construction_gloves_01.png"
+},
+{
+"cls": "Construction_Gloves_01_03",
+"name": "Construction Gloves 1 3",
+"icon": "/item-icons/ico_construction_gloves_01.png"
+},
+{
+"cls": "Construction_Pants_01",
+"name": "Construction Pants 1",
+"icon": "/item-icons/ico_construction_pants_01.png"
+},
+{
+"cls": "Construction_Pants_02",
+"name": "Construction Pants 2",
+"icon": "/item-icons/ico_construction_pants_01.png"
+},
+{
+"cls": "Construction_Pants_03",
+"name": "Construction Pants 3",
+"icon": "/item-icons/ico_construction_pants_01.png"
+},
+{
+"cls": "Cowboys_Boots_01",
+"name": "Cowboys Boots 1",
+"icon": null
+},
+{
+"cls": "Cucumber_Seed_Bag",
+"name": "Cucumber Seed Bag",
+"icon": "/item-icons/ico_trader_seedbags_cucumber.png"
+},
+{
+"cls": "Danny_Trejo_Boots_01",
+"name": "Danny Trejo Boots 1",
+"icon": "/item-icons/ico_dannytrejo_boots.png"
+},
+{
+"cls": "Danny_Trejo_Glove_01",
+"name": "Danny Trejo Glove 1",
+"icon": "/item-icons/ico_dannytrejo_gloves.png"
+},
+{
+"cls": "Danny_Trejo_Pants",
+"name": "Danny Trejo Pants",
+"icon": "/item-icons/ico_dannytrejo_pants.png"
+},
+{
+"cls": "Danny_Trejo_Vest",
+"name": "Danny Trejo Vest",
+"icon": "/item-icons/ico_dannytrejo_vest.png"
+},
+{
+"cls": "Disposable_Mask",
+"name": "Disposable Mask",
+"icon": "/item-icons/ico_t_disposable_mask.png"
+},
+{
+"cls": "Diving_Mask",
+"name": "Diving Mask",
+"icon": "/item-icons/ico_diving_equipment_01.png"
+},
+{
+"cls": "Diving_Mask_With_Breathing_Tube",
+"name": "Diving Mask With Breathing Tube",
+"icon": null
+},
+{
+"cls": "Driving_Gloves_01_01",
+"name": "Driving Gloves 1 1",
+"icon": "/item-icons/ico_driving_gloves_01_01.png"
+},
+{
+"cls": "Driving_Gloves_01_02",
+"name": "Driving Gloves 1 2",
+"icon": "/item-icons/ico_driving_gloves_01_01.png"
+},
+{
+"cls": "Driving_Gloves_01_03",
+"name": "Driving Gloves 1 3",
+"icon": "/item-icons/ico_driving_gloves_01_01.png"
+},
+{
+"cls": "Driving_Gloves_01_04",
+"name": "Driving Gloves 1 4",
+"icon": "/item-icons/ico_driving_gloves_01_01.png"
+},
+{
+"cls": "Electrician_Glove_01_01",
+"name": "Electrician Glove 1 1",
+"icon": "/item-icons/ico_electrician_gloves_01_01.png"
+},
+{
+"cls": "Electrician_Glove_01_02",
+"name": "Electrician Glove 1 2",
+"icon": "/item-icons/ico_electrician_gloves_01_01.png"
+},
+{
+"cls": "Electrician_Glove_01_03",
+"name": "Electrician Glove 1 3",
+"icon": "/item-icons/ico_electrician_gloves_01_01.png"
+},
+{
+"cls": "F_Undershirt_Bra_01",
+"name": "F Undershirt Bra 1",
+"icon": "/item-icons/ico_undershirts.png"
+},
+{
+"cls": "F_Undershirt_Bra_02",
+"name": "F Undershirt Bra 2",
+"icon": "/item-icons/ico_undershirts.png"
+},
+{
+"cls": "Fascinator_Hat_01",
+"name": "Fascinator Hat 1",
+"icon": "/item-icons/ico_fascinator_hat_01.png"
+},
+{
+"cls": "Fascinator_Hat_02",
+"name": "Fascinator Hat 2",
+"icon": "/item-icons/ico_fascinator_hat_01.png"
+},
+{
+"cls": "Fascinator_Hat_03",
+"name": "Fascinator Hat 3",
+"icon": "/item-icons/ico_fascinator_hat_01.png"
+},
+{
+"cls": "Fig_Seed_Bag",
+"name": "Fig Seed Bag",
+"icon": "/item-icons/ico_trader_seedbags_fig.png"
+},
+{
+"cls": "Garrison_Cap_01",
+"name": "Garrison Cap 1",
+"icon": "/item-icons/ico_garrison_cap_01.png"
+},
+{
+"cls": "Garrison_Cap_03",
+"name": "Garrison Cap 3",
+"icon": "/item-icons/ico_garrison_cap_01.png"
+},
+{
+"cls": "Garrison_Cap_05",
+"name": "Garrison Cap 5",
+"icon": "/item-icons/ico_garrison_cap_01.png"
+},
+{
+"cls": "Gas_Mask_02",
+"name": "Gas Mask 2",
+"icon": "/item-icons/ico_gasmask_pink.png"
+},
+{
+"cls": "Gas_Mask_03",
+"name": "Gas Mask 3",
+"icon": "/item-icons/ico_gasmask_pink.png"
+},
+{
+"cls": "Gas_Mask_04",
+"name": "Gas Mask 4",
+"icon": "/item-icons/ico_gasmask_pink.png"
+},
+{
+"cls": "Ghillie_Suit_Jacket_04",
+"name": "Ghillie Suit Jacket 4",
+"icon": "/item-icons/ico_pink_ghillie_jacket.png"
+},
+{
+"cls": "Ghillie_Suit_Pants_04",
+"name": "Ghillie Suit Pants 4",
+"icon": "/item-icons/ico_ghillie_suit_pants.png"
+},
+{
+"cls": "HH_Boots_01",
+"name": "HH Boots 1",
+"icon": "/item-icons/ico_hh_boots_01.png"
+},
+{
+"cls": "HH_Shoes_02_02",
+"name": "HH Shoes 2 2",
+"icon": "/item-icons/ico_hh_shoes_01_01.png"
+},
+{
+"cls": "HH_Shoes_03_02",
+"name": "HH Shoes 3 2",
+"icon": "/item-icons/ico_hh_shoes_01_01.png"
+},
+{
+"cls": "HH_Shoes_03_05",
+"name": "HH Shoes 3 5",
+"icon": "/item-icons/ico_hh_shoes_01_01.png"
+},
+{
+"cls": "HH_Shoes_03_07",
+"name": "HH Shoes 3 7",
+"icon": "/item-icons/ico_hh_shoes_01_01.png"
+},
+{
+"cls": "HH_Shoes_04_01",
+"name": "HH Shoes 4 1",
+"icon": "/item-icons/ico_hh_shoes_01_01.png"
+},
+{
+"cls": "HH_Shoes_04_03",
+"name": "HH Shoes 4 3",
+"icon": "/item-icons/ico_hh_shoes_01_01.png"
+},
+{
+"cls": "Halloween_Anonymous_Mask_01",
+"name": "Halloween Anonymous Mask 1",
+"icon": "/item-icons/ico_wolf_mask.png"
+},
+{
+"cls": "Halloween_Mask_Hockey_04",
+"name": "Halloween Mask Hockey 4",
+"icon": "/item-icons/ico_halloween_mask_hockey.png"
+},
+{
+"cls": "Halloween_Mask_JohnDoe_05",
+"name": "Halloween Mask JohnDoe 5",
+"icon": "/item-icons/ico_halloween_mask_johndoe.png"
+},
+{
+"cls": "Halloween_Mask_Scream",
+"name": "Halloween Mask Scream",
+"icon": "/item-icons/ico_halloween_mask_scream.png"
+},
+{
+"cls": "Hemostatic_Dressing",
+"name": "Hemostatic Dressing",
+"icon": null
+},
+{
+"cls": "HighTop_Shoes",
+"name": "HighTop Shoes",
+"icon": "/item-icons/ico_trader_hightop_shoes.png"
+},
+{
+"cls": "Hiking_Backpack_01_02",
+"name": "Hiking Backpack 1 2",
+"icon": "/item-icons/ico_trader_hiking_backpack_01.png"
+},
+{
+"cls": "Hiking_Backpack_01_04",
+"name": "Hiking Backpack 1 4",
+"icon": "/item-icons/ico_trader_hiking_backpack_01.png"
+},
+{
+"cls": "Hiking_Backpack_01_05",
+"name": "Hiking Backpack 1 5",
+"icon": "/item-icons/ico_trader_hiking_backpack_01.png"
+},
+{
+"cls": "Hiking_Backpack_Tyrone",
+"name": "Hiking Backpack Tyrone",
+"icon": "/item-icons/ico_backpack_tyrone_01.png"
+},
+{
+"cls": "Hiking_Boots_01",
+"name": "Hiking Boots 1",
+"icon": "/item-icons/ico_trader_hiking_boots_01.png"
+},
+{
+"cls": "Hiking_Boots_03",
+"name": "Hiking Boots 3",
+"icon": "/item-icons/ico_trader_hiking_boots_01.png"
+},
+{
+"cls": "Hippie_Pants_01",
+"name": "Hippie Pants 1",
+"icon": "/item-icons/ico_hippie_pants_01.png"
+},
+{
+"cls": "Hippie_Pants_02",
+"name": "Hippie Pants 2",
+"icon": "/item-icons/ico_hippie_pants_01.png"
+},
+{
+"cls": "Hippie_Pants_03",
+"name": "Hippie Pants 3",
+"icon": "/item-icons/ico_hippie_pants_01.png"
+},
+{
+"cls": "Hippie_Pants_06",
+"name": "Hippie Pants 6",
+"icon": "/item-icons/ico_hippie_pants_01.png"
+},
+{
+"cls": "Hippie_Pants_08",
+"name": "Hippie Pants 8",
+"icon": "/item-icons/ico_hippie_pants_01.png"
+},
+{
+"cls": "Hippie_Shirt_01",
+"name": "Hippie Shirt 1",
+"icon": "/item-icons/ico_hippie_shirt_01.png"
+},
+{
+"cls": "Hoodie_01",
+"name": "Hoodie 1",
+"icon": "/item-icons/ico_hoodie_01.png"
+},
+{
+"cls": "Hospital_Pants",
+"name": "Hospital Pants",
+"icon": "/item-icons/ico_doctor_pants_vicinity.png"
+},
+{
+"cls": "Hospital_Shirt_01",
+"name": "Hospital Shirt 1",
+"icon": "/item-icons/ico_doctor_shirt_vicinity.png"
+},
+{
+"cls": "Inmate_Pants_01_South_DigitalDeluxe",
+"name": "Inmate Pants 1 South DigitalDeluxe",
+"icon": null
+},
+{
+"cls": "Inmate_pants",
+"name": "Inmate pants",
+"icon": "/item-icons/ico_inmate_pants_01_snow.png"
+},
+{
+"cls": "Inmate_shirt_01",
+"name": "Inmate shirt 1",
+"icon": "/item-icons/ico_inmate_shirt_01_snow.png"
+},
+{
+"cls": "Jock_Jacket_04",
+"name": "Jock Jacket 4",
+"icon": "/item-icons/ico_punk_jacket_01.png"
+},
+{
+"cls": "Keyhole_Shirt_08",
+"name": "Keyhole Shirt 8",
+"icon": "/item-icons/ico_keyhole_shirt_01.png"
+},
+{
+"cls": "Kilt_06",
+"name": "Kilt 6",
+"icon": null
+},
+{
+"cls": "Kilt_Brogue_Shoe_01",
+"name": "Kilt Brogue Shoe 1",
+"icon": "/item-icons/ico_kilt_brogue_shoe_01.png"
+},
+{
+"cls": "Leather_Backpack_01",
+"name": "Leather Backpack 1",
+"icon": "/item-icons/ico_small_leather_backpack_01.png"
+},
+{
+"cls": "Leather_Backpack_02",
+"name": "Leather Backpack 2",
+"icon": "/item-icons/ico_small_leather_backpack_01.png"
+},
+{
+"cls": "Leather_Backpack_03",
+"name": "Leather Backpack 3",
+"icon": "/item-icons/ico_small_leather_backpack_01.png"
+},
+{
+"cls": "Leather_Jacket",
+"name": "Leather Jacket",
+"icon": "/item-icons/ico_biker_leather_jacket.png"
+},
+{
+"cls": "Leather_MiniSkirt_01",
+"name": "Leather MiniSkirt 1",
+"icon": null
+},
+{
+"cls": "Leather_MiniSkirt_02",
+"name": "Leather MiniSkirt 2",
+"icon": null
+},
+{
+"cls": "Leather_MiniSkirt_03",
+"name": "Leather MiniSkirt 3",
+"icon": null
+},
+{
+"cls": "Leather_Shoes_02",
+"name": "Leather Shoes 2",
+"icon": "/item-icons/ico_leather_shoes.png"
+},
+{
+"cls": "Lemon_Seed_Bag",
+"name": "Lemon Seed Bag",
+"icon": "/item-icons/ico_trader_seedbags_lemon.png"
+},
+{
+"cls": "Marine_Cap_05",
+"name": "Marine Cap 5",
+"icon": "/item-icons/ico_marine_cap_09.png"
+},
+{
+"cls": "Military_Backpack_02_02",
+"name": "Military Backpack 2 2",
+"icon": "/item-icons/ico_military_backpack_03_01.png"
+},
+{
+"cls": "Military_Backpack_03_04",
+"name": "Military Backpack 3 4",
+"icon": "/item-icons/ico_military_backpack_03_01.png"
+},
+{
+"cls": "Military_Backpack_03_08",
+"name": "Military Backpack 3 8",
+"icon": "/item-icons/ico_military_backpack_03_01.png"
+},
+{
+"cls": "Military_Boonie_Hat_05",
+"name": "Military Boonie Hat 5",
+"icon": null
+},
+{
+"cls": "Military_Cap_02",
+"name": "Military Cap 2",
+"icon": "/item-icons/ico_military_cap_01.png"
+},
+{
+"cls": "Military_Cap_03",
+"name": "Military Cap 3",
+"icon": "/item-icons/ico_military_cap_01.png"
+},
+{
+"cls": "Military_Cap_05",
+"name": "Military Cap 5",
+"icon": "/item-icons/ico_military_cap_01.png"
+},
+{
+"cls": "Military_Cap_07",
+"name": "Military Cap 7",
+"icon": "/item-icons/ico_military_cap_01.png"
+},
+{
+"cls": "Military_Helmet_01_09",
+"name": "Military Helmet 1 9",
+"icon": "/item-icons/ico_trader_military_helmet_01.png"
+},
+{
+"cls": "Military_Shirt_01",
+"name": "Military Shirt 1",
+"icon": "/item-icons/ico_trader_military_shirt_01.png"
+},
+{
+"cls": "Military_Shirt_02",
+"name": "Military Shirt 2",
+"icon": "/item-icons/ico_trader_military_shirt_01.png"
+},
+{
+"cls": "Military_Shirt_03",
+"name": "Military Shirt 3",
+"icon": "/item-icons/ico_trader_military_shirt_01.png"
+},
+{
+"cls": "Military_Shirt_05",
+"name": "Military Shirt 5",
+"icon": "/item-icons/ico_trader_military_shirt_01.png"
+},
+{
+"cls": "Military_Shirt_07",
+"name": "Military Shirt 7",
+"icon": "/item-icons/ico_trader_military_shirt_01.png"
+},
+{
+"cls": "Military_Shirt_08",
+"name": "Military Shirt 8",
+"icon": "/item-icons/ico_trader_military_shirt_01.png"
+},
+{
+"cls": "MilitaryBoots_JNA",
+"name": "MilitaryBoots JNA",
+"icon": "/item-icons/ico_trader_militaryboots_jna.png"
+},
+{
+"cls": "MilitaryBoots_Peace",
+"name": "MilitaryBoots Peace",
+"icon": "/item-icons/ico_trader_militaryboots_peace.png"
+},
+{
+"cls": "MilitaryPants_02",
+"name": "MilitaryPants 2",
+"icon": "/item-icons/ico_trader_militarypants_04.png"
+},
+{
+"cls": "MilitaryPants_04",
+"name": "MilitaryPants 4",
+"icon": "/item-icons/ico_trader_militarypants_04.png"
+},
+{
+"cls": "MilitaryPants_07",
+"name": "MilitaryPants 7",
+"icon": "/item-icons/ico_trader_militarypants_04.png"
+},
+{
+"cls": "MilitaryPants_08",
+"name": "MilitaryPants 8",
+"icon": "/item-icons/ico_trader_militarypants_04.png"
+},
+{
+"cls": "Motorcycle_Jacket_01",
+"name": "Motorcycle Jacket 1",
+"icon": "/item-icons/ico_motorcycle_jacket_01.png"
+},
+{
+"cls": "Motorcycle_Jacket_02",
+"name": "Motorcycle Jacket 2",
+"icon": "/item-icons/ico_motorcycle_jacket_01.png"
+},
+{
+"cls": "Motorcycle_Mask_01",
+"name": "Motorcycle Mask 1",
+"icon": "/item-icons/ico_motorcycle_mask_01.png"
+},
+{
+"cls": "Motorcycle_Mask_02",
+"name": "Motorcycle Mask 2",
+"icon": "/item-icons/ico_motorcycle_mask_01.png"
+},
+{
+"cls": "Motorcycle_Pants_01",
+"name": "Motorcycle Pants 1",
+"icon": "/item-icons/ico_motorcyclepants_regular_01.png"
+},
+{
+"cls": "Negan_Jacket",
+"name": "Negan Jacket",
+"icon": "/item-icons/ico_biker_leather_jacket.png"
+},
+{
+"cls": "Pajama_Pants",
+"name": "Pajama Pants",
+"icon": "/item-icons/ico_patient_pants_vicinity.png"
+},
+{
+"cls": "Peach_Seed_Bag",
+"name": "Peach Seed Bag",
+"icon": "/item-icons/ico_trader_seedbags_peach.png"
+},
+{
+"cls": "Pear_Seed_Bag",
+"name": "Pear Seed Bag",
+"icon": "/item-icons/ico_trader_seedbags_pear.png"
+},
+{
+"cls": "Pilot_Jacket",
+"name": "Pilot Jacket",
+"icon": "/item-icons/ico_trader_pilot_jacket.png"
+},
+{
+"cls": "Pirate_Hat_01",
+"name": "Pirate Hat 1",
+"icon": "/item-icons/ico_pirate_hat.png"
+},
+{
+"cls": "Plum_Seed_Bag",
+"name": "Plum Seed Bag",
+"icon": "/item-icons/ico_trader_seedbags_plum.png"
+},
+{
+"cls": "Police_Boonie_Hat_01",
+"name": "Police Boonie Hat 1",
+"icon": null
+},
+{
+"cls": "Police_Gloves_01",
+"name": "Police Gloves 1",
+"icon": "/item-icons/ico_police_gloves_09.png"
+},
+{
+"cls": "Police_Mask_01",
+"name": "Police Mask 1",
+"icon": "/item-icons/ico_police_cap_01.png"
+},
+{
+"cls": "Police_Open_Finger_Gloves_01",
+"name": "Police Open Finger Gloves 1",
+"icon": "/item-icons/ico_police_openfingergloves_05.png"
+},
+{
+"cls": "Police_Shirt_01",
+"name": "Police Shirt 1",
+"icon": null
+},
+{
+"cls": "Pressure_Dressing",
+"name": "Pressure Dressing",
+"icon": "/item-icons/ico_pressuredressing.png"
+},
+{
+"cls": "Qipao_Dress_01",
+"name": "Qipao Dress 1",
+"icon": "/item-icons/ico_qipao_dress_01.png"
+},
+{
+"cls": "Raincoat_05",
+"name": "Raincoat 5",
+"icon": "/item-icons/ico_raincoat_01.png"
+},
+{
+"cls": "Raincoat_06",
+"name": "Raincoat 6",
+"icon": "/item-icons/ico_raincoat_01.png"
+},
+{
+"cls": "Redneck_Hat_07",
+"name": "Redneck Hat 7",
+"icon": null
+},
+{
+"cls": "Retro_Helmet_01",
+"name": "Retro Helmet 1",
+"icon": "/item-icons/ico_trader_bp_retro_helmet.png"
+},
+{
+"cls": "Rider_Helmet_02",
+"name": "Rider Helmet 2",
+"icon": "/item-icons/ico_trader_bp_rider_helmet_01.png"
+},
+{
+"cls": "Riot_Helmet_02",
+"name": "Riot Helmet 2",
+"icon": "/item-icons/ico_k6-3_helmet.png"
+},
+{
+"cls": "Santa_Jacket",
+"name": "Santa Jacket",
+"icon": "/item-icons/ico_santa_jacket_01.png"
+},
+{
+"cls": "School_Backpack_01",
+"name": "School Backpack 1",
+"icon": "/item-icons/ico_school_backpack_boy_01_v2.png"
+},
+{
+"cls": "School_Backpack_Boy_02",
+"name": "School Backpack Boy 2",
+"icon": "/item-icons/ico_school_backpack_boy_01_v2.png"
+},
+{
+"cls": "School_Backpack_Boy_03",
+"name": "School Backpack Boy 3",
+"icon": "/item-icons/ico_school_backpack_boy_01_v2.png"
+},
+{
+"cls": "School_Backpack_Girl_04",
+"name": "School Backpack Girl 4",
+"icon": "/item-icons/ico_school_backpack_girl_01_v2.png"
+},
+{
+"cls": "School_Backpack_Girl_05",
+"name": "School Backpack Girl 5",
+"icon": "/item-icons/ico_school_backpack_girl_01_v2.png"
+},
+{
+"cls": "School_Backpack_Girl_06",
+"name": "School Backpack Girl 6",
+"icon": "/item-icons/ico_school_backpack_girl_01_v2.png"
+},
+{
+"cls": "Scottish_Sporran_Bag_01",
+"name": "Scottish Sporran Bag 1",
+"icon": null
+},
+{
+"cls": "Scum_Shirt_Supporter_Pack_Black_01",
+"name": "Scum Shirt Supporter Pack Black 1",
+"icon": "/item-icons/ico_bra_supporters.png"
+},
+{
+"cls": "Sexy_Jeans_Shorts_01",
+"name": "Sexy Jeans Shorts 1",
+"icon": "/item-icons/ico_sexy_jeans_shorts_01.png"
+},
+{
+"cls": "Sexy_Jeans_Shorts_02",
+"name": "Sexy Jeans Shorts 2",
+"icon": "/item-icons/ico_sexy_jeans_shorts_01.png"
+},
+{
+"cls": "Sexy_Jeans_Shorts_03",
+"name": "Sexy Jeans Shorts 3",
+"icon": "/item-icons/ico_sexy_jeans_shorts_01.png"
+},
+{
+"cls": "Sexy_Jeans_Shorts_04",
+"name": "Sexy Jeans Shorts 4",
+"icon": "/item-icons/ico_sexy_jeans_shorts_01.png"
+},
+{
+"cls": "Sexy_Jeans_Shorts_05",
+"name": "Sexy Jeans Shorts 5",
+"icon": "/item-icons/ico_sexy_jeans_shorts_01.png"
+},
+{
+"cls": "Sexy_Jeans_Shorts_06",
+"name": "Sexy Jeans Shorts 6",
+"icon": "/item-icons/ico_sexy_jeans_shorts_01.png"
+},
+{
+"cls": "Sexy_Jeans_Shorts_07",
+"name": "Sexy Jeans Shorts 7",
+"icon": "/item-icons/ico_sexy_jeans_shorts_01.png"
+},
+{
+"cls": "Shirt_02",
+"name": "Shirt 2",
+"icon": "/item-icons/ico_tang_shirt_01.png"
+},
+{
+"cls": "Shorts_Pants_01_01",
+"name": "Shorts Pants 1 1",
+"icon": "/item-icons/ico_sexy_jeans_shorts_01.png"
+},
+{
+"cls": "Shorts_Pants_01_02",
+"name": "Shorts Pants 1 2",
+"icon": "/item-icons/ico_sexy_jeans_shorts_01.png"
+},
+{
+"cls": "Shorts_Pants_01_03",
+"name": "Shorts Pants 1 3",
+"icon": "/item-icons/ico_sexy_jeans_shorts_01.png"
+},
+{
+"cls": "Shorts_Pants_01_04",
+"name": "Shorts Pants 1 4",
+"icon": "/item-icons/ico_sexy_jeans_shorts_01.png"
+},
+{
+"cls": "Shorts_Pants_01_06",
+"name": "Shorts Pants 1 6",
+"icon": "/item-icons/ico_sexy_jeans_shorts_01.png"
+},
+{
+"cls": "Shorts_Pants_01_08",
+"name": "Shorts Pants 1 8",
+"icon": "/item-icons/ico_sexy_jeans_shorts_01.png"
+},
+{
+"cls": "Shorts_Pants_01_09",
+"name": "Shorts Pants 1 9",
+"icon": "/item-icons/ico_sexy_jeans_shorts_01.png"
+},
+{
+"cls": "Skirt_01_01",
+"name": "Skirt 1 1",
+"icon": "/item-icons/ico_skirt_01_01.png"
+},
+{
+"cls": "Skirt_01_02",
+"name": "Skirt 1 2",
+"icon": "/item-icons/ico_skirt_01_01.png"
+},
+{
+"cls": "Skirt_02_01",
+"name": "Skirt 2 1",
+"icon": "/item-icons/ico_skirt_01_01.png"
+},
+{
+"cls": "Skirt_02_02",
+"name": "Skirt 2 2",
+"icon": "/item-icons/ico_skirt_01_01.png"
+},
+{
+"cls": "Skirt_02_03",
+"name": "Skirt 2 3",
+"icon": "/item-icons/ico_skirt_01_01.png"
+},
+{
+"cls": "Skirt_02_06",
+"name": "Skirt 2 6",
+"icon": "/item-icons/ico_skirt_01_01.png"
+},
+{
+"cls": "Skirt_02_08",
+"name": "Skirt 2 8",
+"icon": "/item-icons/ico_skirt_01_01.png"
+},
+{
+"cls": "Sleeveless_Shirt_01",
+"name": "Sleeveless Shirt 1",
+"icon": "/item-icons/ico_sleeveless_shirt_01.png"
+},
+{
+"cls": "Slouch_Hat_01",
+"name": "Slouch Hat 1",
+"icon": "/item-icons/ico_slouch_hat_01.png"
+},
+{
+"cls": "Slouch_Hat_02",
+"name": "Slouch Hat 2",
+"icon": "/item-icons/ico_slouch_hat_01.png"
+},
+{
+"cls": "Sock_01",
+"name": "Sock 1",
+"icon": null
+},
+{
+"cls": "Socks_02",
+"name": "Socks 2",
+"icon": "/item-icons/ico_socks_02.png"
+},
+{
+"cls": "Spinach_Seed_Bag",
+"name": "Spinach Seed Bag",
+"icon": "/item-icons/ico_trader_seedbags_spinach.png"
+},
+{
+"cls": "Stabproof_Vest_01_05",
+"name": "Stabproof Vest 1 5",
+"icon": "/item-icons/ico_stabproof_vest_01.png"
+},
+{
+"cls": "Stabproof_Vest_01_07",
+"name": "Stabproof Vest 1 7",
+"icon": "/item-icons/ico_stabproof_vest_01.png"
+},
+{
+"cls": "Stabproof_Vest_01_09",
+"name": "Stabproof Vest 1 9",
+"icon": "/item-icons/ico_stabproof_vest_01.png"
+},
+{
+"cls": "Suite_Pants_01",
+"name": "Suite Pants 1",
+"icon": null
+},
+{
+"cls": "Sweater_05",
+"name": "Sweater 5",
+"icon": "/item-icons/ico_christmas_sweater.png"
+},
+{
+"cls": "TC_Backpack",
+"name": "TC Backpack",
+"icon": "/item-icons/ico_backpack_tyrone_01.png"
+},
+{
+"cls": "Tangerine_Seed_Bag",
+"name": "Tangerine Seed Bag",
+"icon": "/item-icons/ico_trader_seedbags_tangerine.png"
+},
+{
+"cls": "Tracksuit_Pants_01_02",
+"name": "Tracksuit Pants 1 2",
+"icon": "/item-icons/ico_shimoro_tracksuit_pants.png"
+},
+{
+"cls": "Tracksuit_Pants_01_03",
+"name": "Tracksuit Pants 1 3",
+"icon": "/item-icons/ico_shimoro_tracksuit_pants.png"
+},
+{
+"cls": "Tracksuit_Pants_01_04",
+"name": "Tracksuit Pants 1 4",
+"icon": "/item-icons/ico_shimoro_tracksuit_pants.png"
+},
+{
+"cls": "Tracksuit_Pants_02_01",
+"name": "Tracksuit Pants 2 1",
+"icon": "/item-icons/ico_shimoro_tracksuit_pants.png"
+},
+{
+"cls": "Tracksuit_Pants_02_02",
+"name": "Tracksuit Pants 2 2",
+"icon": "/item-icons/ico_shimoro_tracksuit_pants.png"
+},
+{
+"cls": "Tracksuit_Pants_02_04",
+"name": "Tracksuit Pants 2 4",
+"icon": "/item-icons/ico_shimoro_tracksuit_pants.png"
+},
+{
+"cls": "Tracksuit_Top_05",
+"name": "Tracksuit Top 5",
+"icon": "/item-icons/ico_tracksuit_top_01.png"
+},
+{
+"cls": "Trucker_Jacket_03",
+"name": "Trucker Jacket 3",
+"icon": "/item-icons/ico_trucker_jacket_01.png"
+},
+{
+"cls": "Trucker_Jacket_04",
+"name": "Trucker Jacket 4",
+"icon": "/item-icons/ico_trucker_jacket_01.png"
+},
+{
+"cls": "Tyrone_Shoelacez_Mask",
+"name": "Tyrone Shoelacez Mask",
+"icon": null
+},
+{
+"cls": "Underpants_01",
+"name": "Underpants 1",
+"icon": "/item-icons/ico_female_underpants_01.png"
+},
+{
+"cls": "Underpants_02",
+"name": "Underpants 2",
+"icon": "/item-icons/ico_female_underpants_01.png"
+},
+{
+"cls": "Underpants_03",
+"name": "Underpants 3",
+"icon": "/item-icons/ico_female_underpants_01.png"
+},
+{
+"cls": "Underpants_05",
+"name": "Underpants 5",
+"icon": "/item-icons/ico_female_underpants_01.png"
+},
+{
+"cls": "Utility_Belt_01",
+"name": "Utility Belt 1",
+"icon": "/item-icons/ico_utility_belt_01.png"
+},
+{
+"cls": "Vintage_Jail_Cap_01",
+"name": "Vintage Jail Cap 1",
+"icon": "/item-icons/ico_vintage_jail_hat.png"
+},
+{
+"cls": "Vintage_Jail_Pants_01",
+"name": "Vintage Jail Pants 1",
+"icon": "/item-icons/ico_vintage_jail_pants.png"
+},
+{
+"cls": "Vintage_Jail_Shirt_01",
+"name": "Vintage Jail Shirt 1",
+"icon": "/item-icons/ico_vintage_jail_shirt.png"
+},
+{
+"cls": "WW2_German_Helmet_01",
+"name": "WW2 German Helmet 1",
+"icon": "/item-icons/ico_ww2_helm.png"
+},
+{
+"cls": "Waist_Bag_Small_01",
+"name": "Waist Bag Small 1",
+"icon": "/item-icons/ico_trader_waist_bag_small_01.png"
+},
+{
+"cls": "Waist_Bag_Small_02",
+"name": "Waist Bag Small 2",
+"icon": "/item-icons/ico_trader_waist_bag_small_01.png"
+},
+{
+"cls": "Waist_Bag_Small_03",
+"name": "Waist Bag Small 3",
+"icon": "/item-icons/ico_trader_waist_bag_small_01.png"
+},
+{
+"cls": "Woodcuters_Shirt_01",
+"name": "Woodcuters Shirt 1",
+"icon": null
+},
+{
+"cls": "Woodcuters_Shirt_02",
+"name": "Woodcuters Shirt 2",
+"icon": null
+},
+{
+"cls": "Woodcuters_Shirt_03",
+"name": "Woodcuters Shirt 3",
+"icon": null
+},
+{
+"cls": "Wool_Gloves_01_01",
+"name": "Wool Gloves 1 1",
+"icon": "/item-icons/ico_dannytrejo_gloves.png"
+},
+{
+"cls": "Wool_Gloves_01_02",
+"name": "Wool Gloves 1 2",
+"icon": "/item-icons/ico_dannytrejo_gloves.png"
+},
+{
+"cls": "Wool_Gloves_01_03",
+"name": "Wool Gloves 1 3",
+"icon": "/item-icons/ico_dannytrejo_gloves.png"
+},
+{
+"cls": "Wool_Gloves_01_04",
+"name": "Wool Gloves 1 4",
+"icon": "/item-icons/ico_dannytrejo_gloves.png"
+},
+{
+"cls": "Wool_Gloves_01_05",
+"name": "Wool Gloves 1 5",
+"icon": "/item-icons/ico_dannytrejo_gloves.png"
+},
+{
+"cls": "Wool_Gloves_01_06",
+"name": "Wool Gloves 1 6",
+"icon": "/item-icons/ico_dannytrejo_gloves.png"
+},
+{
+"cls": "Wool_Gloves_01_07",
+"name": "Wool Gloves 1 7",
+"icon": "/item-icons/ico_dannytrejo_gloves.png"
+},
+{
+"cls": "Work_Jacket_01",
+"name": "Work Jacket 1",
+"icon": "/item-icons/ico_work_jacket_01.png"
+},
+{
+"cls": "Work_Jacket_02",
+"name": "Work Jacket 2",
+"icon": "/item-icons/ico_work_jacket_01.png"
+},
+{
+"cls": "Work_Jacket_03",
+"name": "Work Jacket 3",
+"icon": "/item-icons/ico_work_jacket_01.png"
+},
+{
+"cls": "Working_Helmet_01",
+"name": "Working Helmet 1",
+"icon": "/item-icons/ico_working_helmet_01.png"
+},
+{
+"cls": "Working_Helmet_02",
+"name": "Working Helmet 2",
+"icon": "/item-icons/ico_working_helmet_01.png"
+},
+{
+"cls": "Working_Helmet_03",
+"name": "Working Helmet 3",
+"icon": "/item-icons/ico_working_helmet_01.png"
+},
+{
+"cls": "Working_pants_01_01",
+"name": "Working pants 1 1",
+"icon": "/item-icons/ico_working_jacket_01.png"
+},
+{
+"cls": "Working_pants_01_02",
+"name": "Working pants 1 2",
+"icon": "/item-icons/ico_working_jacket_01.png"
+}
+],
+"Medical": [
+{
+"cls": "ActivatedCharcoal_01",
+"name": "ActivatedCharcoal 1",
+"icon": "/item-icons/ico_trader_activatedcharcoal_01.png"
+},
+{
+"cls": "Antibiotics_01",
+"name": "Antibiotics 1",
+"icon": "/item-icons/ico_antibiotics_single_pill.png"
+},
+{
+"cls": "Antibiotics_02",
+"name": "Antibiotics 2",
+"icon": "/item-icons/ico_antibiotics_single_pill.png"
+},
+{
+"cls": "Emergency_bandage",
+"name": "Emergency bandage",
+"icon": null
+},
+{
+"cls": "Emergency_bandage_Big",
+"name": "Emergency bandage Big",
+"icon": null
+},
+{
+"cls": "Emergency_bandage_Big_Deluxe",
+"name": "Emergency bandage Big Deluxe",
+"icon": null
+},
+{
+"cls": "Emergency_bandage_Deluxe",
+"name": "Emergency bandage Deluxe",
+"icon": null
+},
+{
+"cls": "Needle",
+"name": "Needle",
+"icon": "/item-icons/ico_trader_needle.png"
+},
+{
+"cls": "PainKillers_03",
+"name": "PainKillers 3",
+"icon": "/item-icons/ico_painkillers_01.png"
+},
+{
+"cls": "Painkillers_01",
+"name": "Painkillers 1",
+"icon": "/item-icons/ico_painkillers_01.png"
+},
+{
+"cls": "Painkillers_02",
+"name": "Painkillers 2",
+"icon": "/item-icons/ico_painkillers_01.png"
+},
+{
+"cls": "PotassiumIodide_Pills_01",
+"name": "PotassiumIodide Pills 1",
+"icon": "/item-icons/ico_trader_potassiumiodide_pills_01.png"
+},
+{
+"cls": "PotassiumIodide_Pills_03",
+"name": "PotassiumIodide Pills 3",
+"icon": "/item-icons/ico_trader_potassiumiodide_pills_01.png"
+},
+{
+"cls": "Syringe",
+"name": "Syringe",
+"icon": "/item-icons/ico_syringe.png"
+},
+{
+"cls": "Vitamins_01",
+"name": "Vitamins 1",
+"icon": "/item-icons/ico_trader_vitamins_01.png"
+},
+{
+"cls": "Vitamins_02",
+"name": "Vitamins 2",
+"icon": "/item-icons/ico_trader_vitamins_01.png"
+},
+{
+"cls": "Vitamins_03",
+"name": "Vitamins 3",
+"icon": "/item-icons/ico_trader_vitamins_01.png"
+}
+],
+"Tools": [
+{
+"cls": "1H_Crowbar",
+"name": "1H Crowbar",
+"icon": "/item-icons/ico_crowbar_inhands.png"
+},
+{
+"cls": "1H_Improvised_Hammer",
+"name": "1H Improvised Hammer",
+"icon": "/item-icons/ico_improvised_hammer_inhands.png"
+},
+{
+"cls": "1H_Military_Shovel",
+"name": "1H Military Shovel",
+"icon": "/item-icons/ico_military_shovel_inhands.png"
+},
+{
+"cls": "1H_Pipe_Wrench",
+"name": "1H Pipe Wrench",
+"icon": "/item-icons/ico_pipe_wrench_inhands.png"
+},
+{
+"cls": "2H_Shovel_01",
+"name": "2H Shovel 1",
+"icon": "/item-icons/ico_shovel.png"
+},
+{
+"cls": "2H_Shovel_02",
+"name": "2H Shovel 2",
+"icon": "/item-icons/ico_shovel.png"
+},
+{
+"cls": "2H_Tang_Dao_Black_Dragon",
+"name": "2H Tang Dao Black Dragon",
+"icon": "/item-icons/ico_tang_dao_black_dragon_inhands.png"
+},
+{
+"cls": "Barbed_Wire",
+"name": "Barbed Wire",
+"icon": "/item-icons/ico_barbed_wire.png"
+},
+{
+"cls": "Car_Battery",
+"name": "Car Battery",
+"icon": "/item-icons/ico_trader_car_battery_cables.png"
+},
+{
+"cls": "Car_Battery_Cables",
+"name": "Car Battery Cables",
+"icon": "/item-icons/ico_trader_car_battery_cables.png"
+},
+{
+"cls": "Drill",
+"name": "Drill",
+"icon": "/item-icons/ico_drill.png"
+},
+{
+"cls": "Duct_Tape",
+"name": "Duct Tape",
+"icon": "/item-icons/ico_trader_duct_tape.png"
+},
+{
+"cls": "Electrician_Tools",
+"name": "Electrician Tools",
+"icon": "/item-icons/ico_trader_electriciantools.png"
+},
+{
+"cls": "Fire_Hand_Drill_new",
+"name": "Fire Hand Drill new",
+"icon": "/item-icons/ico_trader_fire_hand_drill_new.png"
+},
+{
+"cls": "FishingFloater",
+"name": "FishingFloater",
+"icon": null
+},
+{
+"cls": "FishingHookPack1",
+"name": "FishingHookPack1",
+"icon": null
+},
+{
+"cls": "FishingHookPack2",
+"name": "FishingHookPack2",
+"icon": null
+},
+{
+"cls": "FishingHookPack4",
+"name": "FishingHookPack4",
+"icon": null
+},
+{
+"cls": "FishingLine_1",
+"name": "FishingLine 1",
+"icon": "/item-icons/ico_fishingline_01.png"
+},
+{
+"cls": "FishingLine_2",
+"name": "FishingLine 2",
+"icon": "/item-icons/ico_fishingline_01.png"
+},
+{
+"cls": "FishingLine_3",
+"name": "FishingLine 3",
+"icon": "/item-icons/ico_fishingline_01.png"
+},
+{
+"cls": "FishingReel",
+"name": "FishingReel",
+"icon": "/item-icons/ico_fishingreel.png"
+},
+{
+"cls": "FishingRod_A",
+"name": "FishingRod A",
+"icon": "/item-icons/ico_fishing_rod.png"
+},
+{
+"cls": "FishingRod_B",
+"name": "FishingRod B",
+"icon": "/item-icons/ico_fishing_rod.png"
+},
+{
+"cls": "Gasoline_Canister",
+"name": "Gasoline Canister",
+"icon": null
+},
+{
+"cls": "Gasoline_Canister_Small",
+"name": "Gasoline Canister Small",
+"icon": null
+},
+{
+"cls": "GlassBottle02",
+"name": "GlassBottle02",
+"icon": "/item-icons/ico_trader_glassbottle02.png"
+},
+{
+"cls": "GlassBottle03",
+"name": "GlassBottle03",
+"icon": "/item-icons/ico_trader_glassbottle03.png"
+},
+{
+"cls": "GlassBottle04",
+"name": "GlassBottle04",
+"icon": "/item-icons/ico_trader_glassbottle04.png"
+},
+{
+"cls": "Improvised_Lockpick",
+"name": "Improvised Lockpick",
+"icon": "/item-icons/ico_improvised_lockpick.png"
+},
+{
+"cls": "Improvised_Plant_rope",
+"name": "Improvised Plant rope",
+"icon": "/item-icons/ico_improvised_rope.png"
+},
+{
+"cls": "Kitchen_Board_01",
+"name": "Kitchen Board 1",
+"icon": "/item-icons/ico_trader_kitchenboard.png"
+},
+{
+"cls": "Kitchen_Board_02",
+"name": "Kitchen Board 2",
+"icon": "/item-icons/ico_trader_kitchenboard.png"
+},
+{
+"cls": "Kitchen_Element_Asian_DrawersTwo",
+"name": "Kitchen Element Asian DrawersTwo",
+"icon": "/item-icons/ico_asiankitchen_drawerstwo.png"
+},
+{
+"cls": "Kitchen_Element_Base_WFP",
+"name": "Kitchen Element Base WFP",
+"icon": "/item-icons/ico_asiankitchen_baseelement.png"
+},
+{
+"cls": "Kitchen_Element_DrawersThree_WFP",
+"name": "Kitchen Element DrawersThree WFP",
+"icon": "/item-icons/ico_asiankitchen_drawersthree.png"
+},
+{
+"cls": "Kitchen_Element_Improvised_Base",
+"name": "Kitchen Element Improvised Base",
+"icon": "/item-icons/ico_improvised_kitchen_bottom_base_wood.png"
+},
+{
+"cls": "Kitchen_Element_Improvised_DrawersThree",
+"name": "Kitchen Element Improvised DrawersThree",
+"icon": null
+},
+{
+"cls": "Kitchen_Element_Improvised_DrawersTwo",
+"name": "Kitchen Element Improvised DrawersTwo",
+"icon": null
+},
+{
+"cls": "KitchenStove",
+"name": "KitchenStove",
+"icon": null
+},
+{
+"cls": "Lighter",
+"name": "Lighter",
+"icon": "/item-icons/ico_lighter.png"
+},
+{
+"cls": "Lockpick_Advanced_Item",
+"name": "Lockpick Advanced Item",
+"icon": "/item-icons/ico_trader_lockpick_advanced_item.png"
+},
+{
+"cls": "Lockpick_Item",
+"name": "Lockpick Item",
+"icon": "/item-icons/ico_lockpick.png"
+},
+{
+"cls": "Motorbike_Battery",
+"name": "Motorbike Battery",
+"icon": null
+},
+{
+"cls": "PETBottle01",
+"name": "PETBottle01",
+"icon": "/item-icons/ico_trader_petbottle01.png"
+},
+{
+"cls": "PETBottle03",
+"name": "PETBottle03",
+"icon": "/item-icons/ico_trader_petbottle03.png"
+},
+{
+"cls": "PETBottle04",
+"name": "PETBottle04",
+"icon": "/item-icons/ico_trader_petbottle04.png"
+},
+{
+"cls": "Rag_Stripes",
+"name": "Rag Stripes",
+"icon": "/item-icons/ico_bundle_rag_stripes.png"
+},
+{
+"cls": "Rager",
+"name": "Rager",
+"icon": "/item-icons/ico_rager.png"
+},
+{
+"cls": "Rager_Bumper_Back_Item",
+"name": "Rager Bumper Back Item",
+"icon": "/item-icons/ico_rager_bumper_back.png"
+},
+{
+"cls": "Rager_Bumper_Front_Item",
+"name": "Rager Bumper Front Item",
+"icon": "/item-icons/ico_rager_bumper_front.png"
+},
+{
+"cls": "Rager_Engine_Alternator_Item",
+"name": "Rager Engine Alternator Item",
+"icon": "/item-icons/ico_bp_ww_engine_alternator_item.png"
+},
+{
+"cls": "Rager_Item_Container",
+"name": "Rager Item Container",
+"icon": "/item-icons/ico_depleted_uranium_container.png"
+},
+{
+"cls": "Rager_Lights_FrontRight",
+"name": "Rager Lights FrontRight",
+"icon": "/item-icons/ico_rager_lights_frontright.png"
+},
+{
+"cls": "Rager_Lights_RearTop",
+"name": "Rager Lights RearTop",
+"icon": "/item-icons/ico_rager_light_reartop.png"
+},
+{
+"cls": "Rags",
+"name": "Rags",
+"icon": null
+},
+{
+"cls": "Rope1",
+"name": "Rope1",
+"icon": "/item-icons/ico_trader_rope1.png"
+},
+{
+"cls": "Screwdriver",
+"name": "Screwdriver",
+"icon": "/item-icons/ico_smallscrewdriver.png"
+},
+{
+"cls": "Screwdriver_Small",
+"name": "Screwdriver Small",
+"icon": "/item-icons/ico_smallscrewdriver.png"
+},
+{
+"cls": "Smartphone_Battery",
+"name": "Smartphone Battery",
+"icon": "/item-icons/ico_trader_smartphone_battery.png"
+},
+{
+"cls": "Wooden_Plank",
+"name": "Wooden Plank",
+"icon": "/item-icons/ico_trader_wooden_plank.png"
+},
+{
+"cls": "Work_Drillpress_01",
+"name": "Work Drillpress 1",
+"icon": "/item-icons/ico_drill_press_01.png"
+},
+{
+"cls": "Work_Drillpress_02",
+"name": "Work Drillpress 2",
+"icon": "/item-icons/ico_drill_press_01.png"
+},
+{
+"cls": "Work_Lathe_Machine_01",
+"name": "Work Lathe Machine 1",
+"icon": "/item-icons/ico_lathe_machine.png"
+}
+],
+"Deployable": [
+{
+"cls": "DJ_Mixer_Radio",
+"name": "DJ Mixer Radio",
+"icon": null
+},
+{
+"cls": "ElectricityGenerator",
+"name": "ElectricityGenerator",
+"icon": null
+},
+{
+"cls": "ElectricityGenerator_Small",
+"name": "ElectricityGenerator Small",
+"icon": null
+},
+{
+"cls": "Portable_Electric_Stove",
+"name": "Portable Electric Stove",
+"icon": "/item-icons/ico_portable_electric_stove.png"
+},
+{
+"cls": "Portable_Gas_Stove",
+"name": "Portable Gas Stove",
+"icon": "/item-icons/ico_trader_portable_gas_stove.png"
+},
+{
+"cls": "Refrigerator",
+"name": "Refrigerator",
+"icon": "/item-icons/ico_bp_refrigerator.png"
+},
+{
+"cls": "Refrigerator_Portable_Small",
+"name": "Refrigerator Portable Small",
+"icon": "/item-icons/ico_portable_refrigerator_small.png"
+},
+{
+"cls": "Tractor_Body_Top_Door_Left_Item",
+"name": "Tractor Body Top Door Left Item",
+"icon": "/item-icons/ico_tractor_body_left.png"
+},
+{
+"cls": "Tractor_Body_Top_Door_Right_Item",
+"name": "Tractor Body Top Door Right Item",
+"icon": "/item-icons/ico_tractor_body_right.png"
+},
+{
+"cls": "Tractor_Door_Hood_Headlight_Left_Item",
+"name": "Tractor Door Hood Headlight Left Item",
+"icon": "/item-icons/ico_tractor_headlight_left.png"
+},
+{
+"cls": "Tractor_Door_Hood_Headlight_Right_Item",
+"name": "Tractor Door Hood Headlight Right Item",
+"icon": "/item-icons/ico_tractor_headlight_right.png"
+},
+{
+"cls": "Tractor_Door_Hood_Item",
+"name": "Tractor Door Hood Item",
+"icon": "/item-icons/ico_tractor_door_hood.png"
+}
+],
+"Misc": [
+{
+"cls": "1H_Brass_knuckles",
+"name": "1H Brass knuckles",
+"icon": "/item-icons/ico_boxer_inhands.png"
+},
+{
+"cls": "1H_Bushman",
+"name": "1H Bushman",
+"icon": "/item-icons/ico_bushman_inhands.png"
+},
+{
+"cls": "1H_Hunter",
+"name": "1H Hunter",
+"icon": "/item-icons/ico_trader_bp_weaponsuppressor_hunter.png"
+},
+{
+"cls": "1H_Kunai",
+"name": "1H Kunai",
+"icon": "/item-icons/ico_kunai.png"
+},
+{
+"cls": "1H_Little_Spade",
+"name": "1H Little Spade",
+"icon": "/item-icons/ico_little_spade_inhands.png"
+},
+{
+"cls": "1H_MK5000_Black",
+"name": "1H MK5000 Black",
+"icon": "/item-icons/ico_mk5000_black_inhands.png"
+},
+{
+"cls": "1H_Metal_Pipe",
+"name": "1H Metal Pipe",
+"icon": "/item-icons/ico_metal_pipe_inhands.png"
+},
+{
+"cls": "1H_Police_Baton",
+"name": "1H Police Baton",
+"icon": "/item-icons/ico_police_baton_inhands.png"
+},
+{
+"cls": "1H_Scalpel",
+"name": "1H Scalpel",
+"icon": "/item-icons/ico_scalpel.png"
+},
+{
+"cls": "1H_Scout_Black",
+"name": "1H Scout Black",
+"icon": "/item-icons/ico_scout_black_inhands.png"
+},
+{
+"cls": "1H_Scout_White",
+"name": "1H Scout White",
+"icon": "/item-icons/ico_scout_white_inhands.png"
+},
+{
+"cls": "1H_Shuriken",
+"name": "1H Shuriken",
+"icon": "/item-icons/ico_shuriken.png"
+},
+{
+"cls": "2H_Industrial_Gardening_Hoe",
+"name": "2H Industrial Gardening Hoe",
+"icon": null
+},
+{
+"cls": "2H_Pitchfork",
+"name": "2H Pitchfork",
+"icon": "/item-icons/ico_pitchfork.png"
+},
+{
+"cls": "2H_Pitchfork_Bent",
+"name": "2H Pitchfork Bent",
+"icon": "/item-icons/ico_pitchfork_02_inhands.png"
+},
+{
+"cls": "2H_Tang_Dao_Damascus",
+"name": "2H Tang Dao Damascus",
+"icon": "/item-icons/ico_tang_dao_damascus_inhands.png"
+},
+{
+"cls": "Absinthe",
+"name": "Absinthe",
+"icon": "/item-icons/ico_trader_absinthe.png"
+},
+{
+"cls": "Aeroplane_Repair_Kit",
+"name": "Aeroplane Repair Kit",
+"icon": null
+},
+{
+"cls": "Air_Pump",
+"name": "Air Pump",
+"icon": "/item-icons/ico_air_pump.png"
+},
+{
+"cls": "Aloe_Vera",
+"name": "Aloe Vera",
+"icon": "/item-icons/ico_aloe_vera_leaf.png"
+},
+{
+"cls": "AnimalBaitFeeder",
+"name": "AnimalBaitFeeder",
+"icon": null
+},
+{
+"cls": "AntiburnGel",
+"name": "AntiburnGel",
+"icon": null
+},
+{
+"cls": "Asian_Chest_Improved",
+"name": "Asian Chest Improved",
+"icon": "/item-icons/ico_improved_wooden_chest.png"
+},
+{
+"cls": "BCULock_Item",
+"name": "BCULock Item",
+"icon": null
+},
+{
+"cls": "BP_HeadLamp",
+"name": "BP HeadLamp",
+"icon": "/item-icons/ico_headlamp_01.png"
+},
+{
+"cls": "Banjo",
+"name": "Banjo",
+"icon": "/item-icons/ico_banjo_01.png"
+},
+{
+"cls": "Batteries",
+"name": "Batteries",
+"icon": "/item-icons/ico_trader_batteries.png"
+},
+{
+"cls": "Bedroll",
+"name": "Bedroll",
+"icon": "/item-icons/ico_bedroll_open.png"
+},
+{
+"cls": "Beenie_01",
+"name": "Beenie 1",
+"icon": null
+},
+{
+"cls": "Beenie_02",
+"name": "Beenie 2",
+"icon": null
+},
+{
+"cls": "Beenie_03",
+"name": "Beenie 3",
+"icon": null
+},
+{
+"cls": "Beenie_05",
+"name": "Beenie 5",
+"icon": null
+},
+{
+"cls": "Beenie_08",
+"name": "Beenie 8",
+"icon": null
+},
+{
+"cls": "Beet",
+"name": "Beet",
+"icon": null
+},
+{
+"cls": "Bell_Pepper",
+"name": "Bell Pepper",
+"icon": "/item-icons/ico_blackpepper_01.png"
+},
+{
+"cls": "Beret_01",
+"name": "Beret 1",
+"icon": "/item-icons/ico_beret_01.png"
+},
+{
+"cls": "Beret_02",
+"name": "Beret 2",
+"icon": "/item-icons/ico_beret_01.png"
+},
+{
+"cls": "Beret_04",
+"name": "Beret 4",
+"icon": "/item-icons/ico_beret_01.png"
+},
+{
+"cls": "Beret_05",
+"name": "Beret 5",
+"icon": "/item-icons/ico_beret_01.png"
+},
+{
+"cls": "Beret_06",
+"name": "Beret 6",
+"icon": "/item-icons/ico_beret_01.png"
+},
+{
+"cls": "Big_Inventory_Expansion_Item_Container",
+"name": "Big Inventory Expansion Item Container",
+"icon": null
+},
+{
+"cls": "Binoculars",
+"name": "Binoculars",
+"icon": "/item-icons/ico_binoculars.png"
+},
+{
+"cls": "BlackPepper",
+"name": "BlackPepper",
+"icon": "/item-icons/ico_blackpepper_01.png"
+},
+{
+"cls": "Bobby_Pin_Package",
+"name": "Bobby Pin Package",
+"icon": null
+},
+{
+"cls": "Bobby_pin",
+"name": "Bobby pin",
+"icon": "/item-icons/ico_bobby_pin.png"
+},
+{
+"cls": "Bolts",
+"name": "Bolts",
+"icon": "/item-icons/ico_trader_bolts.png"
+},
+{
+"cls": "Bolts_Package_Box",
+"name": "Bolts Package Box",
+"icon": "/item-icons/ico_box_of_bolts_inhands.png"
+},
+{
+"cls": "BoomBox_01",
+"name": "BoomBox 1",
+"icon": "/item-icons/ico_boombox_inhands.png"
+},
+{
+"cls": "Brake_Oil",
+"name": "Brake Oil",
+"icon": "/item-icons/ico_tractor_brakelight_left.png"
+},
+{
+"cls": "Brick",
+"name": "Brick",
+"icon": "/item-icons/ico_brick_single.png"
+},
+{
+"cls": "Broccoli",
+"name": "Broccoli",
+"icon": "/item-icons/ico_broccoli_01.png"
+},
+{
+"cls": "Broccoli_Seeds",
+"name": "Broccoli Seeds",
+"icon": "/item-icons/ico_broccoli_01.png"
+},
+{
+"cls": "Buck_Skinned",
+"name": "Buck Skinned",
+"icon": "/item-icons/ico_doe_skinned.png"
+},
+{
+"cls": "Bunny_Slippers",
+"name": "Bunny Slippers",
+"icon": "/item-icons/ico_bunny_slippers.png"
+},
+{
+"cls": "Butter",
+"name": "Butter",
+"icon": "/item-icons/ico_butter_02.png"
+},
+{
+"cls": "CD_Player",
+"name": "CD Player",
+"icon": "/item-icons/ico_trader_cd_player.png"
+},
+{
+"cls": "Cabbage",
+"name": "Cabbage",
+"icon": "/item-icons/ico_cabbage_seeds.png"
+},
+{
+"cls": "Cabbage_Seeds",
+"name": "Cabbage Seeds",
+"icon": "/item-icons/ico_cabbage_seeds.png"
+},
+{
+"cls": "Cabinet_Large_Wood",
+"name": "Cabinet Large Wood",
+"icon": "/item-icons/ico_cabinet_large_asian.png"
+},
+{
+"cls": "Can01",
+"name": "Can01",
+"icon": "/item-icons/ico_trader_can01.png"
+},
+{
+"cls": "Can02",
+"name": "Can02",
+"icon": "/item-icons/ico_trader_can02.png"
+},
+{
+"cls": "Can03",
+"name": "Can03",
+"icon": "/item-icons/ico_trader_can03.png"
+},
+{
+"cls": "Can04",
+"name": "Can04",
+"icon": "/item-icons/ico_trader_can04.png"
+},
+{
+"cls": "Candle_01",
+"name": "Candle 1",
+"icon": "/item-icons/ico_trader_candle_01.png"
+},
+{
+"cls": "Candy_Bob",
+"name": "Candy Bob",
+"icon": "/item-icons/ico_candy606.png"
+},
+{
+"cls": "Canned_Tuna",
+"name": "Canned Tuna",
+"icon": "/item-icons/ico_trader_cannedpeas.png"
+},
+{
+"cls": "CannedSardine",
+"name": "CannedSardine",
+"icon": "/item-icons/ico_cannedsardine_rw.png"
+},
+{
+"cls": "CannedSardine_Deluxe",
+"name": "CannedSardine Deluxe",
+"icon": "/item-icons/ico_cannedsardine_rw.png"
+},
+{
+"cls": "CantaloupeMelon",
+"name": "CantaloupeMelon",
+"icon": "/item-icons/ico_trader_cantaloupemelon_slice.png"
+},
+{
+"cls": "CantaloupeMelon_Seeds",
+"name": "CantaloupeMelon Seeds",
+"icon": "/item-icons/ico_trader_cantaloupemelon_slice.png"
+},
+{
+"cls": "Canteen",
+"name": "Canteen",
+"icon": "/item-icons/ico_canteen.png"
+},
+{
+"cls": "Car_Jack",
+"name": "Car Jack",
+"icon": "/item-icons/ico_car_jack.png"
+},
+{
+"cls": "Car_Radio_Item",
+"name": "Car Radio Item",
+"icon": "/item-icons/ico_car_radio.png"
+},
+{
+"cls": "Car_Repair_Kit",
+"name": "Car Repair Kit",
+"icon": "/item-icons/ico_trader_carrepairkit.png"
+},
+{
+"cls": "Cash",
+"name": "Cash",
+"icon": null
+},
+{
+"cls": "Cauliflower",
+"name": "Cauliflower",
+"icon": "/item-icons/ico_trader_cauliflower.png"
+},
+{
+"cls": "Celery",
+"name": "Celery",
+"icon": "/item-icons/ico_celery_01.png"
+},
+{
+"cls": "CementBag",
+"name": "CementBag",
+"icon": "/item-icons/ico_cementbag.png"
+},
+{
+"cls": "Cereal_BunnyStars",
+"name": "Cereal BunnyStars",
+"icon": null
+},
+{
+"cls": "Chainsaw",
+"name": "Chainsaw",
+"icon": "/item-icons/ico_chainsaw.png"
+},
+{
+"cls": "Cherry_Seeds",
+"name": "Cherry Seeds",
+"icon": "/item-icons/ico_cherry_seeds.png"
+},
+{
+"cls": "ChickenDrumstick",
+"name": "ChickenDrumstick",
+"icon": null
+},
+{
+"cls": "ChickenMeat",
+"name": "ChickenMeat",
+"icon": null
+},
+{
+"cls": "Chili_Pepper",
+"name": "Chili Pepper",
+"icon": "/item-icons/ico_chilipepper_01.png"
+},
+{
+"cls": "ChilliPeppers_Seeds",
+"name": "ChilliPeppers Seeds",
+"icon": null
+},
+{
+"cls": "Christmas_Box",
+"name": "Christmas Box",
+"icon": "/item-icons/ico_trader_christmas_box.png"
+},
+{
+"cls": "Cigarettes",
+"name": "Cigarettes",
+"icon": "/item-icons/ico_trader_cigarettes.png"
+},
+{
+"cls": "Cigarettes1",
+"name": "Cigarettes1",
+"icon": "/item-icons/ico_trader_cigarettes1.png"
+},
+{
+"cls": "CityBike",
+"name": "CityBike",
+"icon": null
+},
+{
+"cls": "CityBike_Item_Container",
+"name": "CityBike Item Container",
+"icon": null
+},
+{
+"cls": "CoalBag",
+"name": "CoalBag",
+"icon": null
+},
+{
+"cls": "Cocoa_Powder",
+"name": "Cocoa Powder",
+"icon": "/item-icons/ico_cocoa_powder.png"
+},
+{
+"cls": "Coconut",
+"name": "Coconut",
+"icon": "/item-icons/ico_coconut_01.png"
+},
+{
+"cls": "ColorCan_AmberYellow",
+"name": "ColorCan AmberYellow",
+"icon": "/item-icons/ico_spray_can_amberyellow.png"
+},
+{
+"cls": "ColorCan_BaronBrown",
+"name": "ColorCan BaronBrown",
+"icon": "/item-icons/ico_spray_can_baronbrown.png"
+},
+{
+"cls": "ColorCan_Black",
+"name": "ColorCan Black",
+"icon": null
+},
+{
+"cls": "ColorCan_CherryRed",
+"name": "ColorCan CherryRed",
+"icon": null
+},
+{
+"cls": "ColorCan_ColdCyan",
+"name": "ColorCan ColdCyan",
+"icon": null
+},
+{
+"cls": "ColorCan_ColdGrey",
+"name": "ColorCan ColdGrey",
+"icon": null
+},
+{
+"cls": "ColorCan_CottonCandy",
+"name": "ColorCan CottonCandy",
+"icon": "/item-icons/ico_spray_can_cottoncandy.png"
+},
+{
+"cls": "ColorCan_DarkBrown",
+"name": "ColorCan DarkBrown",
+"icon": null
+},
+{
+"cls": "ColorCan_DarkGreen",
+"name": "ColorCan DarkGreen",
+"icon": null
+},
+{
+"cls": "ColorCan_DarkGrey",
+"name": "ColorCan DarkGrey",
+"icon": null
+},
+{
+"cls": "ColorCan_DarkUrban",
+"name": "ColorCan DarkUrban",
+"icon": null
+},
+{
+"cls": "ColorCan_DeepOrange",
+"name": "ColorCan DeepOrange",
+"icon": "/item-icons/ico_spray_can_deeporange.png"
+},
+{
+"cls": "ColorCan_EarthGreen",
+"name": "ColorCan EarthGreen",
+"icon": "/item-icons/ico_spray_can_earthgreen.png"
+},
+{
+"cls": "ColorCan_EarthGrey",
+"name": "ColorCan EarthGrey",
+"icon": null
+},
+{
+"cls": "ColorCan_EarthRed",
+"name": "ColorCan EarthRed",
+"icon": null
+},
+{
+"cls": "ColorCan_EarthYellow",
+"name": "ColorCan EarthYellow",
+"icon": "/item-icons/ico_spray_can_earthyellow.png"
+},
+{
+"cls": "ColorCan_FireEngineRed",
+"name": "ColorCan FireEngineRed",
+"icon": "/item-icons/ico_spray_can_fireenginered.png"
+},
+{
+"cls": "ColorCan_FlatBrown",
+"name": "ColorCan FlatBrown",
+"icon": null
+},
+{
+"cls": "ColorCan_FlatGrey",
+"name": "ColorCan FlatGrey",
+"icon": null
+},
+{
+"cls": "ColorCan_FlatWhite",
+"name": "ColorCan FlatWhite",
+"icon": null
+},
+{
+"cls": "ColorCan_HazyPurple",
+"name": "ColorCan HazyPurple",
+"icon": "/item-icons/ico_spray_can_hazypurple.png"
+},
+{
+"cls": "ColorCan_LimeGreen",
+"name": "ColorCan LimeGreen",
+"icon": null
+},
+{
+"cls": "ColorCan_PoliceBlue",
+"name": "ColorCan PoliceBlue",
+"icon": "/item-icons/ico_spray_can_policeblue.png"
+},
+{
+"cls": "ColorCan_SnowWhite",
+"name": "ColorCan SnowWhite",
+"icon": null
+},
+{
+"cls": "ColorCan_VelvetBrown",
+"name": "ColorCan VelvetBrown",
+"icon": "/item-icons/ico_spray_can_velvetbrown.png"
+},
+{
+"cls": "ColorCan_WarmGrey",
+"name": "ColorCan WarmGrey",
+"icon": null
+},
+{
+"cls": "Compass",
+"name": "Compass",
+"icon": "/item-icons/ico_compass_open_01.png"
+},
+{
+"cls": "Construction_Earmuffs_01",
+"name": "Construction Earmuffs 1",
+"icon": "/item-icons/ico_earmuffs_01.png"
+},
+{
+"cls": "Construction_Earmuffs_02",
+"name": "Construction Earmuffs 2",
+"icon": "/item-icons/ico_earmuffs_01.png"
+},
+{
+"cls": "Construction_Earmuffs_03",
+"name": "Construction Earmuffs 3",
+"icon": "/item-icons/ico_earmuffs_01.png"
+},
+{
+"cls": "Construction_Earmuffs_04",
+"name": "Construction Earmuffs 4",
+"icon": "/item-icons/ico_earmuffs_01.png"
+},
+{
+"cls": "Crackers",
+"name": "Crackers",
+"icon": "/item-icons/ico_crackers_01.png"
+},
+{
+"cls": "Cream",
+"name": "Cream",
+"icon": "/item-icons/ico_trader_cream.png"
+},
+{
+"cls": "Credit_Card_Classic",
+"name": "Credit Card Classic",
+"icon": "/item-icons/ico_credit_card_classic.png"
+},
+{
+"cls": "Credit_Card_Gold",
+"name": "Credit Card Gold",
+"icon": "/item-icons/ico_credit_card_gold.png"
+},
+{
+"cls": "Credit_Card_Starter",
+"name": "Credit Card Starter",
+"icon": "/item-icons/ico_bp_credit_card_starter.png"
+},
+{
+"cls": "Cruiser",
+"name": "Cruiser",
+"icon": "/item-icons/ico_cruiser.png"
+},
+{
+"cls": "Cruiser_Brakelight_Item",
+"name": "Cruiser Brakelight Item",
+"icon": "/item-icons/ico_cruiser_brakelight_item.png"
+},
+{
+"cls": "Cruiser_Item_Container",
+"name": "Cruiser Item Container",
+"icon": "/item-icons/ico_depleted_uranium_container.png"
+},
+{
+"cls": "Cruiser_Seat_Front_Item",
+"name": "Cruiser Seat Front Item",
+"icon": "/item-icons/ico_cruiser_seat_front_item.png"
+},
+{
+"cls": "Crutch",
+"name": "Crutch",
+"icon": "/item-icons/ico_crutch_vicinity.png"
+},
+{
+"cls": "Cuban_Cigar",
+"name": "Cuban Cigar",
+"icon": "/item-icons/ico_cuban_cigar.png"
+},
+{
+"cls": "Cucumber",
+"name": "Cucumber",
+"icon": "/item-icons/ico_cucumber.png"
+},
+{
+"cls": "Cucumber_Seeds",
+"name": "Cucumber Seeds",
+"icon": "/item-icons/ico_cucumber_seeds.png"
+},
+{
+"cls": "DialLock_Item",
+"name": "DialLock Item",
+"icon": null
+},
+{
+"cls": "Diary",
+"name": "Diary",
+"icon": "/item-icons/ico_diary.png"
+},
+{
+"cls": "Dinghy",
+"name": "Dinghy",
+"icon": "/item-icons/ico_dinghy_item.png"
+},
+{
+"cls": "Dinghy_Item_Container",
+"name": "Dinghy Item Container",
+"icon": "/item-icons/ico_depleted_uranium_container.png"
+},
+{
+"cls": "Dirtbike",
+"name": "Dirtbike",
+"icon": "/item-icons/ico_dirtbike_body_item.png"
+},
+{
+"cls": "Dirtbike_Body_Hellrider_Item",
+"name": "Dirtbike Body Hellrider Item",
+"icon": "/item-icons/ico_dirtbike_body_hellrider_item.png"
+},
+{
+"cls": "Dirtbike_Body_Item",
+"name": "Dirtbike Body Item",
+"icon": "/item-icons/ico_dirtbike_body_item.png"
+},
+{
+"cls": "Dirtbike_Brakelight_Item",
+"name": "Dirtbike Brakelight Item",
+"icon": "/item-icons/ico_dirtbike_brakelight_item.png"
+},
+{
+"cls": "Dirtbike_Front_Wheel_Cover_Item",
+"name": "Dirtbike Front Wheel Cover Item",
+"icon": "/item-icons/ico_dirtbike_front_wheel_cover_item.png"
+},
+{
+"cls": "Dirtbike_Hellrider_Skull_Item",
+"name": "Dirtbike Hellrider Skull Item",
+"icon": "/item-icons/ico_dirtbike_hellrider_skull_item.png"
+},
+{
+"cls": "Dirtbike_Item_Container",
+"name": "Dirtbike Item Container",
+"icon": null
+},
+{
+"cls": "Dirtbike_Wheel_110_80_R19_Item",
+"name": "Dirtbike Wheel 110 80 R19 Item",
+"icon": "/item-icons/ico_bp_dirtbike_wheel_110_80_r19.png"
+},
+{
+"cls": "Dirtbike_Wheel_90_90_R21_Item",
+"name": "Dirtbike Wheel 90 90 R21 Item",
+"icon": "/item-icons/ico_bp_dirtbike_wheel_90_90_r21.png"
+},
+{
+"cls": "Ear_Plugs",
+"name": "Ear Plugs",
+"icon": null
+},
+{
+"cls": "Egg",
+"name": "Egg",
+"icon": null
+},
+{
+"cls": "EmptyBag",
+"name": "EmptyBag",
+"icon": "/item-icons/ico_trader_bp_emptybag.png"
+},
+{
+"cls": "Energy_Drink_Red_Ghoul",
+"name": "Energy Drink Red Ghoul",
+"icon": "/item-icons/ico_energy_drink_red_ghoul.png"
+},
+{
+"cls": "F_Bra_Supporter_01",
+"name": "F Bra Supporter 1",
+"icon": "/item-icons/ico_bra_supporters.png"
+},
+{
+"cls": "Faceroll_Smasher",
+"name": "Faceroll Smasher",
+"icon": "/item-icons/ico_facerollsmasher_vicinity.png"
+},
+{
+"cls": "Feather",
+"name": "Feather",
+"icon": "/item-icons/ico_trader_feather.png"
+},
+{
+"cls": "Fig_Seeds",
+"name": "Fig Seeds",
+"icon": "/item-icons/ico_fig_seeds.png"
+},
+{
+"cls": "Fireplace2",
+"name": "Fireplace2",
+"icon": null
+},
+{
+"cls": "Flashbang",
+"name": "Flashbang",
+"icon": "/item-icons/ico_flashbang_inventory.png"
+},
+{
+"cls": "Flint_And_Steel",
+"name": "Flint And Steel",
+"icon": "/item-icons/ico_flint_and_steel.png"
+},
+{
+"cls": "Fungicide",
+"name": "Fungicide",
+"icon": "/item-icons/ico_farming_fungicide.png"
+},
+{
+"cls": "Fuse_200A",
+"name": "Fuse 200A",
+"icon": "/item-icons/ico_fuse_200a.png"
+},
+{
+"cls": "Fuse_400A",
+"name": "Fuse 400A",
+"icon": "/item-icons/ico_fuse_400a.png"
+},
+{
+"cls": "Fuse_600A",
+"name": "Fuse 600A",
+"icon": "/item-icons/ico_fuse_600a.png"
+},
+{
+"cls": "Garlic",
+"name": "Garlic",
+"icon": "/item-icons/ico_garlic.png"
+},
+{
+"cls": "Garlic_Seeds",
+"name": "Garlic Seeds",
+"icon": null
+},
+{
+"cls": "GasLantern",
+"name": "GasLantern",
+"icon": "/item-icons/ico_gaslanternhq.png"
+},
+{
+"cls": "GasTank",
+"name": "GasTank",
+"icon": null
+},
+{
+"cls": "Geek_Goggels",
+"name": "Geek Goggels",
+"icon": null
+},
+{
+"cls": "Geiger_Counter_Analogue",
+"name": "Geiger Counter Analogue",
+"icon": null
+},
+{
+"cls": "Glass",
+"name": "Glass",
+"icon": "/item-icons/ico_sunglasses_emoji_charm.png"
+},
+{
+"cls": "Glue",
+"name": "Glue",
+"icon": null
+},
+{
+"cls": "Grapes_Raw",
+"name": "Grapes Raw",
+"icon": "/item-icons/ico_trader_grapes_raw.png"
+},
+{
+"cls": "GravelBag",
+"name": "GravelBag",
+"icon": "/item-icons/ico_gravelbag.png"
+},
+{
+"cls": "GrillGrid",
+"name": "GrillGrid",
+"icon": null
+},
+{
+"cls": "Grinding_Stone_02",
+"name": "Grinding Stone 2",
+"icon": "/item-icons/ico_trader_grindingstone.png"
+},
+{
+"cls": "GuavaHalves",
+"name": "GuavaHalves",
+"icon": null
+},
+{
+"cls": "Guitar",
+"name": "Guitar",
+"icon": "/item-icons/ico_guitar_01.png"
+},
+{
+"cls": "Gun_Powder",
+"name": "Gun Powder",
+"icon": "/item-icons/ico_trader_gun_powder.png"
+},
+{
+"cls": "HH_Wedge_Heels_01_01",
+"name": "HH Wedge Heels 1 1",
+"icon": "/item-icons/ico_hh_wedge_heels_01_01.png"
+},
+{
+"cls": "HH_Wedge_Heels_01_04",
+"name": "HH Wedge Heels 1 4",
+"icon": "/item-icons/ico_hh_wedge_heels_01_01.png"
+},
+{
+"cls": "Hen_Torso",
+"name": "Hen Torso",
+"icon": "/item-icons/ico_boar_torsohq.png"
+},
+{
+"cls": "Herbicide",
+"name": "Herbicide",
+"icon": "/item-icons/ico_farming_herbicide.png"
+},
+{
+"cls": "Hip_Flask",
+"name": "Hip Flask",
+"icon": "/item-icons/ico_hipflask01_inventory.png"
+},
+{
+"cls": "Hose",
+"name": "Hose",
+"icon": null
+},
+{
+"cls": "Improvised_Metal_Chest",
+"name": "Improvised Metal Chest",
+"icon": "/item-icons/ico_improvised_metal_chest.png"
+},
+{
+"cls": "Improvised_Sewing_kit",
+"name": "Improvised Sewing kit",
+"icon": "/item-icons/ico_trader_improvisedsewingkit.png"
+},
+{
+"cls": "Improvised_Wooden_Chest",
+"name": "Improvised Wooden Chest",
+"icon": "/item-icons/ico_wooden_box.png"
+},
+{
+"cls": "Industrial_Fertilizer",
+"name": "Industrial Fertilizer",
+"icon": null
+},
+{
+"cls": "IntEA_Level1",
+"name": "IntEA Level1",
+"icon": null
+},
+{
+"cls": "Isopropyl_alcohol",
+"name": "Isopropyl alcohol",
+"icon": null
+},
+{
+"cls": "Jeans_01_01",
+"name": "Jeans 1 1",
+"icon": "/item-icons/ico_trader_jeans_01_01.png"
+},
+{
+"cls": "Jeans_01_02",
+"name": "Jeans 1 2",
+"icon": "/item-icons/ico_trader_jeans_01_01.png"
+},
+{
+"cls": "Jeans_01_03",
+"name": "Jeans 1 3",
+"icon": "/item-icons/ico_trader_jeans_01_01.png"
+},
+{
+"cls": "Jeans_01_04",
+"name": "Jeans 1 4",
+"icon": "/item-icons/ico_trader_jeans_01_01.png"
+},
+{
+"cls": "Jeans_02_08",
+"name": "Jeans 2 8",
+"icon": "/item-icons/ico_trader_jeans_01_01.png"
+},
+{
+"cls": "Ketchup",
+"name": "Ketchup",
+"icon": "/item-icons/ico_ketchup.png"
+},
+{
+"cls": "Kicmovaca",
+"name": "Kicmovaca",
+"icon": "/item-icons/ico_kicmovaca.png"
+},
+{
+"cls": "Kinglet_Duster",
+"name": "Kinglet Duster",
+"icon": "/item-icons/ico_kinglet_duster_a.png"
+},
+{
+"cls": "Kinglet_Duster_Item_Container",
+"name": "Kinglet Duster Item Container",
+"icon": null
+},
+{
+"cls": "Kinglet_Mariner",
+"name": "Kinglet Mariner",
+"icon": "/item-icons/ico_kinglet_mariner.png"
+},
+{
+"cls": "Kinglet_Mariner_Item_Container",
+"name": "Kinglet Mariner Item Container",
+"icon": null
+},
+{
+"cls": "Laika",
+"name": "Laika",
+"icon": "/item-icons/ico_laika.png"
+},
+{
+"cls": "Laika_Bumper_Back_Item",
+"name": "Laika Bumper Back Item",
+"icon": "/item-icons/ico_bp_laika_bumper_back_item.png"
+},
+{
+"cls": "Laika_Engine_Alternator_Item",
+"name": "Laika Engine Alternator Item",
+"icon": "/item-icons/ico_bp_laika_engine_alternator_item.png"
+},
+{
+"cls": "Laika_Item_Container",
+"name": "Laika Item Container",
+"icon": "/item-icons/ico_depleted_uranium_container.png"
+},
+{
+"cls": "Laika_Lights_FrontRight",
+"name": "Laika Lights FrontRight",
+"icon": "/item-icons/ico_rager_lights_frontright.png"
+},
+{
+"cls": "Laika_Lights_RearLeft",
+"name": "Laika Lights RearLeft",
+"icon": null
+},
+{
+"cls": "Lead_Plate",
+"name": "Lead Plate",
+"icon": "/item-icons/ico_trader_lead_plate.png"
+},
+{
+"cls": "Lemon_Seeds",
+"name": "Lemon Seeds",
+"icon": "/item-icons/ico_lemon_seeds.png"
+},
+{
+"cls": "Lettuce",
+"name": "Lettuce",
+"icon": "/item-icons/ico_lettuce.png"
+},
+{
+"cls": "Lettuce_Seeds",
+"name": "Lettuce Seeds",
+"icon": "/item-icons/ico_lettuce_seeds.png"
+},
+{
+"cls": "Lock_Item_Advanced",
+"name": "Lock Item Advanced",
+"icon": "/item-icons/ico_lock_advanced.png"
+},
+{
+"cls": "Lock_Item_Basic",
+"name": "Lock Item Basic",
+"icon": "/item-icons/ico_lock_basic.png"
+},
+{
+"cls": "Lock_Item_Medium",
+"name": "Lock Item Medium",
+"icon": "/item-icons/ico_lock_medium.png"
+},
+{
+"cls": "LogShed_1",
+"name": "LogShed 1",
+"icon": null
+},
+{
+"cls": "M1_Clip",
+"name": "M1 Clip",
+"icon": null
+},
+{
+"cls": "M70_Bayonet",
+"name": "M70 Bayonet",
+"icon": "/item-icons/ico_m70_inhands.png"
+},
+{
+"cls": "MA1_Spitfire_01",
+"name": "MA1 Spitfire 1",
+"icon": "/item-icons/ico_spitfire_01.png"
+},
+{
+"cls": "Magnifying_Glass1",
+"name": "Magnifying Glass1",
+"icon": "/item-icons/ico_trader_magnifying_glass.png"
+},
+{
+"cls": "Matches",
+"name": "Matches",
+"icon": "/item-icons/ico_matches.png"
+},
+{
+"cls": "MemoryModule_Level1",
+"name": "MemoryModule Level1",
+"icon": null
+},
+{
+"cls": "Metal_Scrap_01",
+"name": "Metal Scrap 1",
+"icon": "/item-icons/ico_metal_scrap_03.png"
+},
+{
+"cls": "Metal_Scrap_02",
+"name": "Metal Scrap 2",
+"icon": "/item-icons/ico_metal_scrap_03.png"
+},
+{
+"cls": "Metal_Scrap_03",
+"name": "Metal Scrap 3",
+"icon": "/item-icons/ico_metal_scrap_03.png"
+},
+{
+"cls": "Metal_Scrap_04",
+"name": "Metal Scrap 4",
+"icon": "/item-icons/ico_metal_scrap_03.png"
+},
+{
+"cls": "Metal_Scrap_05",
+"name": "Metal Scrap 5",
+"icon": "/item-icons/ico_metal_scrap_03.png"
+},
+{
+"cls": "MetalDetector",
+"name": "MetalDetector",
+"icon": "/item-icons/ico_metaldetector_vicinity.png"
+},
+{
+"cls": "Military_Goggles_01",
+"name": "Military Goggles 1",
+"icon": null
+},
+{
+"cls": "Military_Quiver_01",
+"name": "Military Quiver 1",
+"icon": "/item-icons/ico_militaryquiver02_inhands.png"
+},
+{
+"cls": "Military_Quiver_05",
+"name": "Military Quiver 5",
+"icon": "/item-icons/ico_militaryquiver02_inhands.png"
+},
+{
+"cls": "Mobile_Phone",
+"name": "Mobile Phone",
+"icon": "/item-icons/ico_quest_mobile_phone.png"
+},
+{
+"cls": "Motorcycle_Glasses_01",
+"name": "Motorcycle Glasses 1",
+"icon": "/item-icons/ico_riderhelmet_glasses.png"
+},
+{
+"cls": "Motorcycle_Glasses_02",
+"name": "Motorcycle Glasses 2",
+"icon": "/item-icons/ico_riderhelmet_glasses.png"
+},
+{
+"cls": "MountainBike",
+"name": "MountainBike",
+"icon": null
+},
+{
+"cls": "MountainBike_Item_Container",
+"name": "MountainBike Item Container",
+"icon": null
+},
+{
+"cls": "Mustard",
+"name": "Mustard",
+"icon": "/item-icons/ico_mustard.png"
+},
+{
+"cls": "Nails",
+"name": "Nails",
+"icon": "/item-icons/ico_trader_nails.png"
+},
+{
+"cls": "Nails_Package_Box",
+"name": "Nails Package Box",
+"icon": "/item-icons/ico_box_of_bolts_inhands.png"
+},
+{
+"cls": "Night_Vision_Goggles_01",
+"name": "Night Vision Goggles 1",
+"icon": "/item-icons/ico_night_vision_goggles.png"
+},
+{
+"cls": "Oil_Filter",
+"name": "Oil Filter",
+"icon": "/item-icons/ico_trader_oilfilter.png"
+},
+{
+"cls": "Olives",
+"name": "Olives",
+"icon": "/item-icons/ico_trader_olives.png"
+},
+{
+"cls": "Onion",
+"name": "Onion",
+"icon": "/item-icons/ico_onion.png"
+},
+{
+"cls": "Organic_Fertilizer",
+"name": "Organic Fertilizer",
+"icon": "/item-icons/ico_fertilizer_invicinity.png"
+},
+{
+"cls": "Oven_Improvised",
+"name": "Oven Improvised",
+"icon": "/item-icons/ico_improvised_iron_oven_01.png"
+},
+{
+"cls": "Padlock",
+"name": "Padlock",
+"icon": "/item-icons/ico_trader_padlock.png"
+},
+{
+"cls": "PaintSprayer",
+"name": "PaintSprayer",
+"icon": null
+},
+{
+"cls": "Pan",
+"name": "Pan",
+"icon": null
+},
+{
+"cls": "Pantyhose_01",
+"name": "Pantyhose 1",
+"icon": "/item-icons/ico_pantyhose_01_v2.png"
+},
+{
+"cls": "Paper",
+"name": "Paper",
+"icon": "/item-icons/ico_paper_sheet.png"
+},
+{
+"cls": "Parachute",
+"name": "Parachute",
+"icon": "/item-icons/ico_bp_parachute.png"
+},
+{
+"cls": "Parking_Sensor",
+"name": "Parking Sensor",
+"icon": "/item-icons/ico_trader_parking_sensor.png"
+},
+{
+"cls": "Parsley",
+"name": "Parsley",
+"icon": "/item-icons/ico_parsley_01.png"
+},
+{
+"cls": "Party_Glasses_01",
+"name": "Party Glasses 1",
+"icon": "/item-icons/ico_partyglasses_01_inventory.png"
+},
+{
+"cls": "Party_Glasses_02",
+"name": "Party Glasses 2",
+"icon": "/item-icons/ico_partyglasses_01_inventory.png"
+},
+{
+"cls": "Pasta",
+"name": "Pasta",
+"icon": "/item-icons/ico_cookbook_pasta.png"
+},
+{
+"cls": "Pear_Seeds",
+"name": "Pear Seeds",
+"icon": "/item-icons/ico_fig_seeds.png"
+},
+{
+"cls": "Pen",
+"name": "Pen",
+"icon": null
+},
+{
+"cls": "PenisWarmer_01",
+"name": "PenisWarmer 1",
+"icon": "/item-icons/ico_trader_peniswarmer_02.png"
+},
+{
+"cls": "PenisWarmer_02",
+"name": "PenisWarmer 2",
+"icon": "/item-icons/ico_trader_peniswarmer_02.png"
+},
+{
+"cls": "PenisWarmer_03",
+"name": "PenisWarmer 3",
+"icon": "/item-icons/ico_trader_peniswarmer_02.png"
+},
+{
+"cls": "Peppers_Seeds",
+"name": "Peppers Seeds",
+"icon": "/item-icons/ico_stuffed_peppers_raw_item.png"
+},
+{
+"cls": "Pesticide",
+"name": "Pesticide",
+"icon": "/item-icons/ico_farming_pesticide.png"
+},
+{
+"cls": "Phoenix_Tears",
+"name": "Phoenix Tears",
+"icon": "/item-icons/ico_tears_of_phoenix.png"
+},
+{
+"cls": "Pilot_Glasses",
+"name": "Pilot Glasses",
+"icon": "/item-icons/ico_sunglasses_emoji_charm.png"
+},
+{
+"cls": "Pirate_EyePatch",
+"name": "Pirate EyePatch",
+"icon": "/item-icons/ico_pirate_eye_patch.png"
+},
+{
+"cls": "Pot1",
+"name": "Pot1",
+"icon": null
+},
+{
+"cls": "PremiumBoiliesPack",
+"name": "PremiumBoiliesPack",
+"icon": null
+},
+{
+"cls": "Pumpkin_Seeds",
+"name": "Pumpkin Seeds",
+"icon": "/item-icons/ico_pumpkin.png"
+},
+{
+"cls": "Puppet_Eye",
+"name": "Puppet Eye",
+"icon": "/item-icons/ico_puppet_eye.png"
+},
+{
+"cls": "RH_Arm_Guard",
+"name": "RH Arm Guard",
+"icon": "/item-icons/ico_t_rh_arm_guard.png"
+},
+{
+"cls": "RH_Bycoket_01",
+"name": "RH Bycoket 1",
+"icon": "/item-icons/ico_trader_rh_bycoket.png"
+},
+{
+"cls": "RIS",
+"name": "RIS",
+"icon": null
+},
+{
+"cls": "RIS_Bars_Civilian_Front_Item",
+"name": "RIS Bars Civilian Front Item",
+"icon": "/item-icons/ico_ris_bars_civilian_front.png"
+},
+{
+"cls": "RIS_BrakeLight_Left_Item",
+"name": "RIS BrakeLight Left Item",
+"icon": "/item-icons/ico_tractor_brakelight_left.png"
+},
+{
+"cls": "RIS_Hand_Guards_Civilian_Item",
+"name": "RIS Hand Guards Civilian Item",
+"icon": "/item-icons/ico_ris_handguards_civilian.png"
+},
+{
+"cls": "RIS_Headlight_Right_Item",
+"name": "RIS Headlight Right Item",
+"icon": "/item-icons/ico_tractor_headlight_right.png"
+},
+{
+"cls": "RIS_Item_Container",
+"name": "RIS Item Container",
+"icon": "/item-icons/ico_depleted_uranium_container.png"
+},
+{
+"cls": "RIS_Wheel_Armor_Item",
+"name": "RIS Wheel Armor Item",
+"icon": "/item-icons/ico_ris_wheel_armor.png"
+},
+{
+"cls": "Radio",
+"name": "Radio",
+"icon": "/item-icons/ico_radio_01.png"
+},
+{
+"cls": "Raisins",
+"name": "Raisins",
+"icon": "/item-icons/ico_raisins.png"
+},
+{
+"cls": "Rebar_Cutter",
+"name": "Rebar Cutter",
+"icon": "/item-icons/ico_rebar_cutter.png"
+},
+{
+"cls": "RedOnion_Seeds",
+"name": "RedOnion Seeds",
+"icon": null
+},
+{
+"cls": "Rice",
+"name": "Rice",
+"icon": null
+},
+{
+"cls": "Round_Sunglasses",
+"name": "Round Sunglasses",
+"icon": "/item-icons/ico_sunglasses_emoji_charm.png"
+},
+{
+"cls": "Rubber_band",
+"name": "Rubber band",
+"icon": "/item-icons/ico_trader_rubber_band.png"
+},
+{
+"cls": "Rubber_sheet",
+"name": "Rubber sheet",
+"icon": null
+},
+{
+"cls": "SCUMkin_Spice_Latte",
+"name": "SCUMkin Spice Latte",
+"icon": "/item-icons/ico_scumkin_spice_latte.png"
+},
+{
+"cls": "SUP",
+"name": "SUP",
+"icon": null
+},
+{
+"cls": "SUP_Item_Container",
+"name": "SUP Item Container",
+"icon": "/item-icons/ico_depleted_uranium_container.png"
+},
+{
+"cls": "Safety_Goggles",
+"name": "Safety Goggles",
+"icon": "/item-icons/ico_safety_goggles.png"
+},
+{
+"cls": "Safety_pin",
+"name": "Safety pin",
+"icon": "/item-icons/ico_trader_safety_pin.png"
+},
+{
+"cls": "Saw",
+"name": "Saw",
+"icon": null
+},
+{
+"cls": "Scissors_01",
+"name": "Scissors 1",
+"icon": "/item-icons/ico_scissors.png"
+},
+{
+"cls": "Scissors_Plastic",
+"name": "Scissors Plastic",
+"icon": "/item-icons/ico_trader_scissors_plastic.png"
+},
+{
+"cls": "Scum_Sunrise",
+"name": "Scum Sunrise",
+"icon": "/item-icons/ico_cocktail_scum_sunrise.png"
+},
+{
+"cls": "Sewing_kit",
+"name": "Sewing kit",
+"icon": "/item-icons/ico_trader_sewing_kit.png"
+},
+{
+"cls": "Short_Paddle_A",
+"name": "Short Paddle A",
+"icon": null
+},
+{
+"cls": "Short_Paddle_B",
+"name": "Short Paddle B",
+"icon": null
+},
+{
+"cls": "Short_Trousers_01_01",
+"name": "Short Trousers 1 1",
+"icon": "/item-icons/ico_trousers_02_short_01.png"
+},
+{
+"cls": "Short_Trousers_01_02",
+"name": "Short Trousers 1 2",
+"icon": "/item-icons/ico_trousers_02_short_01.png"
+},
+{
+"cls": "Short_Trousers_01_03",
+"name": "Short Trousers 1 3",
+"icon": "/item-icons/ico_trousers_02_short_01.png"
+},
+{
+"cls": "Short_Trousers_01_04",
+"name": "Short Trousers 1 4",
+"icon": "/item-icons/ico_trousers_02_short_01.png"
+},
+{
+"cls": "Short_Trousers_01_05",
+"name": "Short Trousers 1 5",
+"icon": "/item-icons/ico_trousers_02_short_01.png"
+},
+{
+"cls": "SidecarBike",
+"name": "SidecarBike",
+"icon": "/item-icons/ico_sidecarbike.png"
+},
+{
+"cls": "SidecarBike_Fender_Front_Item",
+"name": "SidecarBike Fender Front Item",
+"icon": "/item-icons/ico_sidecarbike_fender_front.png"
+},
+{
+"cls": "SidecarBike_Fender_Rear_Item",
+"name": "SidecarBike Fender Rear Item",
+"icon": "/item-icons/ico_sidecarbike_fender_rear.png"
+},
+{
+"cls": "SidecarBike_Item_Container",
+"name": "SidecarBike Item Container",
+"icon": "/item-icons/ico_sidecarbike.png"
+},
+{
+"cls": "SidecarBike_Seat_Front_Item",
+"name": "SidecarBike Seat Front Item",
+"icon": "/item-icons/ico_sidecarbike_seat_front.png"
+},
+{
+"cls": "Slippers_01",
+"name": "Slippers 1",
+"icon": "/item-icons/ico_trader_slippers_01.png"
+},
+{
+"cls": "Slippers_03",
+"name": "Slippers 3",
+"icon": "/item-icons/ico_trader_slippers_01.png"
+},
+{
+"cls": "Small_Animal_Fat",
+"name": "Small Animal Fat",
+"icon": "/item-icons/ico_small_intestines.png"
+},
+{
+"cls": "Sneakers_02_01",
+"name": "Sneakers 2 1",
+"icon": "/item-icons/ico_sneakers_01.png"
+},
+{
+"cls": "Sneakers_02_02",
+"name": "Sneakers 2 2",
+"icon": "/item-icons/ico_sneakers_01.png"
+},
+{
+"cls": "Sneakers_02_03",
+"name": "Sneakers 2 3",
+"icon": "/item-icons/ico_sneakers_01.png"
+},
+{
+"cls": "Sneakers_02_04",
+"name": "Sneakers 2 4",
+"icon": "/item-icons/ico_sneakers_01.png"
+},
+{
+"cls": "Soap",
+"name": "Soap",
+"icon": null
+},
+{
+"cls": "SoySauce",
+"name": "SoySauce",
+"icon": "/item-icons/ico_trader_soysauce.png"
+},
+{
+"cls": "SpicesMix_01",
+"name": "SpicesMix 1",
+"icon": "/item-icons/ico_spicesmix_02.png"
+},
+{
+"cls": "SpicesMix_02",
+"name": "SpicesMix 2",
+"icon": "/item-icons/ico_spicesmix_02.png"
+},
+{
+"cls": "Spinach",
+"name": "Spinach",
+"icon": "/item-icons/ico_spinach.png"
+},
+{
+"cls": "Spinach_Seeds",
+"name": "Spinach Seeds",
+"icon": "/item-icons/ico_spinach_seeds.png"
+},
+{
+"cls": "Stockings_01",
+"name": "Stockings 1",
+"icon": "/item-icons/ico_stockings_01_01_01.png"
+},
+{
+"cls": "Stockings_02",
+"name": "Stockings 2",
+"icon": "/item-icons/ico_stockings_01_01_01.png"
+},
+{
+"cls": "Stockings_05",
+"name": "Stockings 5",
+"icon": "/item-icons/ico_stockings_01_01_01.png"
+},
+{
+"cls": "Stockings_07",
+"name": "Stockings 7",
+"icon": "/item-icons/ico_stockings_01_01_01.png"
+},
+{
+"cls": "Tangerine",
+"name": "Tangerine",
+"icon": "/item-icons/ico_trader_tangerine.png"
+},
+{
+"cls": "Tea_Pack",
+"name": "Tea Pack",
+"icon": null
+},
+{
+"cls": "Tequila",
+"name": "Tequila",
+"icon": "/item-icons/ico_trader_tequila.png"
+},
+{
+"cls": "The_Island_Special",
+"name": "The Island Special",
+"icon": "/item-icons/ico_cocktail_the_island_special.png"
+},
+{
+"cls": "Thread",
+"name": "Thread",
+"icon": "/item-icons/ico_thread.png"
+},
+{
+"cls": "Tights_01_01",
+"name": "Tights 1 1",
+"icon": "/item-icons/ico_tights_01.png"
+},
+{
+"cls": "Tights_01_02",
+"name": "Tights 1 2",
+"icon": "/item-icons/ico_tights_01.png"
+},
+{
+"cls": "Tights_01_04",
+"name": "Tights 1 4",
+"icon": "/item-icons/ico_tights_01.png"
+},
+{
+"cls": "Tights_01_05",
+"name": "Tights 1 5",
+"icon": "/item-icons/ico_tights_01.png"
+},
+{
+"cls": "Tights_01_06",
+"name": "Tights 1 6",
+"icon": "/item-icons/ico_tights_01.png"
+},
+{
+"cls": "Toaster_Pastries2",
+"name": "Toaster Pastries2",
+"icon": "/item-icons/ico_trader_toasterpastries2.png"
+},
+{
+"cls": "Tobacco_Seeds",
+"name": "Tobacco Seeds",
+"icon": "/item-icons/ico_tobacco_seeds.png"
+},
+{
+"cls": "Tool_Box",
+"name": "Tool Box",
+"icon": "/item-icons/ico_trader_tool_box.png"
+},
+{
+"cls": "Tool_Box_Small",
+"name": "Tool Box Small",
+"icon": "/item-icons/ico_tool_box_small.png"
+},
+{
+"cls": "Tourniquet",
+"name": "Tourniquet",
+"icon": "/item-icons/ico_tourniquet.png"
+},
+{
+"cls": "Tractor",
+"name": "Tractor",
+"icon": "/item-icons/ico_tractor.png"
+},
+{
+"cls": "Tractor_Body_Left_Brakelight_Item",
+"name": "Tractor Body Left Brakelight Item",
+"icon": "/item-icons/ico_tractor_brakelight_left.png"
+},
+{
+"cls": "Tractor_Body_Left_Item",
+"name": "Tractor Body Left Item",
+"icon": "/item-icons/ico_tractor_body_left.png"
+},
+{
+"cls": "Tractor_Body_Right_Brakelight_Item",
+"name": "Tractor Body Right Brakelight Item",
+"icon": "/item-icons/ico_tractor_brakelight_right.png"
+},
+{
+"cls": "Tractor_Body_Right_Item",
+"name": "Tractor Body Right Item",
+"icon": "/item-icons/ico_tractor_body_right.png"
+},
+{
+"cls": "Tractor_Carriage_Item_Container",
+"name": "Tractor Carriage Item Container",
+"icon": null
+},
+{
+"cls": "Tractor_Engine_Alternator_Item",
+"name": "Tractor Engine Alternator Item",
+"icon": "/item-icons/ico_tractor_alternator_item.png"
+},
+{
+"cls": "Tractor_Item_Container",
+"name": "Tractor Item Container",
+"icon": "/item-icons/ico_depleted_uranium_container.png"
+},
+{
+"cls": "VegetableOil",
+"name": "VegetableOil",
+"icon": "/item-icons/ico_trader_vegetableoil.png"
+},
+{
+"cls": "Vinegar",
+"name": "Vinegar",
+"icon": "/item-icons/ico_trader_vinegar.png"
+},
+{
+"cls": "Vodka",
+"name": "Vodka",
+"icon": "/item-icons/ico_trader_vodka.png"
+},
+{
+"cls": "WW_Bumper_Front_Item",
+"name": "WW Bumper Front Item",
+"icon": "/item-icons/ico_rager_bumper_front.png"
+},
+{
+"cls": "WW_Engine_Alternator_Item",
+"name": "WW Engine Alternator Item",
+"icon": "/item-icons/ico_bp_ww_engine_alternator_item.png"
+},
+{
+"cls": "WW_Lights_FrontLeft",
+"name": "WW Lights FrontLeft",
+"icon": "/item-icons/ico_rager_lights_frontleft.png"
+},
+{
+"cls": "WW_Lights_FrontRight",
+"name": "WW Lights FrontRight",
+"icon": "/item-icons/ico_rager_lights_frontright.png"
+},
+{
+"cls": "WW_Lights_RearLeft",
+"name": "WW Lights RearLeft",
+"icon": null
+},
+{
+"cls": "WW_Lights_RearRight",
+"name": "WW Lights RearRight",
+"icon": null
+},
+{
+"cls": "WW_Seat_BackRight_Item",
+"name": "WW Seat BackRight Item",
+"icon": "/item-icons/ico_bp_laika_seat_backright_item.png"
+},
+{
+"cls": "WW_Seat_FrontRight_Item",
+"name": "WW Seat FrontRight Item",
+"icon": "/item-icons/ico_rager_seat_frontright.png"
+},
+{
+"cls": "Wardrobe_Improvised_Wood",
+"name": "Wardrobe Improvised Wood",
+"icon": "/item-icons/ico_bench_improvised_wood.png"
+},
+{
+"cls": "Wheel_155_R65_Item",
+"name": "Wheel 155 R65 Item",
+"icon": "/item-icons/ico_bp_wheel_155_r65_item.png"
+},
+{
+"cls": "Wheel_265_60_R18_Item",
+"name": "Wheel 265 60 R18 Item",
+"icon": "/item-icons/ico_wheel_265_60_r18.png"
+},
+{
+"cls": "Wheel_6x16_Item",
+"name": "Wheel 6x16 Item",
+"icon": "/item-icons/ico_wheelbarrow.png"
+},
+{
+"cls": "Whiskey",
+"name": "Whiskey",
+"icon": "/item-icons/ico_trader_whiskey.png"
+},
+{
+"cls": "Wild_Cherry",
+"name": "Wild Cherry",
+"icon": "/item-icons/ico_trader_wild_cherry.png"
+},
+{
+"cls": "Wire",
+"name": "Wire",
+"icon": null
+},
+{
+"cls": "Wire_Cutters_01",
+"name": "Wire Cutters 1",
+"icon": "/item-icons/ico_wire_cutters_inhands.png"
+},
+{
+"cls": "WolfsWagen",
+"name": "WolfsWagen",
+"icon": "/item-icons/ico_wolfswagen.png"
+},
+{
+"cls": "Wolfswagen_Item_Container",
+"name": "Wolfswagen Item Container",
+"icon": null
+},
+{
+"cls": "Wooden_Log_Small_02",
+"name": "Wooden Log Small 2",
+"icon": "/item-icons/ico_wooden_log_small_inhands_01.png"
+},
+{
+"cls": "Wooden_Log_Small_03",
+"name": "Wooden Log Small 3",
+"icon": "/item-icons/ico_wooden_log_small_inhands_01.png"
+},
+{
+"cls": "Wooden_Stick",
+"name": "Wooden Stick",
+"icon": "/item-icons/ico_trader_largewoodenstick.png"
+},
+{
+"cls": "WoodlandHunter_Quiver_01",
+"name": "WoodlandHunter Quiver 1",
+"icon": null
+},
+{
+"cls": "Yeast",
+"name": "Yeast",
+"icon": "/item-icons/ico_yeast.png"
+},
+{
+"cls": "Zucchini_Seeds",
+"name": "Zucchini Seeds",
+"icon": "/item-icons/ico_zucchini_seeds.png"
+}
+]
+}

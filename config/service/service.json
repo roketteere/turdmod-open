@@ -1,0 +1,12 @@
+{
+  "port": 9090,
+  "token": "changeme-alpha-token",
+  "scum_server_exe": "C:\\SCUMServer\\SCUM\\Binaries\\Win64\\SCUMServer.exe",
+  "scum_server_args": ["-log", "-port=7042", "-QueryPort=7044", "-NoBattlEye"],
+  "inject_dlls": [
+    "C:\\SCUMServer\\SCUM\\Binaries\\Win64\\turdmod_server_loader.dll",
+    "C:\\SCUMServer\\SCUM\\Binaries\\Win64\\UE4SS\\UE4SS.dll"
+  ],
+  "auto_restart": true,
+  "restart_delay_secs": 10
+}

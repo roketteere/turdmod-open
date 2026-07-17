@@ -1,0 +1,61 @@
+{
+  "name": "kit-picker",
+  "version": "0.1.0",
+  "description": "Grid of item slots. Used by Quartermaster persona for kit selection (PVP kit, hunting kit, starter kit, etc.).",
+  "category": "ui",
+  "baseClass": "UTurdMODGridPickerWidget",
+  "parameters": [
+    {
+      "name": "title",
+      "type": "string",
+      "description": "Picker title shown at top",
+      "default": "Choose a kit"
+    },
+    {
+      "name": "gridCols",
+      "type": "int",
+      "description": "Grid columns",
+      "default": 4,
+      "min": 1,
+      "max": 10
+    },
+    {
+      "name": "gridRows",
+      "type": "int",
+      "description": "Grid rows",
+      "default": 3,
+      "min": 1,
+      "max": 10
+    },
+    {
+      "name": "slotSize",
+      "type": "int",
+      "description": "Slot edge pixel size",
+      "default": 96,
+      "min": 32,
+      "max": 256
+    },
+    {
+      "name": "allowMultiselect",
+      "type": "bool",
+      "description": "Allow picking multiple slots before confirming",
+      "default": false
+    },
+    {
+      "name": "bgColor",
+      "type": "color",
+      "description": "Panel background color",
+      "default": "#0c0c0c"
+    },
+    {
+      "name": "selectedColor",
+      "type": "color",
+      "description": "Selected-slot color",
+      "default": "#FFD700"
+    }
+  ],
+  "outputs": [
+    "widgets/<name>/BP_<name>.uasset",
+    "widgets/<name>/<name>.json"
+  ]
+}

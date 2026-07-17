@@ -1,0 +1,39 @@
+{
+  "name": "blank",
+  "version": "0.1.0",
+  "description": "Empty UMG widget. For advanced users authoring custom UI in UE 4.27 Editor. Use with --advanced.",
+  "category": "ui",
+  "baseClass": "UTurdMODBlankWidget",
+  "parameters": [
+    {
+      "name": "panelSize",
+      "type": "string",
+      "description": "Initial panel size as \"WxH\" (px)",
+      "default": "800x600"
+    },
+    {
+      "name": "anchorX",
+      "type": "enum",
+      "description": "Horizontal anchor",
+      "default": "Center",
+      "enum": ["Left", "Center", "Right"]
+    },
+    {
+      "name": "anchorY",
+      "type": "enum",
+      "description": "Vertical anchor",
+      "default": "Center",
+      "enum": ["Top", "Center", "Bottom"]
+    },
+    {
+      "name": "openOnEvent",
+      "type": "string",
+      "description": "(advanced) Bridge event that triggers showing (e.g. 'login')",
+      "default": ""
+    }
+  ],
+  "outputs": [
+    "widgets/<name>/BP_<name>.uasset",
+    "widgets/<name>/<name>.json"
+  ]
+}

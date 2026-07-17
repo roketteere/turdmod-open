@@ -1,0 +1,24 @@
+{
+  "name": "@turdmod/creator",
+  "version": "0.1.0",
+  "description": "TurdMOD content creator CLI — UE 4.27 widget/vehicle/item authoring with AI piping.",
+  "type": "module",
+  "license": "MIT",
+  "bin": {
+    "turdmod-creator": "./dist/cli.js",
+    "tmc": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test --import tsx ./src/**/*.test.ts"
+  },
+  "dependencies": {
+    "tsx": "^4.21.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}

@@ -1,0 +1,37 @@
+[package]
+name = "turdmod-lite"
+version = "0.0.1"
+description = "TurdMOD Lite — free SCUM admin client for managed hosts."
+edition = "2021"
+rust-version = "1.77"
+
+[lib]
+name = "turdmod_lite_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2.0", features = [] }
+
+[dependencies]
+tauri = { version = "2.1", features = [] }
+tauri-plugin-dialog = "2.0"
+tauri-plugin-fs = "2.0"
+tauri-plugin-store = "2.0"
+
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tokio = { version = "1.42", features = ["full"] }
+parking_lot = "0.12"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# FTP for the soft-tier route. G-Portal exposes plain FTP. SFTP via
+# russh/russh-sftp comes when a host that requires it is added — match
+# Manager's versions (0.46 + 2.0) when it lands.
+suppaftp = { version = "6", default-features = false, features = ["async-rustls"] }
+anyhow = "1.0"
+futures-util = { version = "0.3", default-features = false, features = ["std", "io"] }
+
+[features]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]

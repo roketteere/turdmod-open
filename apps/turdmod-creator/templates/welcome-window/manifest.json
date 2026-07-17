@@ -1,0 +1,119 @@
+{
+  "name": "welcome-window",
+  "version": "0.1.0",
+  "description": "Interactive in-game window like Rust's welcome screen. Tabs, rules, action buttons, close button. Shows on player login (configurable). Modders use this for server intros, rule banners, news, and call-to-action menus.",
+  "category": "ui",
+  "baseClass": "UTurdMODWelcomeWindowWidget",
+  "parameters": [
+    {
+      "name": "title",
+      "type": "string",
+      "description": "Server name shown in the window header",
+      "default": "My Awesome Server"
+    },
+    {
+      "name": "subtitle",
+      "type": "string",
+      "description": "Tagline / branding under the title",
+      "default": "TurdMOD Engine Powered"
+    },
+    {
+      "name": "tabsJson",
+      "type": "string",
+      "description": "Tabs JSON: [{\"name\":\"Welcome\",\"body\":\"...markdown...\"}, ...]",
+      "default": "[{\"name\":\"Welcome\",\"body\":\"Welcome to the server!\\nHave fun and survive.\"},{\"name\":\"Rules\",\"body\":\"1. No griefing\\n2. No cheating\\n3. Be respectful\"},{\"name\":\"Commands\",\"body\":\"!doc heal <player>\\n!mech bring <vehicle>\\n!story banner <text>\"}]"
+    },
+    {
+      "name": "buttonsJson",
+      "type": "string",
+      "description": "Buttons JSON: [{\"label\":\"Discord\",\"action\":\"openUrl\",\"url\":\"https://discord.gg/x\"}, {\"label\":\"Close\",\"action\":\"close\"}]",
+      "default": "[{\"label\":\"Discord\",\"action\":\"openUrl\",\"url\":\"https://discord.gg/turdmod\"},{\"label\":\"Got it\",\"action\":\"close\"}]"
+    },
+    {
+      "name": "width",
+      "type": "int",
+      "description": "Window width in pixels",
+      "default": 720,
+      "min": 320,
+      "max": 1920
+    },
+    {
+      "name": "height",
+      "type": "int",
+      "description": "Window height in pixels",
+      "default": 520,
+      "min": 240,
+      "max": 1080
+    },
+    {
+      "name": "bgColor",
+      "type": "color",
+      "description": "Window background color",
+      "default": "#0a0a0a"
+    },
+    {
+      "name": "headerColor",
+      "type": "color",
+      "description": "Header bar color",
+      "default": "#1a1a1a"
+    },
+    {
+      "name": "accentColor",
+      "type": "color",
+      "description": "Accent + active-tab color",
+      "default": "#f5c542"
+    },
+    {
+      "name": "textColor",
+      "type": "color",
+      "description": "Body text color",
+      "default": "#e0e0e0"
+    },
+    {
+      "name": "showOnLogin",
+      "type": "bool",
+      "description": "Auto-show on player login",
+      "default": true
+    },
+    {
+      "name": "showOnGroundDelayMs",
+      "type": "int",
+      "description": "Delay before showing (after login, ms). Use 5000 to wait until player is on the ground.",
+      "default": 5000,
+      "min": 0,
+      "max": 30000
+    },
+    {
+      "name": "dismissible",
+      "type": "bool",
+      "description": "Player can close the window (false = forced read)",
+      "default": true
+    },
+    {
+      "name": "showAgainKey",
+      "type": "string",
+      "description": "(advanced) Key to re-open after dismiss (e.g. F1, Y). Empty = never re-open.",
+      "default": "F1"
+    }
+  ],
+  "outputs": [
+    "widgets/<name>/BP_<name>.uasset",
+    "widgets/<name>/<name>.json"
+  ],
+  "renderPipeline": {
+    "ueClass": "UTurdMODWelcomeWindowWidget",
+    "ueParentClass": "UUserWidget",
+    "bridgeInvocation": {
+      "trigger": "login event + showOnGroundDelayMs",
+      "method": "showWidgetToPlayer",
+      "payload": {
+        "widgetClassName": "BP_<name>_C",
+        "title": "<title>",
+        "subtitle": "<subtitle>",
+        "tabs": "<tabsJson>",
+        "buttons": "<buttonsJson>"
+      }
+    },
+    "gatedOn": ["pak-bypass-layer-3", "ue-4-27-content-pak-cook"]
+  }
+}

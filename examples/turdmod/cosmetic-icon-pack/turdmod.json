@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "id": "cosmetic-icon-pack",
+  "name": "Cosmetic Icon Pack",
+  "version": "0.0.1",
+  "author": "TechyRican",
+  "description": "Replaces a handful of inventory icons with hand-drawn alternatives.",
+  "mode": "pak-content",
+  "minBuild": "23128448",
+  "dependencies": {},
+  "capabilities": [],
+  "tags": []
+}

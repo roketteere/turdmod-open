@@ -1,0 +1,9 @@
+{
+  "name": "@turdmod/admin-log",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "zod": "^3.23.0",
+    "@turdmod/turdmod-api": "workspace:*"
+  }
+}

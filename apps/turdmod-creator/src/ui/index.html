@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>turdmod-creator</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <nav class="topbar">
+    <div class="brand">
+      <span class="logo">⚒</span>
+      <span class="name">turdmod-creator</span>
+      <span class="tag">noob → hero</span>
+    </div>
+    <div class="actions">
+      <button id="btn-doctor" class="ghost">doctor</button>
+      <button id="btn-config" class="ghost">config</button>
+      <a class="ghost" href="https://github.com/roketteere/turdmod" target="_blank">github ↗</a>
+    </div>
+  </nav>
+
+  <main class="layout">
+    <aside class="side">
+      <section class="project-card">
+        <h3>Project</h3>
+        <div id="project-name">— none —</div>
+        <div id="project-author" class="muted"></div>
+        <div id="project-dir" class="muted small"></div>
+        <button id="btn-init" class="primary">+ New project</button>
+      </section>
+
+      <section class="widget-list">
+        <h3>Widgets <span id="widget-count" class="muted small">0</span></h3>
+        <ul id="widget-list"></ul>
+      </section>
+
+      <section class="ai-panel">
+        <h3>AI assist <span class="byok-pill">BYO key</span></h3>
+        <p class="muted small">Your key, your billing — we never see it.</p>
+        <select id="ai-provider">
+          <option value="deepseek">deepseek</option>
+          <option value="openai">openai</option>
+          <option value="anthropic">anthropic</option>
+          <option value="ollama">ollama (local)</option>
+          <option value="gemini">gemini</option>
+        </select>
+        <input id="ai-model" placeholder="model (e.g. deepseek-chat)" value="deepseek-chat">
+        <textarea id="ai-prompt" placeholder='make me a notification banner that says "Welcome to the island"'></textarea>
+        <button id="btn-ai" class="ghost">Ask AI</button>
+        <pre id="ai-output" class="ai-output muted small"></pre>
+      </section>
+    </aside>
+
+    <section class="main">
+      <header class="main-head">
+        <h1 id="page-title">Pick a template</h1>
+        <p id="page-sub" class="muted">Or use AI to draft one for you in the sidebar.</p>
+      </header>
+
+      <div id="template-gallery" class="gallery"></div>
+
+      <div id="param-form" class="hidden">
+        <button id="btn-back" class="ghost">← Back to templates</button>
+        <h2 id="param-title"></h2>
+        <p id="param-desc" class="muted"></p>
+        <div class="param-grid">
+          <div id="param-fields" class="param-fields"></div>
+          <div class="preview-wrap">
+            <h3>Live preview</h3>
+            <p class="muted small">An approximation. Final UMG renders may differ slightly.</p>
+            <div id="preview" class="preview"></div>
+          </div>
+        </div>
+        <div class="form-actions">
+          <label class="muted">Widget name <input id="widget-name" placeholder="e.g. welcome"></label>
+          <button id="btn-add" class="primary">Add widget to project</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="modal" class="modal hidden">
+    <div class="modal-card">
+      <h2 id="modal-title"></h2>
+      <div id="modal-body"></div>
+      <div class="modal-actions">
+        <button id="modal-cancel" class="ghost">Cancel</button>
+        <button id="modal-ok" class="primary">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

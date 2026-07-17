@@ -1,0 +1,105 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+dist/
+build/
+.next/
+.turbo/
+out/
+*.tsbuildinfo
+# tsc -b emits these from vite.config.ts (composite); not source
+apps/*/vite.config.d.ts
+apps/*/vite.config.js
+# turdmod-web deploy stager (rsync'd to Spaceship)
+.deploy-stage/
+# turdmod-web deploy artifact
+apps/turdmod-web/deploy.tgz
+
+# Rust
+target/
+target-*/
+**/*.rs.bk
+
+# Python (used by some build tooling)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# Env / secrets
+.env
+.env.local
+.env.*.local
+.secrets/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Runtime data
+data/turdmod-companion/
+
+# OS
+desktop.ini
+
+# extraction-team runtime log (dossiers ARE tracked)
+docs/engine/research/_queue/queue.log
+
+# L5 digest fleet runtime output (knowledge home is lobe, not git; regenerable ~$8)
+docs/engine/research/l5-digests/
+
+# verify-claim ledger (machine-local audit trail)
+tools/verify/ledger.jsonl
+
+# verify-dossier generated reports (regenerable)
+docs/engine/research/**/*.verified.md
+docs/engine/research/*.verified.md
+
+# Live OVH SCUM server config snapshot — local-only, lobe-indexed, NEVER commit (SteamIDs/passwords)
+docs/scum-config-live/
+
+# Ops scratch — never commit. Holds SCUM.db copies (player PII), build logs,
+# briefs, and anything that may briefly hold secrets. The whole dir is scratch.
+tmp/
+**/discord.json
+
+# Runtime player analytics — PII (names, SteamIDs, position history). Never commit.
+apps/turdmod-service/src/data/analytics/
+
+# Runtime data directories (service state, analytics)
+apps/turdmod-service/data/
+data/analytics/
+
+# Build bundles (regenerable, deployed via scripts)
+apps/turdmod-bot/dist-bundle/
+apps/turdmod-companion/dist-bundle/
+
+# Cross-session comms + build logs (machine-local)
+master/
+messenger/
+
+# Stray temp archives
+apps/$RQE89OY.tar
+
+# Local convenience scripts (machine-specific, not portable)
+open-admin-here.bat
+apps/*/open-admin-here.bat
+
+# Tauri icon backups (pre-rebrand snapshots, not source)
+apps/*/src-tauri/icons/_pre-turd-backup/
+
+# Batch scratch files
+tools/batch*.txt

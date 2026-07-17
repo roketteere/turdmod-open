@@ -1,0 +1,18 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "4.27",
+	"Category": "TurdMOD",
+	"Description": "Phase C P1 Hello World pak — first BP class shipped via pak into SCUMServer.exe. See docs/runbooks/uproject-cook.md.",
+	"Modules": [
+		{
+			"Name": "HelloWorldPak",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		},
+		{
+			"Name": "SCUM",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}

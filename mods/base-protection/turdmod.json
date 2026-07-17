@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "id": "base-protection",
+  "name": "Base Protection by Zilla",
+  "version": "0.1.0-alpha",
+  "author": "Zilla",
+  "description": "Offline raid protection: if you (and your squad) haven't been on the server, your base flag zone becomes unlockable after a configurable timeout. Encourages active play and prevents hoarding by ghost players.",
+  "mode": "server-side",
+  "minBuild": "23128448",
+  "dependencies": {},
+  "capabilities": [{ "filesystem": "readwrite" }],
+  "entrypoint": "scripts/main.ts",
+  "tags": ["raid", "protection", "base", "offline", "flag", "zilla"]
+}

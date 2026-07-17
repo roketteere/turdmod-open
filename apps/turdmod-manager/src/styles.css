@@ -1,0 +1,680 @@
+@import '@fontsource-variable/bricolage-grotesque';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------------
+ * Design layer — theme-independent. Sits on top of the 25 color themes
+ * (which only set --turd-* colors). Defines the "refined glass cockpit"
+ * character: a characterful display face, frosted-glass surfaces, soft
+ * elevation, and spring-easing tokens for iOS-smooth motion.
+ * --------------------------------------------------------------------------- */
+:root {
+  --font-display: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
+
+  /* Spring / ease curves — used by CSS transitions and as the resting
+   * feel framer-motion springs echo. */
+  --ease-out-soft:  cubic-bezier(0.22, 1, 0.36, 1);     /* expo-ish settle */
+  --ease-spring:    cubic-bezier(0.34, 1.56, 0.64, 1);  /* gentle overshoot */
+  --dur-fast: 140ms;
+  --dur-mid:  240ms;
+  --dur-slow: 420ms;
+
+  /* Elevation — soft, layered shadows tuned for dark glass. */
+  --elev-1: 0 1px 2px rgba(0,0,0,0.25), 0 1px 1px rgba(0,0,0,0.18);
+  --elev-2: 0 4px 12px rgba(0,0,0,0.30), 0 1px 3px rgba(0,0,0,0.22);
+  --elev-3: 0 12px 32px rgba(0,0,0,0.42), 0 3px 8px rgba(0,0,0,0.30);
+
+  /* Glass surface tint — derived per-theme from bg-mid; the blur + inner
+   * highlight read against whatever the active theme paints behind it. */
+  --glass-blur: 14px;
+}
+
+/* Mono numerals shouldn't jitter as values change width — a major source
+ * of the "cheap" shifting. Lock tabular figures app-wide for mono text. */
+.font-mono, code, kbd, pre, [class*="tabular"] {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+/* Interactive elements get a default smooth transition so hover/active
+ * states ease instead of snapping. Components can override per-property. */
+button, a, select, input, [role="tab"], .interactive {
+  transition: background-color var(--dur-fast) var(--ease-out-soft),
+              border-color var(--dur-fast) var(--ease-out-soft),
+              color var(--dur-fast) var(--ease-out-soft),
+              box-shadow var(--dur-mid) var(--ease-out-soft),
+              transform var(--dur-mid) var(--ease-spring);
+}
+
+/* Respect reduced-motion: kill transitions/animations for those users. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+
+/* Frosted-glass surface. Background uses the theme's mid tone at partial
+ * alpha + a top inner highlight for the "lit edge" glass look. Falls back
+ * gracefully where backdrop-filter is unsupported. */
+.glass {
+  background:
+    /* lit top edge */
+    linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.015) 12%, transparent 40%),
+    /* faint accent wash — picks up each theme's character (green on Matrix, pink on Sakura, …) */
+    linear-gradient(135deg, color-mix(in srgb, var(--turd-mustard) 8%, transparent) 0%, transparent 55%),
+    color-mix(in srgb, var(--turd-bg-mid) 72%, transparent);
+  backdrop-filter: blur(var(--glass-blur)) saturate(1.3);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.3);
+  /* border leans slightly toward the accent so edges read on-theme */
+  border: 1px solid color-mix(in srgb, var(--turd-mustard) 14%, color-mix(in srgb, var(--turd-bronze) 38%, transparent));
+  box-shadow: var(--elev-2), inset 0 1px 0 rgba(255,255,255,0.05);
+}
+.glass-soft {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--turd-mustard) 5%, transparent) 0%, transparent 60%),
+    color-mix(in srgb, var(--turd-bg-mid) 55%, transparent);
+  backdrop-filter: blur(10px) saturate(1.15);
+  -webkit-backdrop-filter: blur(10px) saturate(1.15);
+  border: 1px solid color-mix(in srgb, var(--turd-bronze) 26%, transparent);
+}
+
+/* ---------------------------------------------------------------------------
+ * Theme system — 25 palettes total (default "turd" + 24 selectable).
+ *
+ * Each theme overrides a small set of CSS custom properties. Tailwind
+ * reads them through the turd-* tokens (see tailwind.config.ts). Themes
+ * are applied by setting data-theme="<name>" on <html>; the picker in
+ * the sidebar (ThemeSwitcher.tsx) does this and persists the choice
+ * via the Tauri store plugin.
+ * --------------------------------------------------------------------------- */
+
+/* :root is the default (TurdMOD bronze/cream/mustard). Each theme is a
+ * delta on top of this, so themes only need to set what changes. */
+:root {
+  color-scheme: dark;
+
+  /* x12 Anime Cyberpunk palette — matches turdmod.com */
+  --turd-bg-deep:        #08080f;
+  --turd-bg-mid:         #121225;
+  --turd-bg-soft:        #1a1a35;
+  --turd-bronze:         #2a2a50;
+  --turd-bronze-bright:  #3a3a65;
+  --turd-bronze-light:   #4a4a75;
+  --turd-cream:          #e4e4f0;
+  --turd-cream-dim:      #8888aa;
+  --turd-mustard:        #00d4ff;
+  --turd-mustard-bright: #33e0ff;
+  --turd-mustard-soft:   #0099bb;
+  --turd-green:          #00ff88;
+  --turd-red:            #ff3344;
+
+  /* Body background — x12 grid pattern + gradient atmosphere */
+  --turd-body-bg:
+    radial-gradient(circle at 20% 0%, rgba(153, 69, 255, 0.04) 0%, transparent 50%),
+    radial-gradient(circle at 80% 100%, rgba(0, 212, 255, 0.02) 0%, transparent 50%),
+    #08080f;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--turd-body-bg);
+  color: var(--turd-cream);
+  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+/* Opt out for things that shouldn't be selectable: drag regions,
+ * buttons, the sidebar nav, and anything marked .no-select. Default
+ * is now text-selectable so RPC errors / log lines / response bodies
+ * can be copied without per-element classes. */
+[data-tauri-drag-region],
+button,
+nav,
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--turd-bg-deep); }
+::-webkit-scrollbar-thumb { background: var(--turd-bg-soft); border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: var(--turd-bronze); }
+
+/* ---------------------------------------------------------------------------
+ * HACKER themes (8) — terminal/cyberpunk palettes, some semi-glass
+ * --------------------------------------------------------------------------- */
+
+/* hacker-matrix — classic green-on-black */
+[data-theme="hacker-matrix"] {
+  --turd-bg-deep:        #000000;
+  --turd-bg-mid:         #051405;
+  --turd-bg-soft:        #0c2a0c;
+  --turd-bronze:         #1f5a1f;
+  --turd-bronze-bright:  #2a7a2a;
+  --turd-bronze-light:   #4dbf4d;
+  --turd-cream:          #c8ffc8;
+  --turd-cream-dim:      #6fc06f;
+  --turd-mustard:        #46e846;
+  --turd-mustard-bright: #5dff5d;
+  --turd-mustard-soft:   #2aaa2a;
+  --turd-green:          #5dff5d;
+  --turd-red:            #ff5050;
+  --turd-body-bg:
+    radial-gradient(circle at 50% 0%, rgba(70, 232, 70, 0.08) 0%, transparent 60%),
+    #000000;
+}
+
+/* hacker-glass — translucent neon-cyan on near-black with glass blocks */
+[data-theme="hacker-glass"] {
+  --turd-bg-deep:        #04060a;
+  --turd-bg-mid:         rgba(20, 50, 70, 0.45);
+  --turd-bg-soft:        rgba(40, 100, 140, 0.30);
+  --turd-bronze:         rgba(80, 180, 220, 0.55);
+  --turd-bronze-bright:  rgba(110, 220, 255, 0.70);
+  --turd-bronze-light:   #6edcff;
+  --turd-cream:          #d9f3ff;
+  --turd-cream-dim:      #6fa9c8;
+  --turd-mustard:        #6edcff;
+  --turd-mustard-bright: #b6f1ff;
+  --turd-mustard-soft:   #2a8fb8;
+  --turd-green:          #5dffd6;
+  --turd-red:            #ff6e8e;
+  --turd-body-bg:
+    radial-gradient(circle at 20% 0%, rgba(110, 220, 255, 0.10) 0%, transparent 55%),
+    radial-gradient(circle at 80% 100%, rgba(80, 140, 200, 0.08) 0%, transparent 55%),
+    #04060a;
+}
+
+/* hacker-amber — old-school amber CRT monitor */
+[data-theme="hacker-amber"] {
+  --turd-bg-deep:        #100802;
+  --turd-bg-mid:         #1f1304;
+  --turd-bg-soft:        #2e1d08;
+  --turd-bronze:         #884a08;
+  --turd-bronze-bright:  #b46410;
+  --turd-bronze-light:   #ff9a3a;
+  --turd-cream:          #ffd28a;
+  --turd-cream-dim:      #c8923a;
+  --turd-mustard:        #ffaa2a;
+  --turd-mustard-bright: #ffd060;
+  --turd-mustard-soft:   #aa6a14;
+  --turd-green:          #ffcc44;
+  --turd-red:            #ff5e30;
+  --turd-body-bg:
+    radial-gradient(circle at 50% 100%, rgba(255, 170, 42, 0.06) 0%, transparent 50%),
+    #100802;
+}
+
+/* hacker-cyberpunk — magenta/cyan neon split */
+[data-theme="hacker-cyberpunk"] {
+  --turd-bg-deep:        #07041a;
+  --turd-bg-mid:         #120a30;
+  --turd-bg-soft:        #1f1244;
+  --turd-bronze:         #4e1c8e;
+  --turd-bronze-bright:  #722cc0;
+  --turd-bronze-light:   #a45cff;
+  --turd-cream:          #f3d6ff;
+  --turd-cream-dim:      #a48fc8;
+  --turd-mustard:        #ff3aa1;
+  --turd-mustard-bright: #ff6dc4;
+  --turd-mustard-soft:   #b8226b;
+  --turd-green:          #00f0ff;
+  --turd-red:            #ff486b;
+  --turd-body-bg:
+    radial-gradient(circle at 0% 100%, rgba(255, 58, 161, 0.12) 0%, transparent 55%),
+    radial-gradient(circle at 100% 0%, rgba(0, 240, 255, 0.10) 0%, transparent 55%),
+    #07041a;
+}
+
+/* hacker-frost — translucent ice-blue glass on slate */
+[data-theme="hacker-frost"] {
+  --turd-bg-deep:        #0a1018;
+  --turd-bg-mid:         rgba(60, 90, 130, 0.40);
+  --turd-bg-soft:        rgba(100, 140, 180, 0.28);
+  --turd-bronze:         rgba(120, 170, 220, 0.55);
+  --turd-bronze-bright:  rgba(160, 210, 255, 0.75);
+  --turd-bronze-light:   #b8dcff;
+  --turd-cream:          #e6f3ff;
+  --turd-cream-dim:      #8aabd0;
+  --turd-mustard:        #8ad8ff;
+  --turd-mustard-bright: #c0eaff;
+  --turd-mustard-soft:   #3a85bb;
+  --turd-green:          #8effd6;
+  --turd-red:            #ff8caa;
+  --turd-body-bg:
+    radial-gradient(circle at 30% 10%, rgba(180, 220, 255, 0.10) 0%, transparent 50%),
+    radial-gradient(circle at 70% 90%, rgba(100, 150, 200, 0.08) 0%, transparent 60%),
+    #0a1018;
+}
+
+/* hacker-bloodmoon — semi-glass blood red on charcoal */
+[data-theme="hacker-bloodmoon"] {
+  --turd-bg-deep:        #0a0405;
+  --turd-bg-mid:         rgba(60, 12, 18, 0.55);
+  --turd-bg-soft:        rgba(120, 25, 35, 0.40);
+  --turd-bronze:         rgba(200, 40, 60, 0.55);
+  --turd-bronze-bright:  rgba(240, 60, 80, 0.75);
+  --turd-bronze-light:   #ff8090;
+  --turd-cream:          #ffdadf;
+  --turd-cream-dim:      #c08090;
+  --turd-mustard:        #ff4060;
+  --turd-mustard-bright: #ff6e8a;
+  --turd-mustard-soft:   #aa2030;
+  --turd-green:          #ff9c30;
+  --turd-red:            #ff3050;
+  --turd-body-bg:
+    radial-gradient(circle at 50% 100%, rgba(200, 40, 60, 0.14) 0%, transparent 50%),
+    #0a0405;
+}
+
+/* hacker-onyx — pure black + subtle white glass */
+[data-theme="hacker-onyx"] {
+  --turd-bg-deep:        #000000;
+  --turd-bg-mid:         rgba(255, 255, 255, 0.04);
+  --turd-bg-soft:        rgba(255, 255, 255, 0.07);
+  --turd-bronze:         rgba(255, 255, 255, 0.20);
+  --turd-bronze-bright:  rgba(255, 255, 255, 0.35);
+  --turd-bronze-light:   #e8e8e8;
+  --turd-cream:          #ffffff;
+  --turd-cream-dim:      #909090;
+  --turd-mustard:        #ffffff;
+  --turd-mustard-bright: #ffffff;
+  --turd-mustard-soft:   #808080;
+  --turd-green:          #80ff80;
+  --turd-red:            #ff6060;
+  --turd-body-bg: #000000;
+}
+
+/* hacker-vapor — vaporwave gradient (pink → purple → cyan glass) */
+[data-theme="hacker-vapor"] {
+  --turd-bg-deep:        #160d2a;
+  --turd-bg-mid:         rgba(80, 30, 130, 0.40);
+  --turd-bg-soft:        rgba(140, 60, 200, 0.30);
+  --turd-bronze:         rgba(200, 100, 220, 0.55);
+  --turd-bronze-bright:  rgba(240, 140, 240, 0.75);
+  --turd-bronze-light:   #ff9fe6;
+  --turd-cream:          #ffe0f6;
+  --turd-cream-dim:      #c08acb;
+  --turd-mustard:        #ff80d6;
+  --turd-mustard-bright: #ffb0e8;
+  --turd-mustard-soft:   #b04a8a;
+  --turd-green:          #66f8ff;
+  --turd-red:            #ff5588;
+  --turd-body-bg:
+    linear-gradient(155deg, #2a0e44 0%, #1c0c30 40%, #1a1b40 100%),
+    #160d2a;
+}
+
+/* ---------------------------------------------------------------------------
+ * ANIME themes (8) — soft pastels, vivid accents, light shoujo to dark seinen
+ * --------------------------------------------------------------------------- */
+
+/* anime-sakura — cherry blossom pink + scattered petal dots */
+[data-theme="anime-sakura"] {
+  --turd-bg-deep:        #221016;
+  --turd-bg-mid:         #3a1c28;
+  --turd-bg-soft:        #4d2735;
+  --turd-bronze:         #b35a82;
+  --turd-bronze-bright:  #d680a8;
+  --turd-bronze-light:   #ffb6d8;
+  --turd-cream:          #ffe8f0;
+  --turd-cream-dim:      #d4a0b8;
+  --turd-mustard:        #ff80b5;
+  --turd-mustard-bright: #ffa8cf;
+  --turd-mustard-soft:   #aa4070;
+  --turd-green:          #b8ffa0;
+  --turd-red:            #ff6080;
+  /* Scattered falling-petal dots in two sizes + a top-right glow. */
+  --turd-body-bg:
+    radial-gradient(circle at 25% 30%, rgba(255, 168, 207, 0.16) 1.5px, transparent 3px) 0 0 / 60px 90px,
+    radial-gradient(circle at 70% 60%, rgba(255, 200, 220, 0.12) 1px, transparent 2px) 20px 30px / 70px 80px,
+    radial-gradient(circle at 70% 0%, rgba(255, 168, 207, 0.12) 0%, transparent 55%),
+    #221016;
+}
+
+/* anime-ghibli — soft forest greens + horizontal sun-ray mist bands */
+[data-theme="anime-ghibli"] {
+  --turd-bg-deep:        #14201a;
+  --turd-bg-mid:         #1f3128;
+  --turd-bg-soft:        #2d4536;
+  --turd-bronze:         #6a8f5e;
+  --turd-bronze-bright:  #8ab47c;
+  --turd-bronze-light:   #b5d6a8;
+  --turd-cream:          #f5ecd0;
+  --turd-cream-dim:      #b8b08c;
+  --turd-mustard:        #d8c468;
+  --turd-mustard-bright: #f0dc88;
+  --turd-mustard-soft:   #a09040;
+  --turd-green:          #a0e070;
+  --turd-red:            #e08868;
+  /* Watercolor horizontal mist bands + warm bottom-left sun glow. */
+  --turd-body-bg:
+    repeating-linear-gradient(0deg,
+      transparent 0 50px,
+      rgba(245, 236, 208, 0.025) 50px 51px,
+      transparent 51px 110px,
+      rgba(138, 180, 124, 0.020) 110px 112px),
+    radial-gradient(circle at 20% 80%, rgba(216, 196, 104, 0.10) 0%, transparent 55%),
+    radial-gradient(circle at 80% 10%, rgba(138, 180, 124, 0.08) 0%, transparent 55%),
+    #14201a;
+}
+
+/* anime-eva — gritty NERV purples + neon green + AT-Field warning stripes */
+[data-theme="anime-eva"] {
+  --turd-bg-deep:        #0a0814;
+  --turd-bg-mid:         #1a1428;
+  --turd-bg-soft:        #2a1c44;
+  --turd-bronze:         #5c3a8c;
+  --turd-bronze-bright:  #7e54bc;
+  --turd-bronze-light:   #a886e8;
+  --turd-cream:          #e8d6ff;
+  --turd-cream-dim:      #9080c0;
+  --turd-mustard:        #80ff40;
+  --turd-mustard-bright: #a8ff70;
+  --turd-mustard-soft:   #50aa20;
+  --turd-green:          #80ff40;
+  --turd-red:            #ff6040;
+  /* Hex-pattern AT field via cross-hatch diagonals + bottom-right
+     NERV-green warning stripes. */
+  --turd-body-bg:
+    repeating-linear-gradient(60deg, transparent 0 24px, rgba(128, 255, 64, 0.025) 24px 25px),
+    repeating-linear-gradient(-60deg, transparent 0 24px, rgba(168, 134, 232, 0.025) 24px 25px),
+    repeating-linear-gradient(45deg, rgba(128, 255, 64, 0.030) 0 4px, transparent 4px 24px),
+    linear-gradient(135deg, #0a0814 0%, #181028 100%);
+}
+
+/* anime-shoujo — soft pink+lilac+gold (girliest of the anime set) */
+[data-theme="anime-shoujo"] {
+  --turd-bg-deep:        #2a1830;
+  --turd-bg-mid:         #3e2348;
+  --turd-bg-soft:        #533060;
+  --turd-bronze:         #b076c8;
+  --turd-bronze-bright:  #d098e8;
+  --turd-bronze-light:   #f0c0ff;
+  --turd-cream:          #ffeefa;
+  --turd-cream-dim:      #c8a8d8;
+  --turd-mustard:        #ffd060;
+  --turd-mustard-bright: #ffe890;
+  --turd-mustard-soft:   #b8902c;
+  --turd-green:          #b6f8c4;
+  --turd-red:            #ff7a90;
+  /* Shoujo sparkle — tiny twinkles scattered + dreamy corner glows. */
+  --turd-body-bg:
+    radial-gradient(circle at 15% 25%, rgba(255, 232, 144, 0.20) 1px, transparent 2px) 0 0 / 90px 110px,
+    radial-gradient(circle at 75% 55%, rgba(255, 208, 96, 0.16) 0.8px, transparent 1.5px) 30px 40px / 70px 80px,
+    radial-gradient(circle at 40% 80%, rgba(255, 192, 224, 0.14) 1.2px, transparent 2px) 50px 20px / 110px 90px,
+    radial-gradient(circle at 30% 0%, rgba(208, 152, 232, 0.14) 0%, transparent 55%),
+    radial-gradient(circle at 70% 100%, rgba(255, 208, 96, 0.10) 0%, transparent 55%),
+    #2a1830;
+}
+
+/* anime-shonen — high-energy orange + sky blue */
+[data-theme="anime-shonen"] {
+  --turd-bg-deep:        #14182a;
+  --turd-bg-mid:         #1f2640;
+  --turd-bg-soft:        #2c3658;
+  --turd-bronze:         #4080d0;
+  --turd-bronze-bright:  #66a4f0;
+  --turd-bronze-light:   #a0c8ff;
+  --turd-cream:          #fff4e0;
+  --turd-cream-dim:      #b89c80;
+  --turd-mustard:        #ff8040;
+  --turd-mustard-bright: #ffa868;
+  --turd-mustard-soft:   #b85020;
+  --turd-green:          #80e060;
+  --turd-red:            #ff5040;
+  /* Shonen action lines — diagonal speed stripes radiating across the
+     viewport + manga half-tone dots in the corners. */
+  --turd-body-bg:
+    repeating-linear-gradient(-25deg, transparent 0 7px, rgba(255, 168, 104, 0.035) 7px 8px),
+    radial-gradient(circle at 10% 10%, rgba(255, 128, 64, 0.06) 1.5px, transparent 2.5px) 0 0 / 12px 12px,
+    radial-gradient(circle at 100% 0%, rgba(102, 164, 240, 0.12) 0%, transparent 55%),
+    radial-gradient(circle at 0% 100%, rgba(255, 128, 64, 0.12) 0%, transparent 55%),
+    #14182a;
+}
+
+/* anime-yuru — soft cottagecore-style sage + peach */
+[data-theme="anime-yuru"] {
+  --turd-bg-deep:        #1d1812;
+  --turd-bg-mid:         #2e271d;
+  --turd-bg-soft:        #423829;
+  --turd-bronze:         #b89868;
+  --turd-bronze-bright:  #d8b888;
+  --turd-bronze-light:   #f0d8a8;
+  --turd-cream:          #fff0d8;
+  --turd-cream-dim:      #c8b090;
+  --turd-mustard:        #d8a878;
+  --turd-mustard-bright: #f0c898;
+  --turd-mustard-soft:   #a08058;
+  --turd-green:          #a8c890;
+  --turd-red:            #d88878;
+  /* Soft horizontal wood-grain bands + a top-center warm sun. */
+  --turd-body-bg:
+    repeating-linear-gradient(0deg, transparent 0 22px, rgba(216, 168, 120, 0.025) 22px 24px),
+    repeating-linear-gradient(0deg, transparent 0 7px, rgba(184, 152, 104, 0.015) 7px 8px),
+    radial-gradient(circle at 50% 0%, rgba(216, 184, 136, 0.10) 0%, transparent 55%),
+    #1d1812;
+}
+
+/* anime-tsuki — moonlit night, silvery blue */
+[data-theme="anime-tsuki"] {
+  --turd-bg-deep:        #0d1424;
+  --turd-bg-mid:         #1a2440;
+  --turd-bg-soft:        #283758;
+  --turd-bronze:         #5878a8;
+  --turd-bronze-bright:  #80a0d0;
+  --turd-bronze-light:   #b8d4ff;
+  --turd-cream:          #e8eeff;
+  --turd-cream-dim:      #909cb8;
+  --turd-mustard:        #c0c8ff;
+  --turd-mustard-bright: #e0e8ff;
+  --turd-mustard-soft:   #7080a8;
+  --turd-green:          #a0e8c0;
+  --turd-red:            #f08090;
+  /* Moonlit night — scattered stars at multiple sizes + a large soft
+     moon glow in the upper right. */
+  --turd-body-bg:
+    radial-gradient(circle at 20% 30%, rgba(232, 238, 255, 0.18) 1px, transparent 2px) 0 0 / 100px 130px,
+    radial-gradient(circle at 65% 70%, rgba(192, 200, 255, 0.14) 0.8px, transparent 1.5px) 40px 60px / 80px 90px,
+    radial-gradient(circle at 90% 15%, rgba(220, 228, 255, 0.20) 1.2px, transparent 2.2px) 70px 30px / 120px 140px,
+    radial-gradient(circle at 80% 20%, rgba(232, 238, 255, 0.14) 0%, transparent 35%),
+    radial-gradient(circle at 80% 20%, rgba(192, 200, 255, 0.10) 0%, transparent 55%),
+    #0d1424;
+}
+
+/* anime-kawaii — vivid pop pink + mint + yellow */
+[data-theme="anime-kawaii"] {
+  --turd-bg-deep:        #2a1c2e;
+  --turd-bg-mid:         #3e2a44;
+  --turd-bg-soft:        #543a5a;
+  --turd-bronze:         #c068a8;
+  --turd-bronze-bright:  #e090c8;
+  --turd-bronze-light:   #ffb8e8;
+  --turd-cream:          #fff0fa;
+  --turd-cream-dim:      #c8a8c8;
+  --turd-mustard:        #ffe080;
+  --turd-mustard-bright: #ffec98;
+  --turd-mustard-soft:   #b8a040;
+  --turd-green:          #80f0c0;
+  --turd-red:            #ff6088;
+  /* Kawaii pop-art polka dots in alternating pink/mint + two corner glows. */
+  --turd-body-bg:
+    radial-gradient(circle at 50% 50%, rgba(255, 152, 200, 0.10) 4px, transparent 5px) 0 0 / 50px 50px,
+    radial-gradient(circle at 50% 50%, rgba(128, 240, 192, 0.08) 3px, transparent 4px) 25px 25px / 50px 50px,
+    radial-gradient(circle at 30% 0%, rgba(255, 184, 232, 0.16) 0%, transparent 55%),
+    radial-gradient(circle at 70% 100%, rgba(128, 240, 192, 0.12) 0%, transparent 55%),
+    #2a1c2e;
+}
+
+/* ---------------------------------------------------------------------------
+ * SPUNK themes (8) — bright pinks, lavenders, gold, mauve
+ * --------------------------------------------------------------------------- */
+
+/* girly-bubblegum — bright pink + light mint */
+[data-theme="spunk-bubblegum"] {
+  --turd-bg-deep:        #2e1424;
+  --turd-bg-mid:         #441e36;
+  --turd-bg-soft:        #582a48;
+  --turd-bronze:         #d860a8;
+  --turd-bronze-bright:  #f088c8;
+  --turd-bronze-light:   #ffb0e0;
+  --turd-cream:          #fff0f8;
+  --turd-cream-dim:      #d8a8c8;
+  --turd-mustard:        #ff5cae;
+  --turd-mustard-bright: #ff88c8;
+  --turd-mustard-soft:   #b83080;
+  --turd-green:          #98ffd0;
+  --turd-red:            #ff4070;
+  --turd-body-bg:
+    radial-gradient(circle at 50% 0%, rgba(255, 136, 200, 0.14) 0%, transparent 55%),
+    #2e1424;
+}
+
+/* girly-rosegold — rose + gold + warm white */
+[data-theme="spunk-rosegold"] {
+  --turd-bg-deep:        #261620;
+  --turd-bg-mid:         #3a2230;
+  --turd-bg-soft:        #4c2d3e;
+  --turd-bronze:         #c08070;
+  --turd-bronze-bright:  #e0a090;
+  --turd-bronze-light:   #f8c8b8;
+  --turd-cream:          #fff0e8;
+  --turd-cream-dim:      #c8a098;
+  --turd-mustard:        #f8b878;
+  --turd-mustard-bright: #ffd098;
+  --turd-mustard-soft:   #b08858;
+  --turd-green:          #d8d090;
+  --turd-red:            #e87070;
+  --turd-body-bg:
+    radial-gradient(circle at 80% 20%, rgba(248, 184, 120, 0.10) 0%, transparent 55%),
+    #261620;
+}
+
+/* girly-lavender — lavender + soft purple + silver */
+[data-theme="spunk-lavender"] {
+  --turd-bg-deep:        #1f1830;
+  --turd-bg-mid:         #2e2448;
+  --turd-bg-soft:        #3e305f;
+  --turd-bronze:         #8c70c8;
+  --turd-bronze-bright:  #ac90e8;
+  --turd-bronze-light:   #d0b8ff;
+  --turd-cream:          #f0e8ff;
+  --turd-cream-dim:      #b8a8d0;
+  --turd-mustard:        #c0a0ff;
+  --turd-mustard-bright: #e0c8ff;
+  --turd-mustard-soft:   #7050b8;
+  --turd-green:          #b8e8c8;
+  --turd-red:            #ff8090;
+  --turd-body-bg:
+    radial-gradient(circle at 50% 100%, rgba(192, 160, 255, 0.10) 0%, transparent 55%),
+    #1f1830;
+}
+
+/* girly-cottagecore — peach + sage + cream */
+[data-theme="spunk-cottagecore"] {
+  --turd-bg-deep:        #20180f;
+  --turd-bg-mid:         #2e2317;
+  --turd-bg-soft:        #3c2f1f;
+  --turd-bronze:         #b89060;
+  --turd-bronze-bright:  #d8b080;
+  --turd-bronze-light:   #f0d0a0;
+  --turd-cream:          #fff0d8;
+  --turd-cream-dim:      #c8a880;
+  --turd-mustard:        #f8a890;
+  --turd-mustard-bright: #ffc8b0;
+  --turd-mustard-soft:   #b07060;
+  --turd-green:          #b8c890;
+  --turd-red:            #d87070;
+  --turd-body-bg:
+    radial-gradient(circle at 30% 0%, rgba(248, 168, 144, 0.10) 0%, transparent 55%),
+    radial-gradient(circle at 70% 100%, rgba(184, 200, 144, 0.08) 0%, transparent 55%),
+    #20180f;
+}
+
+/* girly-cottoncandy — pastel cyan + pink */
+[data-theme="spunk-cottoncandy"] {
+  --turd-bg-deep:        #1a1c30;
+  --turd-bg-mid:         #282c48;
+  --turd-bg-soft:        #36405e;
+  --turd-bronze:         #98c0e8;
+  --turd-bronze-bright:  #b8d8ff;
+  --turd-bronze-light:   #d8e8ff;
+  --turd-cream:          #fff0fa;
+  --turd-cream-dim:      #b8c8d8;
+  --turd-mustard:        #ff98c8;
+  --turd-mustard-bright: #ffb8d8;
+  --turd-mustard-soft:   #b86090;
+  --turd-green:          #a0f0d0;
+  --turd-red:            #ff7090;
+  --turd-body-bg:
+    radial-gradient(circle at 20% 0%, rgba(184, 216, 255, 0.12) 0%, transparent 55%),
+    radial-gradient(circle at 80% 100%, rgba(255, 184, 216, 0.12) 0%, transparent 55%),
+    #1a1c30;
+}
+
+/* girly-strawberry — strawberry red + cream + pink */
+[data-theme="spunk-strawberry"] {
+  --turd-bg-deep:        #2a1018;
+  --turd-bg-mid:         #3e1a26;
+  --turd-bg-soft:        #522435;
+  --turd-bronze:         #d05068;
+  --turd-bronze-bright:  #f07088;
+  --turd-bronze-light:   #ff98a8;
+  --turd-cream:          #fff0e0;
+  --turd-cream-dim:      #d8a098;
+  --turd-mustard:        #ff7080;
+  --turd-mustard-bright: #ff98a0;
+  --turd-mustard-soft:   #b04050;
+  --turd-green:          #c8e890;
+  --turd-red:            #ff4060;
+  --turd-body-bg:
+    radial-gradient(circle at 50% 100%, rgba(240, 112, 136, 0.14) 0%, transparent 55%),
+    #2a1018;
+}
+
+/* girly-unicorn — multi-pastel rainbow */
+[data-theme="spunk-unicorn"] {
+  --turd-bg-deep:        #1f1430;
+  --turd-bg-mid:         #2c1f48;
+  --turd-bg-soft:        #3c2a5f;
+  --turd-bronze:         #b078e0;
+  --turd-bronze-bright:  #d098f8;
+  --turd-bronze-light:   #ffb8f0;
+  --turd-cream:          #fff0f8;
+  --turd-cream-dim:      #c8a8d8;
+  --turd-mustard:        #ffd060;
+  --turd-mustard-bright: #ffe898;
+  --turd-mustard-soft:   #b89030;
+  --turd-green:          #8af0d8;
+  --turd-red:            #ff6890;
+  --turd-body-bg:
+    linear-gradient(135deg, #1f1430 0%, #2c1f48 40%, #2a1c44 100%),
+    radial-gradient(circle at 30% 0%, rgba(208, 152, 248, 0.10) 0%, transparent 50%),
+    radial-gradient(circle at 70% 100%, rgba(138, 240, 216, 0.08) 0%, transparent 50%);
+}
+
+/* girly-glam — black + gold + magenta (less pastel, more night-out) */
+[data-theme="spunk-glam"] {
+  --turd-bg-deep:        #0e0a14;
+  --turd-bg-mid:         #1a1424;
+  --turd-bg-soft:        #281c38;
+  --turd-bronze:         #c8a040;
+  --turd-bronze-bright:  #f0c860;
+  --turd-bronze-light:   #ffe080;
+  --turd-cream:          #fff4d8;
+  --turd-cream-dim:      #c8a878;
+  --turd-mustard:        #ff60b0;
+  --turd-mustard-bright: #ff88c8;
+  --turd-mustard-soft:   #b8307a;
+  --turd-green:          #c8e0a0;
+  --turd-red:            #ff5078;
+  --turd-body-bg:
+    radial-gradient(circle at 50% 0%, rgba(240, 200, 96, 0.06) 0%, transparent 55%),
+    radial-gradient(circle at 50% 100%, rgba(255, 96, 176, 0.08) 0%, transparent 55%),
+    #0e0a14;
+}

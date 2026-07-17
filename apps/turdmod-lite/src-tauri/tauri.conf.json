@@ -1,0 +1,45 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "TurdMOD Lite",
+  "version": "0.0.1",
+  "identifier": "com.turdmod.lite",
+  "build": {
+    "beforeDevCommand": "pnpm dev",
+    "devUrl": "http://localhost:5174",
+    "beforeBuildCommand": "pnpm build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "TurdMOD Lite",
+        "width": 1200,
+        "height": 760,
+        "minWidth": 880,
+        "minHeight": 560,
+        "decorations": true,
+        "transparent": false,
+        "fullscreen": false,
+        "resizable": true
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; img-src 'self' data:; connect-src 'self' ipc: http://ipc.localhost"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "publisher": "TurdMOD Contributors",
+    "category": "Utility",
+    "shortDescription": "Open-source SCUM admin client for managed hosts.",
+    "longDescription": "TurdMOD Lite is the free, MIT-licensed SCUM admin client for managed-host servers (G-Portal, Nitrado, etc). Push config, run RCON, tail logs — all from one place.",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  }
+}

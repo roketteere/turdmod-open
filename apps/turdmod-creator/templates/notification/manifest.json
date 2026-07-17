@@ -1,0 +1,53 @@
+{
+  "name": "notification",
+  "version": "0.1.0",
+  "description": "Top-of-screen banner. Auto-dismisses after a duration. Pairs with Storyteller persona's banner subcommand.",
+  "category": "ui",
+  "baseClass": "UTurdMODNotificationWidget",
+  "parameters": [
+    {
+      "name": "text",
+      "type": "string",
+      "description": "Banner message displayed to all clients",
+      "default": "Hello island!"
+    },
+    {
+      "name": "durationMs",
+      "type": "int",
+      "description": "Auto-dismiss after this many milliseconds",
+      "default": 10000,
+      "min": 500,
+      "max": 60000
+    },
+    {
+      "name": "fontSize",
+      "type": "int",
+      "description": "Font point size",
+      "default": 32,
+      "min": 12,
+      "max": 96
+    },
+    {
+      "name": "bgColor",
+      "type": "color",
+      "description": "Background color (hex #RRGGBB)",
+      "default": "#1a1a1a"
+    },
+    {
+      "name": "textColor",
+      "type": "color",
+      "description": "Text color (hex #RRGGBB)",
+      "default": "#FFD700"
+    },
+    {
+      "name": "soundCue",
+      "type": "string",
+      "description": "(advanced) Sound to play on show. Reference like '/Game/Sounds/Cue_X'",
+      "default": ""
+    }
+  ],
+  "outputs": [
+    "widgets/<name>/BP_<name>.uasset",
+    "widgets/<name>/<name>.json"
+  ]
+}

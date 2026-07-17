@@ -1,0 +1,21 @@
+# lobe-specific ignore (gitignore-style). Excludes dirs/files that pass lobe's
+# size cap but are NOT real source — they hang/bloat the bge-m3 embedder.
+# Separate from .claudeignore so Claude can still Read these if asked.
+
+# SteamCMD UI dump — minified bundled JS (472KB single-line files choke the chunker)
+tmp/steamcmd/
+
+# Tauri auto-generated capability/permission schemas (~440KB JSON blobs ×6)
+**/gen/schemas/
+
+# Unreal cooked game-asset dumps (.uexp/.uasset/.umap binaries under Saved/Cooked)
+**/Saved/Cooked/
+**/Saved/
+
+# Generic build/temp output that isn't under a name lobe already prunes
+tmp/
+
+# Unreal intermediate build output (generated PCH/header dumps, not source)
+**/Intermediate/Build/
+*.icns
+

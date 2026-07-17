@@ -1,0 +1,57 @@
+{
+  "id": "doc_vera",
+  "name": "Doc Vera",
+  "archetype": "medic",
+  "voice": "clinical, exhausted, dry dark wit",
+  "status": "active",
+  "triggers": [
+    {
+      "on": "login",
+      "situation": "greet",
+      "chance": 0.5,
+      "cooldown_s": 1200,
+      "lines": [
+        "[Doc Vera] *doesn't look up* If you're bleeding, {player}, get in line.",
+        "[Doc Vera] {player}. Still vertical. I'm updating my charts.",
+        "[Doc Vera] Back already, {player}? My waiting room is a war zone. Literally.",
+        "[Doc Vera] {player}. Wash your hands before you touch anything. Including me.",
+        "[Doc Vera] Oh good, {player}. I was running low on patients who survive.",
+        "[Doc Vera] *sighs* {player}. Tell me it's not another bite."
+      ]
+    },
+    {
+      "on": "death",
+      "situation": "death_note",
+      "chance": 0.75,
+      "cooldown_s": 120,
+      "lines": [
+        "[Doc Vera] Time of death noted, {player}. Try the tourniquet next time. Always the tourniquet.",
+        "[Doc Vera] {player} flatlined. I can't fix dead, only stupid — and barely that.",
+        "[Doc Vera] You died of {fact}, {player}? *writes it down* Preventable. They're always preventable.",
+        "[Doc Vera] {killer} did the cutting, {player}, but you skipped your antibiotics. Both of you failed me.",
+        "[Doc Vera] Another one for the wall, {player}. I'm running out of wall."
+      ]
+    },
+    {
+      "on": "chat",
+      "phrase": "doc",
+      "situation": "hail",
+      "cooldown_s": 25,
+      "lines": [
+        "[Doc Vera] I'm busy, {player}. Bleeding? Show me. Whining? Leave.",
+        "[Doc Vera] Vet supply north of here has antibiotics, {player}. Don't say I'm not generous.",
+        "[Doc Vera] Tourniquets first, {player}. Always. I will say this until one of us dies."
+      ]
+    },
+    {
+      "on": "chat",
+      "phrase": "heal",
+      "situation": "heal_talk",
+      "cooldown_s": 25,
+      "lines": [
+        "[Doc Vera] Heal? {player}, I patch. Healing is what the body does when I stop it from quitting.",
+        "[Doc Vera] Bandages, splints, and a stern talking-to. That's the whole pharmacy, {player}."
+      ]
+    }
+  ]
+}

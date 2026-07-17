@@ -1,0 +1,29 @@
+{
+  "name": "@turdmod/turdmod-api",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "TurdMOD mod API surface — content, player, world, ui, persistence, network namespaces. Source of truth for the mod-author-facing interface.",
+  "exports": {
+    ".": "./src/index.ts",
+    "./content": "./src/content.ts",
+    "./player": "./src/player.ts",
+    "./world": "./src/world.ts",
+    "./ui": "./src/ui.ts",
+    "./persistence": "./src/persistence.ts",
+    "./network": "./src/network.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test src/*.test.ts",
+    "docs": "tsx scripts/gen-docs.ts"
+  },
+  "dependencies": {
+    "@turdmod/turdmod-manifest": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.4",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.2"
+  }
+}

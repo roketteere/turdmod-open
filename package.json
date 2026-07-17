@@ -1,0 +1,24 @@
+{
+  "name": "turdmod",
+  "version": "0.0.0",
+  "private": true,
+  "description": "TurdMOD — modding engine for SCUM (server-side mods, in-game UI panels, rich-text decorators, BattlEye-safe loader).",
+  "license": "MIT",
+  "packageManager": "pnpm@9.12.0",
+  "engines": {
+    "node": ">=20.11.0",
+    "pnpm": ">=9.0.0"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "catalog:refresh": "node tools/regen-admin-catalog.mjs",
+    "engine": "node tools/engine-rpc.mjs",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,yml,yaml}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md,yml,yaml}\""
+  }
+}

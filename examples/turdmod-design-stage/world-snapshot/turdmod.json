@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "id": "world-snapshot",
+  "name": "World Snapshot",
+  "version": "0.1.0",
+  "author": "TurdMOD",
+  "description": "Hotkey to dump every actor in the running SCUM world to a JSON file. The first-ever complete world inventory.",
+  "mode": "offline-only",
+  "minBuild": "23128448",
+  "dependencies": {},
+  "capabilities": [
+    { "filesystem": "readwrite" }
+  ],
+  "entrypoint": "scripts/main.lua",
+  "tags": ["worldgen", "tooling"]
+}

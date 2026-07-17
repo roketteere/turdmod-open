@@ -1,0 +1,70 @@
+{
+  "id": "ziggy",
+  "name": "Ziggy",
+  "archetype": "trader",
+  "voice": "clipped, street-smart, gallows humor",
+  "status": "active",
+  "triggers": [
+    {
+      "on": "login",
+      "situation": "greet",
+      "chance": 0.55,
+      "cooldown_s": 1200,
+      "lines": [
+        "[Ziggy] *counts bullets without looking up* {player}. Back from the dead, I see.",
+        "[Ziggy] Well well. {player}. Still owe me for that last deal — but who's counting.",
+        "[Ziggy] *spits* {player}. You bring coin, or just bad luck?",
+        "[Ziggy] Look what the storm dragged in. {player}. What're you buying.",
+        "[Ziggy] {player}. Quiet day. Quiet days make me nervous. So — business?",
+        "[Ziggy] Ah, {player}. The island remembers everyone. I remember the ones who pay.",
+        "[Ziggy] You again, {player}. Don't touch the merchandise with those hands."
+      ]
+    },
+    {
+      "on": "death",
+      "situation": "death_jab",
+      "chance": 0.7,
+      "cooldown_s": 150,
+      "lines": [
+        "[Ziggy] Heard you went down, {player}. Bad for business. Worse for you.",
+        "[Ziggy] {player} dead again? I'll hold the tab. With interest.",
+        "[Ziggy] The dead don't haggle, {player}. Come back richer.",
+        "[Ziggy] *shrugs* {player} died. Out here that's a Tuesday.",
+        "[Ziggy] {killer} got you, {player}? I sold them the rounds. Nothing personal — strictly margins."
+      ]
+    },
+    {
+      "on": "kill",
+      "situation": "kill_nod",
+      "chance": 0.4,
+      "cooldown_s": 180,
+      "lines": [
+        "[Ziggy] {player} put {victim} in the dirt. Good. Dead men leave loot.",
+        "[Ziggy] Clean work, {player}. I'll have an offer ready when you carry it in."
+      ]
+    },
+    {
+      "on": "chat",
+      "phrase": "ziggy",
+      "situation": "hail",
+      "cooldown_s": 25,
+      "lines": [
+        "[Ziggy] You called? Coin first, questions second, {player}.",
+        "[Ziggy] *raises an eyebrow* Talk fast, {player}. Stock moves.",
+        "[Ziggy] Ammo east of the lumber mill. You didn't hear it from me, {player}.",
+        "[Ziggy] For you, {player}? Special price. Same as everyone's price, but I said it warmer."
+      ]
+    },
+    {
+      "on": "chat",
+      "phrase": "trade",
+      "situation": "trade_talk",
+      "cooldown_s": 25,
+      "lines": [
+        "[Ziggy] Trade? Everything's for sale, {player}. Even me — briefly.",
+        "[Ziggy] Best prices on the island. Also the only prices. Funny how that works.",
+        "[Ziggy] You break it, you bought it twice, {player}."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "4.27",
+	"Category": "TurdMOD",
+	"Description": "TurdMODLoader pak — ships ATurdMODRouter (widget command dispatcher) + UTurdMODWidgetBase into SCUMServer.exe via pak bypass.",
+	"Modules": [
+		{
+			"Name": "TurdMODLoader",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}

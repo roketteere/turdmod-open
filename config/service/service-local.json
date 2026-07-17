@@ -1,0 +1,14 @@
+{
+  "_comment": "LOCAL turdmod-service config — BattlEye OFF, managed exactly like OVH so the manager drives both over HTTP. Steam server install path. For BE-ON RE/pak-bypass work, do NOT use this — launch via scripts/engine-control/start-server.ps1 instead (local-only escape hatch).",
+  "port": 9090,
+  "token": "local-dev-token",
+  "scum_server_exe": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\SCUM Server\\SCUM\\Binaries\\Win64\\SCUMServer.exe",
+  "scum_server_args": ["-log", "-port=7042", "-QueryPort=7044", "-NoBattlEye", "-nullrhi"],
+  "inject_dlls": [
+    "C:\\Program Files (x86)\\Steam\\steamapps\\common\\SCUM Server\\SCUM\\Binaries\\Win64\\turdmod_server_loader.dll",
+    "C:\\Program Files (x86)\\Steam\\steamapps\\common\\SCUM Server\\SCUM\\Binaries\\Win64\\UE4SS\\UE4SS.dll"
+  ],
+  "auto_restart": true,
+  "restart_delay_secs": 10,
+  "scumdb_path": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\SCUM Server\\SCUM\\Saved\\SaveFiles\\SCUM.db"
+}
