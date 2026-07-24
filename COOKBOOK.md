@@ -59,8 +59,8 @@ Cook **twice** for distributable content: `WindowsServer` (server) and `WindowsC
 
 ### Recipe 4 — Pak + sign-bypass 🟡
 Pak the cooked folder with `UnrealPak.exe`, forge/skip the `.sig`. The 6-patch
-server bypass (`game-specific bypass`, flag `C:\TurdMOD\pak_bypass.enabled`) lets the
-unsigned pak mount. See `scripts/pak-probe/*` and the bypass memories. S2 proved an
+server bypass (game-specific pak validation hooks, flag `C:\TurdMOD\pak_bypass.enabled`) lets the
+unsigned pak mount. S2 proved an
 unsigned custom pak loads server-side.
 
 ### Recipe 5 — Load + run server-side via the bridge ✅ (for BP)
