@@ -137,13 +137,27 @@ export function Install() {
 
   return (
     <div className="pane">
-      <h1>{done ? (failed.length ? "Something went wrong." : "Installed.") : "Ready to install."}</h1>
+      <h1>
+        {done
+          ? failed.length
+            ? "Something went wrong."
+            : state.isUpdate
+              ? "Updated."
+              : "Installed."
+          : state.isUpdate
+            ? "Ready to update."
+            : "Ready to install."}
+      </h1>
       <p className="lede">
         {done
           ? failed.length
             ? "Here's exactly where it stopped. Fix the item below and run it again — or ask the assistant, it can read the logs."
-            : "Files are in place and the TurdMOD service is installed. Next we check that it's actually working."
-          : "This copies the TurdMOD files into your server folder and installs the background service that runs the engine."}
+            : state.isUpdate
+              ? "New files are in place and the service is back up, with your settings untouched. Next we check it's actually working."
+              : "Files are in place and the TurdMOD service is installed. Next we check that it's actually working."
+          : state.isUpdate
+            ? "This replaces the TurdMOD program files with the new ones and restarts the service. Your config, access key, and mod settings stay as they are."
+            : "This copies the TurdMOD files into your server folder and installs the background service that runs the engine."}
       </p>
 
       {!done && !running && (
@@ -154,18 +168,40 @@ export function Install() {
               use pak mods and config tuning.
             </div>
           )}
-          <div className="note">
-            Two things worth checking first: <b>stop your SCUM server</b> if it's running (files can't be
-            replaced while it's in use), and make sure this app is running{" "}
-            <b>as Administrator</b> (installing a Windows service needs it).
-          </div>
+          {state.isUpdate ? (
+            <>
+              {state.serviceState === "running" && (
+                <div className="verdict warn">
+                  Your server is running right now. Updating stops it — the engine files are loaded
+                  inside the game process, so they can&apos;t be swapped live. Expect a few minutes of
+                  downtime. Warn your players first if that matters.
+                </div>
+              )}
+              <div className="note">
+                We back up your current <span className="mono">turdmod-service.exe</span> and{" "}
+                <span className="mono">service.json</span> to{" "}
+                <span className="mono">.bak-preupdate</span> first, then stop the service, replace the
+                files, and start it again. Run this <b>as Administrator</b>.
+              </div>
+            </>
+          ) : (
+            <div className="note">
+              Two things worth checking first: <b>stop your SCUM server</b> if it&apos;s running (files
+              can&apos;t be replaced while it&apos;s in use), and make sure this app is running{" "}
+              <b>as Administrator</b> (installing a Windows service needs it).
+            </div>
+          )}
         </>
       )}
 
       {running && (
         <div className="row">
           <div className="spin" />
-          <span>Installing — this takes a few seconds.</span>
+          <span>
+            {state.isUpdate
+              ? "Updating — stopping the service, swapping files, starting it back up."
+              : "Installing — this takes a few seconds."}
+          </span>
         </div>
       )}
 
@@ -188,7 +224,7 @@ export function Install() {
           Back
         </button>
         <button className="btn" onClick={install} disabled={running || !state.config}>
-          {results.length ? "Run again" : "Install now"}
+          {results.length ? "Run again" : state.isUpdate ? "Update now" : "Install now"}
         </button>
         <span className="spacer" />
         <button className="btn primary" disabled={!done} onClick={next}>

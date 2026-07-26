@@ -115,18 +115,22 @@ if (Test-Path $SetupExe) {
 }
 
 # 5. Config template
+# @dep: apps/turdmod-service/src/config.rs::Config — key names must match it
+# exactly. scum_server_exe has no serde default, so a wrong name makes the
+# service fail to parse the whole file. inject_dlls is loader-then-UE4SS.
 $configTemplate = @'
 {
   "port": 9090,
   "token": "CHANGE_ME_your_secret_bearer_token",
-  "scum_exe": "C:\\SCUMServer\\SCUM\\Binaries\\Win64\\GameServer.exe",
+  "scum_server_exe": "C:\\SCUMServer\\SCUM\\Binaries\\Win64\\GameServer.exe",
+  "scum_server_args": ["-log", "-port=7042", "-QueryPort=7044"],
   "inject_dlls": [
-    "C:\\SCUMServer\\SCUM\\Binaries\\Win64\\UE4SS\\UE4SS.dll",
-    "C:\\SCUMServer\\SCUM\\Binaries\\Win64\\turdmod_server_loader.dll"
+    "C:\\SCUMServer\\SCUM\\Binaries\\Win64\\turdmod_server_loader.dll",
+    "C:\\SCUMServer\\SCUM\\Binaries\\Win64\\UE4SS\\UE4SS.dll"
   ],
   "auto_restart": true,
-  "restart_interval_hours": 6,
-  "restart_countdown_seconds": 60
+  "restart_delay_secs": 10,
+  "scumdb_path": "C:\\SCUMServer\\SCUM\\Saved\\SaveFiles\\SCUM.db"
 }
 '@
 Set-Content -Encoding utf8 -Path (Join-Path $stage 'service.json.template') -Value $configTemplate
@@ -168,7 +172,7 @@ Copy the DLLs to your game server directory:
 ## 3. Configure
 - Copy `service.json.template` to `service.json`
 - Edit `service.json`:
-  - Set `scum_exe` to the full path of your game server executable
+  - Set `scum_server_exe` to the full path of your game server executable
   - Set `token` to a random secret string (this is your API password)
   - Adjust `inject_dlls` paths to match your server layout
 

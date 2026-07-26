@@ -73,20 +73,68 @@ pub fn find_artifacts_dir() -> Option<PathBuf> {
 }
 
 /// Build the service.json contents for a detected install.
+///
+/// @dep: apps/turdmod-service/src/config.rs::Config — key names must match
+///   exactly. `scum_server_exe` has no serde default, so a wrong key name makes
+///   the service fail to parse the config entirely.
+/// @inv: inject_dlls order is loader-then-UE4SS, matching Config::load's own
+///   fallback. Don't reorder.
 pub fn build_service_config(server_root: &str, token: &str, port: u16) -> serde_json::Value {
     let w = win64(server_root);
     serde_json::json!({
         "port": port,
         "token": token,
-        "scum_exe": w.join("GameServer.exe").display().to_string(),
+        "scum_server_exe": w.join("GameServer.exe").display().to_string(),
+        "scum_server_args": ["-log", "-port=7042", "-QueryPort=7044"],
         "inject_dlls": [
-            w.join("UE4SS").join("UE4SS.dll").display().to_string(),
             w.join("turdmod_server_loader.dll").display().to_string(),
+            w.join("UE4SS").join("UE4SS.dll").display().to_string(),
         ],
         "auto_restart": true,
-        "restart_interval_hours": 6,
-        "restart_countdown_seconds": 60
+        "restart_delay_secs": 10,
+        "scumdb_path": Path::new(server_root)
+            .join("SCUM").join("Saved").join("SaveFiles").join("SCUM.db")
+            .display().to_string(),
     })
+}
+
+/// The service.json of an install that's already here, if there is one.
+/// @inv: path must match turdmod-service's config::config_path("default").
+pub fn read_existing_config() -> Option<serde_json::Value> {
+    let raw = std::fs::read_to_string(PathBuf::from(TURDMOD_DIR).join("service.json")).ok()?;
+    // Tolerate a UTF-8 BOM — hand-edited configs pick these up on Windows.
+    serde_json::from_str(raw.trim_start_matches('\u{feff}')).ok()
+}
+
+/// Merge a freshly-derived config over an existing one for an UPDATE.
+///
+/// @inv: the token must survive. Regenerating it silently breaks every Manager
+///   dashboard and script already pointed at this server — the single most
+///   damaging thing an "update" could do.
+/// Only the fields that describe where files now live get overwritten; every
+/// other key the operator set (ports, args, scummap_*, phantom_population,
+/// instance_id) is carried through untouched, including keys this version of
+/// Setup doesn't know about.
+pub fn merge_config(existing: &serde_json::Value, fresh: &serde_json::Value) -> serde_json::Value {
+    let mut out = existing.clone();
+    let (Some(out_map), Some(fresh_map)) = (out.as_object_mut(), fresh.as_object()) else {
+        return fresh.clone();
+    };
+
+    for key in ["scum_server_exe", "inject_dlls"] {
+        if let Some(v) = fresh_map.get(key) {
+            out_map.insert(key.to_string(), v.clone());
+        }
+    }
+    // Fill only what's missing — never clobber an operator's choice.
+    for key in ["port", "token", "scum_server_args", "auto_restart", "restart_delay_secs", "scumdb_path"] {
+        if !out_map.contains_key(key) {
+            if let Some(v) = fresh_map.get(key) {
+                out_map.insert(key.to_string(), v.clone());
+            }
+        }
+    }
+    out
 }
 
 fn copy_into(src: &Path, dst: &Path, results: &mut Vec<StepResult>, label: &str) -> bool {
@@ -192,7 +240,92 @@ pub fn place_service(artifacts: &Path, config: &serde_json::Value) -> Vec<StepRe
     r
 }
 
-/// Install + start the Windows Service. Requires elevation.
+/// @dep: apps/turdmod-service/src/service.rs::service_name("default")
+const SERVICE_NAME: &str = "TurdMODService";
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "lowercase")]
+pub enum ServiceState {
+    Missing,
+    Stopped,
+    Running,
+}
+
+#[cfg(windows)]
+pub fn service_state() -> ServiceState {
+    use std::process::Command;
+    match Command::new("sc").args(["query", SERVICE_NAME]).output() {
+        Ok(out) if out.status.success() => {
+            let s = String::from_utf8_lossy(&out.stdout);
+            if s.contains("RUNNING") || s.contains("START_PENDING") {
+                ServiceState::Running
+            } else {
+                ServiceState::Stopped
+            }
+        }
+        _ => ServiceState::Missing,
+    }
+}
+
+#[cfg(not(windows))]
+pub fn service_state() -> ServiceState {
+    ServiceState::Missing
+}
+
+/// Stop the service before replacing files.
+///
+/// @ctx: the service is the game server's PARENT process — stopping it takes
+///   SCUM down too. That's unavoidable for an update (the DLLs are loaded into
+///   SCUM and locked), but it means an update is a real outage, not a hot swap.
+#[cfg(windows)]
+pub fn stop_service_for_update() -> Vec<StepResult> {
+    use std::process::Command;
+    use std::{thread, time::Duration};
+    let mut r = Vec::new();
+
+    if service_state() != ServiceState::Running {
+        return r;
+    }
+
+    match Command::new("net").args(["stop", SERVICE_NAME]).output() {
+        Ok(out) if out.status.success() => {
+            r.push(StepResult::ok("Stop service", "stopped so files can be replaced"))
+        }
+        Ok(out) => {
+            let msg = String::from_utf8_lossy(&out.stdout);
+            let hint = if msg.contains("Access") || msg.contains("denied") {
+                " — run TurdMOD Setup as Administrator"
+            } else {
+                ""
+            };
+            r.push(StepResult::fail("Stop service", format!("{}{hint}", msg.trim())));
+            return r;
+        }
+        Err(e) => {
+            r.push(StepResult::fail("Stop service", format!("{e}")));
+            return r;
+        }
+    }
+
+    // Windows reports the service stopped before the game process has fully
+    // exited and released its DLL handles; copying immediately hits error 32.
+    for _ in 0..20 {
+        thread::sleep(Duration::from_millis(500));
+        if service_state() != ServiceState::Running {
+            break;
+        }
+    }
+    thread::sleep(Duration::from_secs(2));
+    r
+}
+
+#[cfg(not(windows))]
+pub fn stop_service_for_update() -> Vec<StepResult> {
+    Vec::new()
+}
+
+/// Register the service if it isn't already, then start it. Requires elevation.
+/// Safe to call on an update — an existing registration is left alone.
 #[cfg(windows)]
 pub fn install_service() -> Vec<StepResult> {
     use std::process::Command;
@@ -204,30 +337,36 @@ pub fn install_service() -> Vec<StepResult> {
         return r;
     }
 
-    match Command::new(&exe).arg("--install").output() {
-        Ok(out) if out.status.success() => {
-            r.push(StepResult::ok("Install service", "registered as TurdMODService"))
+    if service_state() == ServiceState::Missing {
+        match Command::new(&exe).arg("--install").output() {
+            Ok(out) if out.status.success() => {
+                r.push(StepResult::ok("Install service", "registered as TurdMODService"))
+            }
+            Ok(out) => {
+                let msg = format!(
+                    "{}{}",
+                    String::from_utf8_lossy(&out.stderr),
+                    String::from_utf8_lossy(&out.stdout)
+                );
+                let hint = if msg.contains("Access") || msg.contains("denied") {
+                    " — run TurdMOD Setup as Administrator"
+                } else {
+                    ""
+                };
+                r.push(StepResult::fail("Install service", format!("{}{hint}", msg.trim())));
+                return r;
+            }
+            Err(e) => {
+                r.push(StepResult::fail("Install service", format!("{e}")));
+                return r;
+            }
         }
-        Ok(out) => {
-            let msg = String::from_utf8_lossy(&out.stderr);
-            let hint = if msg.contains("Access") || msg.contains("denied") {
-                " — run TurdMOD Setup as Administrator"
-            } else {
-                ""
-            };
-            r.push(StepResult::fail("Install service", format!("{}{hint}", msg.trim())));
-            return r;
-        }
-        Err(e) => {
-            r.push(StepResult::fail("Install service", format!("{e}")));
-            return r;
-        }
+    } else {
+        r.push(StepResult::ok("Install service", "already registered — kept it"));
     }
 
-    match Command::new("net").args(["start", "TurdMODService"]).output() {
-        Ok(out) if out.status.success() => {
-            r.push(StepResult::ok("Start service", "running"))
-        }
+    match Command::new("net").args(["start", SERVICE_NAME]).output() {
+        Ok(out) if out.status.success() => r.push(StepResult::ok("Start service", "running")),
         Ok(out) => {
             let so = String::from_utf8_lossy(&out.stdout);
             if so.contains("already been started") {
@@ -247,6 +386,26 @@ pub fn install_service() -> Vec<StepResult> {
     vec![StepResult::fail("Install service", "Windows only")]
 }
 
+/// Back up the current service exe + config before an update overwrites them.
+/// Cheap insurance: if a new build is broken, the operator has the one that worked.
+pub fn backup_existing() -> Vec<StepResult> {
+    let dir = PathBuf::from(TURDMOD_DIR);
+    let mut r = Vec::new();
+    for name in ["turdmod-service.exe", "service.json"] {
+        let src = dir.join(name);
+        if !src.exists() {
+            continue;
+        }
+        let dst = dir.join(format!("{name}.bak-preupdate"));
+        match std::fs::copy(&src, &dst) {
+            Ok(_) => r.push(StepResult::ok("Back up", dst.display().to_string())),
+            // A failed backup shouldn't block the update, but say so out loud.
+            Err(e) => r.push(StepResult::ok("Back up", format!("skipped {name}: {e}"))),
+        }
+    }
+    r
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -260,12 +419,71 @@ mod tests {
         assert!(a.chars().all(|c| c.is_ascii_alphanumeric()));
     }
 
+    // @dep: apps/turdmod-service/src/config.rs — these key names are load-bearing.
+    #[test]
+    fn config_uses_the_key_names_the_service_actually_parses() {
+        let cfg = build_service_config(r"C:\SCUMServer", "tok", 9090);
+        // scum_server_exe has no serde default — a wrong name here means the
+        // service refuses to parse the config at all.
+        assert!(cfg.get("scum_server_exe").is_some(), "must be scum_server_exe, not scum_exe");
+        assert!(cfg.get("scum_exe").is_none(), "scum_exe is not a key the service knows");
+        assert!(cfg.get("restart_delay_secs").is_some());
+        assert!(cfg.get("scumdb_path").is_some());
+    }
+
+    #[test]
+    fn inject_order_is_loader_then_ue4ss() {
+        let cfg = build_service_config(r"C:\SCUMServer", "tok", 9090);
+        let dlls: Vec<&str> = cfg["inject_dlls"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|d| d.as_str().unwrap())
+            .collect();
+        assert!(dlls[0].ends_with("turdmod_server_loader.dll"), "loader injects first");
+        assert!(dlls[1].ends_with("UE4SS.dll"));
+    }
+
+    #[test]
+    fn update_never_regenerates_the_token() {
+        let existing = serde_json::json!({
+            "port": 9099,
+            "token": "operators-real-token",
+            "scum_server_exe": r"D:\Old\GameServer.exe",
+            "inject_dlls": [r"D:\Old\loader.dll"],
+            "scum_server_args": ["-log", "-port=8000"],
+            "phantom_population": 50,
+            "scummap_api_url": "https://scummymap.com/api",
+        });
+        let fresh = build_service_config(r"C:\New", "brand-new-token", 9090);
+        let merged = merge_config(&existing, &fresh);
+
+        assert_eq!(merged["token"], "operators-real-token", "token must survive an update");
+        // Operator settings — including keys Setup doesn't know about — carry through.
+        assert_eq!(merged["port"], 9099);
+        assert_eq!(merged["phantom_population"], 50);
+        assert_eq!(merged["scummap_api_url"], "https://scummymap.com/api");
+        assert_eq!(merged["scum_server_args"][1], "-port=8000");
+        // Paths DO update — they describe where the files we just copied live.
+        assert!(merged["scum_server_exe"].as_str().unwrap().starts_with(r"C:\New"));
+        assert!(merged["inject_dlls"][0].as_str().unwrap().starts_with(r"C:\New"));
+    }
+
+    #[test]
+    fn merge_fills_missing_keys_from_a_partial_config() {
+        let sparse = serde_json::json!({ "token": "t", "scum_server_exe": "x" });
+        let merged = merge_config(&sparse, &build_service_config(r"C:\S", "new", 9090));
+        assert_eq!(merged["token"], "t");
+        assert_eq!(merged["port"], 9090, "missing keys get filled");
+        assert!(merged["scumdb_path"].is_string());
+    }
+
     #[test]
     fn config_points_at_real_paths() {
         let cfg = build_service_config(r"C:\SCUMServer", "tok", 9090);
         assert_eq!(cfg["port"], 9090);
         assert_eq!(cfg["token"], "tok");
-        let exe = cfg["scum_exe"].as_str().unwrap();
+        let exe = cfg["scum_server_exe"].as_str().unwrap();
         assert!(exe.ends_with("GameServer.exe"), "got {exe}");
         assert!(exe.contains("Binaries"));
         let dlls = cfg["inject_dlls"].as_array().unwrap();

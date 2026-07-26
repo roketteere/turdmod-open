@@ -22,6 +22,9 @@ export function Configure() {
         port: cfg.port,
         config: cfg.config,
         artifactsDir: cfg.artifacts_dir,
+        isUpdate: cfg.is_update,
+        tokenPreserved: cfg.token_preserved,
+        serviceState: cfg.service_state,
         lastError: "",
       });
     } catch (e) {
@@ -44,11 +47,20 @@ export function Configure() {
 
   return (
     <div className="pane">
-      <h1>Settings — already filled in.</h1>
+      <h1>{state.isUpdate ? "Updating your existing install." : "Settings — already filled in."}</h1>
       <p className="lede">
-        We generated everything from what we found. You don't need to change any of this; it's here so you
-        know what's about to happen.
+        {state.isUpdate
+          ? "TurdMOD is already here, so this is an update. Your settings stay exactly as they are — we only refresh the program files."
+          : "We generated everything from what we found. You don't need to change any of this; it's here so you know what's about to happen."}
       </p>
+
+      {state.isUpdate && (
+        <div className={`verdict ${state.tokenPreserved ? "good" : "warn"}`}>
+          {state.tokenPreserved
+            ? "Keeping your current access key and settings — your Manager dashboard will keep working after the update."
+            : "No access key found in your existing config, so a new one was generated. You'll need to update it in Manager."}
+        </div>
+      )}
 
       <div className="stack">
         <div className="result yes">
@@ -78,7 +90,9 @@ export function Configure() {
           <div className="body">
             <div className="t">Access key</div>
             <div className="d">
-              Generated for you — the Manager dashboard uses it to talk to your server. Keep it private.
+              {state.tokenPreserved
+                ? "Your existing key — unchanged, so nothing you've already set up breaks. Keep it private."
+                : "Generated for you — the Manager dashboard uses it to talk to your server. Keep it private."}
               <div style={{ marginTop: 7 }}>
                 <span className="mono">
                   {showToken ? state.token : state.token.replace(/./g, "•").slice(0, 40)}
@@ -114,7 +128,7 @@ export function Configure() {
         </button>
         <span className="spacer" />
         <button className="btn primary" disabled={!state.config || loading} onClick={next}>
-          Install
+          {state.isUpdate ? "Update" : "Install"}
         </button>
       </div>
     </div>

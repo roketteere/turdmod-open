@@ -3,7 +3,14 @@
 // UI reflects the assistant's work exactly as if you'd clicked the buttons.
 
 import { createContext, useContext } from "react";
-import type { CapabilityReport, DetectedInstalls, HostKind, StepResult, VerifyReport } from "./api";
+import type {
+  CapabilityReport,
+  DetectedInstalls,
+  HostKind,
+  ServiceState,
+  StepResult,
+  VerifyReport,
+} from "./api";
 
 export const STEPS = [
   { id: "welcome", label: "Start" },
@@ -29,6 +36,11 @@ export interface SetupState {
   artifactsDir: string | null;
   installResults: StepResult[];
   verifyReport: VerifyReport | null;
+  /** TurdMOD already installed here — this run is an update. */
+  isUpdate: boolean;
+  /** The existing access key was kept, so Manager keeps connecting. */
+  tokenPreserved: boolean;
+  serviceState: ServiceState;
   /** Last error text — fed to the assistant so it can diagnose without asking. */
   lastError: string;
 }
@@ -45,6 +57,9 @@ export const initialState: SetupState = {
   artifactsDir: null,
   installResults: [],
   verifyReport: null,
+  isUpdate: false,
+  tokenPreserved: false,
+  serviceState: "missing",
   lastError: "",
 };
 
@@ -82,7 +97,14 @@ export function describeState(s: SetupState): string {
     `Server Pack artifacts folder: ${s.artifactsDir ?? "not found yet"}`,
     `Service port: ${s.port}`,
     `Config prepared: ${s.config ? "yes" : "no"}`,
+    `Existing TurdMOD install: ${s.isUpdate ? "YES — this is an UPDATE, not a fresh install" : "no"}`,
+    `Windows service: ${s.serviceState}`,
   ];
+  if (s.isUpdate) {
+    lines.push(
+      `Access key: ${s.tokenPreserved ? "existing key kept (dashboards keep working)" : "NEW key generated — warn the user their Manager will need it"}`,
+    );
+  }
   if (s.capability) {
     lines.push(
       `Capability verdict: ${s.capability.verdict}`,

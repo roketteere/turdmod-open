@@ -118,7 +118,7 @@ export function buildTools(store: SetupStore): ToolSpec[] {
       def: {
         name: "prepare_config",
         description:
-          "Generate the service configuration (auto-generates the API token, fills in paths, locates the Server Pack artifacts). Safe — writes nothing to disk.",
+          "Generate the service configuration (fills in paths, locates the Server Pack artifacts). Safe — writes nothing to disk. If TurdMOD is already installed this detects it and REUSES the existing access key and settings; the result tells you via is_update / token_preserved / service_state.",
         parameters: {
           type: "object",
           properties: {
@@ -137,9 +137,13 @@ export function buildTools(store: SetupStore): ToolSpec[] {
           port: cfg.port,
           config: cfg.config,
           artifactsDir: cfg.artifacts_dir,
+          isUpdate: cfg.is_update,
+          tokenPreserved: cfg.token_preserved,
+          serviceState: cfg.service_state,
           serverRoot: str(a.server_root, state.serverRoot),
         });
-        return { ...cfg, token: "(generated — hidden)" };
+        // Never echo the token back to the model — it's a live credential.
+        return { ...cfg, token: "(hidden)" };
       },
     },
 
@@ -152,7 +156,9 @@ export function buildTools(store: SetupStore): ToolSpec[] {
       },
       destructive: true,
       summarize: () =>
-        `Copy TurdMOD files into ${state.serverRoot || "the server folder"} and install the Windows Service`,
+        state.isUpdate
+          ? `Update TurdMOD in ${state.serverRoot || "the server folder"}${state.serviceState === "running" ? " — this stops the running server" : ""}`
+          : `Copy TurdMOD files into ${state.serverRoot || "the server folder"} and install the Windows Service`,
       run: async () => {
         if (!state.config) return { ok: false, error: "Call prepare_config first." };
         const results = await api.installLocal(state.serverRoot, state.config, state.artifactsDir);

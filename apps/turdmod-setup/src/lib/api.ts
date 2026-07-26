@@ -26,11 +26,18 @@ export interface CapabilityReport {
   engine_supported: boolean;
 }
 
+export type ServiceState = "missing" | "stopped" | "running";
+
 export interface PreparedConfig {
   token: string;
   port: number;
   config: Record<string, unknown>;
   artifacts_dir: string | null;
+  /** TurdMOD is already here — this run updates rather than installs fresh. */
+  is_update: boolean;
+  /** The existing access key was reused, so dashboards keep working. */
+  token_preserved: boolean;
+  service_state: ServiceState;
 }
 
 export interface StepResult {
