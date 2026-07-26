@@ -198,17 +198,61 @@ pub fn place_artifacts(server_root: &str, artifacts: &Path) -> Vec<StepResult> {
         "Engine bridge",
     );
 
-    // UE4SS only checks that enabled.txt exists; contents are ignored.
-    let enabled = w.join("UE4SS").join("Mods").join("TurdMODEngineBridge").join("enabled.txt");
-    if let Some(p) = enabled.parent() {
-        let _ = std::fs::create_dir_all(p);
-    }
-    match std::fs::write(&enabled, "") {
-        Ok(_) => r.push(StepResult::ok("Enable bridge", enabled.display().to_string())),
-        Err(e) => r.push(StepResult::fail("Enable bridge", format!("{e}"))),
-    }
+    r.push(enable_bridge_mod(&w));
 
     r
+}
+
+/// Turn the bridge on in UE4SS.
+///
+/// @inv: mods.txt is the CONTROLLING list — UE4SS-settings.ini calls it exactly
+///   that. A mod folder with only enabled.txt and no mods.txt entry is NOT
+///   loaded, which looks like "installed fine, engine dead" with no error
+///   anywhere. Write both: enabled.txt for UE4SS builds that honour it, and the
+///   mods.txt line for the ones that don't.
+/// @brk: if UE4SS ever changes the `Name : 1` line format, this silently
+///   stops enabling the bridge.
+fn enable_bridge_mod(win64: &Path) -> StepResult {
+    const MOD_NAME: &str = "TurdMODEngineBridge";
+    let mods_dir = win64.join("UE4SS").join("Mods");
+    let _ = std::fs::create_dir_all(mods_dir.join(MOD_NAME));
+
+    // Belt: some UE4SS builds look for this marker file.
+    let _ = std::fs::write(mods_dir.join(MOD_NAME).join("enabled.txt"), "");
+
+    // Braces: the controlling list. Preserve every other entry and comment —
+    // operators run other mods (UsmapDumper etc.) and we must not disable them.
+    let path = mods_dir.join("mods.txt");
+    let existing = std::fs::read_to_string(&path).unwrap_or_default();
+    let existing = existing.trim_start_matches('\u{feff}');
+
+    let mut lines: Vec<String> = Vec::new();
+    let mut found = false;
+    for line in existing.lines() {
+        let name = line.split(':').next().unwrap_or("").trim();
+        if name.eq_ignore_ascii_case(MOD_NAME) {
+            found = true;
+            lines.push(format!("{MOD_NAME} : 1"));
+        } else {
+            lines.push(line.to_string());
+        }
+    }
+    if !found {
+        lines.push(format!("{MOD_NAME} : 1"));
+    }
+
+    let out = format!("{}\r\n", lines.join("\r\n"));
+    match std::fs::write(&path, out) {
+        Ok(_) => StepResult::ok(
+            "Enable bridge",
+            if found {
+                format!("{} — already listed, set to enabled", path.display())
+            } else {
+                format!("{} — added to the mod list", path.display())
+            },
+        ),
+        Err(e) => StepResult::fail("Enable bridge", format!("{}: {e}", path.display())),
+    }
 }
 
 /// Write C:\TurdMOD\service.json and copy the service exe next to it.
@@ -442,6 +486,62 @@ mod tests {
             .collect();
         assert!(dlls[0].ends_with("turdmod_server_loader.dll"), "loader injects first");
         assert!(dlls[1].ends_with("UE4SS.dll"));
+    }
+
+    // @dep: UE4SS-settings.ini calls mods.txt "the controlling mod list" — a
+    // mod that isn't listed there does not load, however many marker files it has.
+    #[test]
+    fn enabling_the_bridge_preserves_other_mods() {
+        let root = std::env::temp_dir().join("tm-setup-modstxt-test");
+        let _ = std::fs::remove_dir_all(&root);
+        let mods = root.join("UE4SS").join("Mods");
+        std::fs::create_dir_all(&mods).unwrap();
+        std::fs::write(
+            mods.join("mods.txt"),
+            "; my mod list\r\nUsmapDumper : 1\r\nSomethingOff : 0\r\n",
+        )
+        .unwrap();
+
+        let res = enable_bridge_mod(&root);
+        assert!(res.ok, "{}", res.detail);
+
+        let txt = std::fs::read_to_string(mods.join("mods.txt")).unwrap();
+        assert!(txt.contains("TurdMODEngineBridge : 1"), "bridge must be listed: {txt}");
+        assert!(txt.contains("UsmapDumper : 1"), "other mods must survive: {txt}");
+        assert!(txt.contains("SomethingOff : 0"), "must not enable what the operator disabled");
+        assert!(txt.contains("; my mod list"), "comments must survive");
+        assert!(mods.join("TurdMODEngineBridge").join("enabled.txt").exists());
+
+        std::fs::remove_dir_all(&root).unwrap();
+    }
+
+    #[test]
+    fn enabling_the_bridge_flips_an_existing_disabled_entry() {
+        let root = std::env::temp_dir().join("tm-setup-modstxt-test2");
+        let _ = std::fs::remove_dir_all(&root);
+        let mods = root.join("UE4SS").join("Mods");
+        std::fs::create_dir_all(&mods).unwrap();
+        std::fs::write(mods.join("mods.txt"), "TurdMODEngineBridge : 0\r\n").unwrap();
+
+        assert!(enable_bridge_mod(&root).ok);
+        let txt = std::fs::read_to_string(mods.join("mods.txt")).unwrap();
+        assert!(txt.contains("TurdMODEngineBridge : 1"));
+        assert!(!txt.contains(": 0"), "the disabled entry must be replaced, not duplicated: {txt}");
+
+        std::fs::remove_dir_all(&root).unwrap();
+    }
+
+    #[test]
+    fn enabling_the_bridge_creates_mods_txt_from_nothing() {
+        let root = std::env::temp_dir().join("tm-setup-modstxt-test3");
+        let _ = std::fs::remove_dir_all(&root);
+        std::fs::create_dir_all(root.join("UE4SS").join("Mods")).unwrap();
+
+        assert!(enable_bridge_mod(&root).ok);
+        let txt = std::fs::read_to_string(root.join("UE4SS").join("Mods").join("mods.txt")).unwrap();
+        assert_eq!(txt, "TurdMODEngineBridge : 1\r\n");
+
+        std::fs::remove_dir_all(&root).unwrap();
     }
 
     #[test]

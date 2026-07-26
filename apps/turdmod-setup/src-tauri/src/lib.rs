@@ -161,8 +161,8 @@ fn install_local_full(
 // ─── Verify ────────────────────────────────────────────────────────────────
 
 #[tauri::command]
-async fn verify_install(port: u16, token: String) -> VerifyReport {
-    verify::run(port, &token).await
+async fn verify_install(port: u16, token: String, server_root: Option<String>) -> VerifyReport {
+    verify::run(port, &token, server_root.as_deref()).await
 }
 
 // ─── AI assistant tools ────────────────────────────────────────────────────
@@ -347,5 +347,62 @@ mod live {
             assert_eq!(&merged[k], v, "update dropped or changed operator key: {k}");
         }
         println!("preserved {} keys, token intact", existing.as_object().unwrap().len());
+    }
+
+    /// THE REAL THING: full install onto this machine's actual SCUM server.
+    /// Registers and starts the Windows Service. Requires an elevated shell.
+    ///   set TURDMOD_PACK=<extracted Server Pack>
+    ///   cargo test --lib live_real_install -- --ignored --nocapture
+    #[tokio::test]
+    #[ignore = "installs and starts a Windows service on this machine"]
+    async fn live_real_install() {
+        let pack = std::env::var("TURDMOD_PACK").expect("set TURDMOD_PACK");
+        let found = detect::detect_all();
+        let root = found.server.expect("no SCUM dedicated server found");
+        println!("server root: {root}");
+
+        let prep = prepare_config(root.clone(), None);
+        println!("is_update={} token_preserved={} service={:?}",
+                 prep.is_update, prep.token_preserved, prep.service_state);
+        println!("config:
+{}", serde_json::to_string_pretty(&prep.config).unwrap());
+
+        let root2 = root.clone();
+        let results = install_local_full(root, prep.config.clone(), Some(pack));
+        println!("
+--- install steps ---");
+        for r in &results {
+            println!("{:<20} {:<5} {}", r.step, r.ok, r.detail);
+        }
+        assert!(results.iter().all(|r| r.ok), "install had failing steps");
+
+        println!("
+--- verify ---");
+        let rep = verify_install(prep.port, prep.token.clone(), Some(root2)).await;
+        for c in &rep.checks {
+            println!("{:<26} {:<5} {}", c.label, c.ok, c.detail);
+            if !c.ok { println!("{:<26}   fix: {}", "", c.fix); }
+        }
+        println!("
+summary: {}", rep.summary);
+    }
+
+    /// Re-run verification only, against whatever state the machine is in now.
+    ///   cargo test --lib live_verify_only -- --ignored --nocapture
+    #[tokio::test]
+    #[ignore = "reads live service state on this machine"]
+    async fn live_verify_only() {
+        let root = detect::detect_all().server.expect("no server");
+        let cfg = install_local::read_existing_config().expect("no service.json");
+        let token = cfg["token"].as_str().unwrap().to_string();
+        let port = cfg["port"].as_u64().unwrap_or(9090) as u16;
+
+        let rep = verify_install(port, token, Some(root)).await;
+        for c in &rep.checks {
+            println!("{:<28} {:<5} {}", c.label, c.ok, c.detail);
+            if !c.ok { println!("{:<28}   FIX: {}", "", c.fix); }
+        }
+        println!("
+summary: {}", rep.summary);
     }
 }

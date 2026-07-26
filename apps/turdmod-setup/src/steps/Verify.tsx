@@ -15,7 +15,7 @@ export function Verify() {
   async function check() {
     setRunning(true);
     try {
-      const rep = await api.verify(state.port, state.token);
+      const rep = await api.verify(state.port, state.token, state.serverRoot);
       set({
         verifyReport: rep,
         lastError: rep.all_ok ? "" : rep.checks.filter((c) => !c.ok).map((c) => c.detail).join("; "),

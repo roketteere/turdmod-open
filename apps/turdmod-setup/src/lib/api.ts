@@ -76,7 +76,8 @@ export const api = {
   installLocal: (serverRoot: string, config: Record<string, unknown>, artifactsDir?: string | null) =>
     invoke<StepResult[]>("install_local_full", { serverRoot, config, artifactsDir }),
 
-  verify: (port: number, token: string) => invoke<VerifyReport>("verify_install", { port, token }),
+  verify: (port: number, token: string, serverRoot?: string) =>
+    invoke<VerifyReport>("verify_install", { port, token, serverRoot }),
 
   // Assistant helpers
   readTextFile: (path: string) => invoke<string>("read_text_file", { path }),
