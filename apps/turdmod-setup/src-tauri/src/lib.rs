@@ -174,3 +174,43 @@ pub fn run() {
         .run(tauri::generate_context!())
         .expect("error while running TurdMOD Setup");
 }
+
+// ─── Live smoke test ───────────────────────────────────────────────────────
+// Runs the whole non-destructive path against THIS machine's real SCUM install:
+// detect -> validate -> capability -> config. Writes nothing, installs nothing.
+// #[ignore] because it needs a real SCUM server present.
+//   cargo test --lib live_ -- --ignored --nocapture
+
+#[cfg(test)]
+mod live {
+    use super::*;
+
+    #[test]
+    #[ignore = "requires a real SCUM dedicated server install on this machine"]
+    fn live_detect_through_config() {
+        let found = detect::detect_all();
+        println!("game:   {:?}", found.game);
+        println!("server: {:?}", found.server);
+        println!("looked in: {:?}", found.searched);
+
+        let root = found.server.expect("no SCUM dedicated server found on this machine");
+        assert!(detect::validate_install_path(&root), "detected root failed validation: {root}");
+
+        let exe = detect::server_exe_in(&root).expect("GameServer.exe missing under detected root");
+        println!("exe:    {exe}");
+
+        let rep = capability::report_for(capability::HostKind::Local, true);
+        assert!(rep.engine_supported, "local install must support the engine");
+        println!("verdict: {}", rep.verdict);
+
+        let token = install_local::generate_token();
+        let cfg = install_local::build_service_config(&root, &token, 9090);
+        assert_eq!(cfg["scum_exe"].as_str().unwrap(), exe, "config must point at the real exe");
+        for d in cfg["inject_dlls"].as_array().unwrap() {
+            let p = d.as_str().unwrap();
+            assert!(p.starts_with(&root), "inject path escaped the server root: {p}");
+        }
+        println!("config: {}", serde_json::to_string_pretty(&cfg).unwrap());
+        println!("artifacts dir: {:?}", install_local::find_artifacts_dir());
+    }
+}

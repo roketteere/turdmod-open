@@ -25,8 +25,9 @@ reqwest = { version = "0.12", features = ["json", "rustls-tls"], default-feature
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 
-# FTP for rented-host detection + uploads
-suppaftp = "6"
+# @ctx: no FTP/SSH transport deps yet — the remote install paths aren't built.
+# Add suppaftp / ssh2 when install_ftp.rs / install_remote.rs land, not before:
+# an unused transport dep implies a capability the app doesn't have.
 
 [target.'cfg(windows)'.dependencies]
 winreg = "0.52"
