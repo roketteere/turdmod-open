@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "TurdMOD Setup",
+  "mainBinaryName": "TurdMOD-Setup",
+  "version": "0.1.0",
+  "identifier": "com.turdmod.setup",
+  "build": {
+    "beforeDevCommand": "pnpm dev",
+    "devUrl": "http://localhost:5190",
+    "beforeBuildCommand": "pnpm build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "TurdMOD Setup",
+        "label": "main",
+        "width": 1080,
+        "height": 760,
+        "minWidth": 900,
+        "minHeight": 640,
+        "resizable": true,
+        "center": true
+      }
+    ],
+    "security": { "csp": null }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "publisher": "Joel Perez (TurdMOD)",
+    "category": "Utility",
+    "shortDescription": "Guided installer for TurdMOD — detects your setup, installs, and verifies.",
+    "longDescription": "TurdMOD Setup detects where your SCUM server lives (this PC, your own VPS, or a rented host), reports honestly what your hosting supports, configures everything, installs it, and verifies it works. Includes an AI assistant that can perform the install for you.",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.ico"
+    ]
+  }
+}

@@ -87,6 +87,16 @@ The launch suite. All authored by **Joel Perez (TurdMOD Admin)**. Live in the ca
 
 ## Quick start
 
+### Run it on your server (operators)
+
+Download **TurdMOD Setup** from [turdmod.com/downloads](https://turdmod.com/downloads), extract
+the Server Pack next to it, and run it as Administrator. It finds your SCUM server, tells you up
+front whether your hosting can even run the engine, installs everything, and verifies it worked.
+No toolchain, no config editing. It also ships an AI assistant that can do the install for you —
+your own API key (Claude / ChatGPT / Gemini / DeepSeek) or free local Ollama.
+
+See [`apps/turdmod-setup`](apps/turdmod-setup) for how it works and how to build it.
+
 ### Try the marketplace (users)
 
 1. Visit **[turdmod.com](https://turdmod.com)**

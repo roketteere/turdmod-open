@@ -6,12 +6,22 @@
 #         .\scripts\package-release.ps1 -ServerOnly      # server pack only
 #         .\scripts\package-release.ps1 -BuildFirst       # build then package
 #
+#         .\scripts\package-release.ps1 -WithSetup       # also build + bundle TurdMOD Setup
+#
 # Output: releases\TurdMOD-Server-Pack-<build>.zip
 #         releases\TurdMOD-Manager-<build>.msi (if manager built)
+#         releases\TurdMOD-Setup-<build>.exe (with -WithSetup)
+#
+# @inv: TurdMOD-Setup.exe ships INSIDE the Server Pack zip, at the zip root.
+#       install_local.rs::find_artifacts_dir looks next to the running exe for
+#       turdmod-service.exe — that adjacency is what makes "extract and run
+#       Setup" work with zero configuration. Don't move it into a subfolder.
 
 param(
     [switch]$ServerOnly,
-    [switch]$BuildFirst
+    [switch]$BuildFirst,
+    # Build TurdMOD Setup (Tauri) and include it. Needs Rust + MSVC + pnpm.
+    [switch]$WithSetup
 )
 $ErrorActionPreference = 'Stop'
 $Repo = 'C:\Development\Claude\turdmod'
@@ -29,6 +39,20 @@ if ($BuildFirst) {
     Write-Host "[pack] Building all artifacts..."
     & "$Repo\scripts\build-engine.ps1"
     if ($LASTEXITCODE -ne 0) { Write-Host "[pack] Build failed" -ForegroundColor Red; exit 1 }
+}
+
+# TurdMOD Setup — the guided installer. Built separately because it needs the
+# Node toolchain as well as Rust, and most repackages don't change it.
+$SetupDir = Join-Path $Repo 'apps\turdmod-setup'
+$SetupExe = Join-Path $SetupDir 'src-tauri\target\release\TurdMOD-Setup.exe'
+if ($WithSetup) {
+    Write-Host "[pack] Building TurdMOD Setup..."
+    Push-Location $SetupDir
+    pnpm install | Out-Null
+    pnpm tauri build
+    $rc = $LASTEXITCODE
+    Pop-Location
+    if ($rc -ne 0) { Write-Host "[pack] TurdMOD Setup build failed" -ForegroundColor Red; exit 1 }
 }
 
 # Verify artifacts exist
@@ -82,6 +106,14 @@ if (Test-Path $UE4SSDll) {
     Write-Host "  ~ UE4SS.dll not found (user must supply their own)" -ForegroundColor Yellow
 }
 
+# 4b. TurdMOD Setup — at the zip root, next to turdmod-service.exe (see @inv above)
+if (Test-Path $SetupExe) {
+    Copy-Item $SetupExe (Join-Path $stage 'TurdMOD-Setup.exe')
+    Write-Host "  + TurdMOD-Setup.exe"
+} else {
+    Write-Host "  ~ TurdMOD-Setup.exe not found (run with -WithSetup to build it)" -ForegroundColor Yellow
+}
+
 # 5. Config template
 $configTemplate = @'
 {
@@ -103,6 +135,26 @@ Write-Host "  + service.json.template"
 # 6. Quick-start guide
 $quickstart = @'
 # TurdMOD Server Pack — Quick Start
+
+## The easy way (recommended)
+
+1. Extract this zip to `C:\TurdMOD\` **on the machine that runs your game server**.
+2. Right-click `TurdMOD-Setup.exe` and choose **Run as administrator**.
+3. Answer one question, click through, done.
+
+TurdMOD Setup finds your server, tells you honestly what your hosting can run,
+writes the config, installs the service, and checks that it actually worked. If
+anything fails it tells you the specific fix. It also has a built-in AI
+assistant that can do the whole install for you — bring your own API key
+(Claude, ChatGPT, Gemini, DeepSeek) or point it at free local Ollama.
+
+Stop your SCUM server before running it — files can't be replaced while in use.
+
+Everything below is the manual path, for people who'd rather do it by hand.
+
+---
+
+# Manual install
 
 ## 1. Extract
 Extract this zip to `C:\TurdMOD\` on your game server.
@@ -175,12 +227,22 @@ $sizeMB = [math]::Round((Get-Item $zipPath).Length / 1MB, 1)
 Write-Host ""
 Write-Host "[pack] Server Pack ready: $zipPath ($sizeMB MB)" -ForegroundColor Green
 
+# Also stage Setup as a standalone download (turdmod.com/downloads links it directly)
+if (Test-Path $SetupExe) {
+    Copy-Item $SetupExe (Join-Path $ReleaseDir "TurdMOD-Setup-$ts.exe")
+    Copy-Item $SetupExe (Join-Path $ReleaseDir 'TurdMOD-Setup-latest.exe')
+    Write-Host "[pack] TurdMOD Setup ready: releases\TurdMOD-Setup-latest.exe" -ForegroundColor Green
+}
+
 # Clean staging
 Remove-Item -Recurse -Force $StagingDir
 
 # ── Summary ──
 Write-Host ""
 Write-Host "[pack] Contents:"
+if (Test-Path $SetupExe) {
+    Write-Host "  TurdMOD-Setup.exe             $('{0:N1}' -f ((Get-Item $SetupExe).Length / 1MB)) MB"
+}
 Write-Host "  turdmod-service.exe           $('{0:N1}' -f ((Get-Item $ServiceExe).Length / 1MB)) MB"
 Write-Host "  TurdMODEngineBridge (main.dll) $('{0:N1}' -f ((Get-Item $BridgeDll).Length / 1MB)) MB"
 Write-Host "  turdmod_server_loader.dll     $('{0:N1}' -f ((Get-Item $LoaderDll).Length / 1MB)) MB"

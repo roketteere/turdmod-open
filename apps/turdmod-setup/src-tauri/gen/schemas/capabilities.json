@@ -1,0 +1,1 @@
+{"default":{"identifier":"default","description":"TurdMOD Setup main window — folder picking, opening docs links, and persisting the assistant's provider/key choice.","local":true,"windows":["main"],"permissions":["core:default","shell:allow-open","dialog:allow-open","dialog:allow-message","dialog:allow-confirm","store:default"]}}

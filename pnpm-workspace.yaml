@@ -10,6 +10,7 @@ packages:
   - "apps/turdmod-pro"
   - "apps/turdmod-bot"
   - "apps/turdmod-creator"
+  - "apps/turdmod-setup"
   - "examples/turdmod/*"
   - "mods/*"
   - "packages/*"

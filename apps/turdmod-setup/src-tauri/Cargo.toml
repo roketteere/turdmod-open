@@ -1,0 +1,36 @@
+[package]
+name = "turdmod-setup-app"
+version = "0.1.0"
+description = "TurdMOD Setup — guided installer with capability detection and an AI assistant."
+edition = "2021"
+rust-version = "1.77"
+
+[lib]
+name = "turdmod_setup_app_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2.0", features = [] }
+
+[dependencies]
+tauri = { version = "2.1", features = [] }
+tauri-plugin-shell = "2.0"
+tauri-plugin-dialog = "2.0"
+tauri-plugin-store = "2.0"
+
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tokio = { version = "1.42", features = ["full"] }
+reqwest = { version = "0.12", features = ["json", "rustls-tls"], default-features = false }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# FTP for rented-host detection + uploads
+suppaftp = "6"
+
+[target.'cfg(windows)'.dependencies]
+winreg = "0.52"
+
+[features]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]
