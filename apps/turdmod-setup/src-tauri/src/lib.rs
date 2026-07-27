@@ -7,6 +7,7 @@
 mod capability;
 mod client;
 mod detect;
+mod download;
 mod handoff;
 mod install_local;
 mod manifest;
@@ -210,6 +211,14 @@ fn client_create_copy(source: String, dest: String) -> Vec<StepResult> {
     r
 }
 
+// ─── Download the Server Pack ──────────────────────────────────────────────
+
+/// Fetch + extract the pack from turdmod.com so a bare Setup.exe can install.
+#[tauri::command]
+async fn download_pack() -> download::DownloadResult {
+    download::fetch_pack().await
+}
+
 // ─── Update check ──────────────────────────────────────────────────────────
 
 #[tauri::command]
@@ -295,6 +304,7 @@ pub fn run() {
             client_plan,
             client_create_copy,
             check_for_update,
+            download_pack,
             uninstall_plan,
             uninstall_run,
             verify_install,
@@ -616,5 +626,36 @@ summary: {}", rep.summary);
             None => { let _ = std::fs::remove_file(&vpath); }
         }
         println!("restored prior state");
+    }
+
+    /// Download + extract the REAL Server Pack from turdmod.com, then clean up.
+    ///   cargo test --lib live_download_pack -- --ignored --nocapture
+    #[tokio::test]
+    #[ignore = "downloads ~16 MB from turdmod.com"]
+    async fn live_download_pack() {
+        let r = download::fetch_pack().await;
+        for s in &r.steps { println!("{:<10} {:<5} {}", s.step, s.ok, s.detail); }
+        let dir = r.artifacts_dir.expect("download should yield an artifacts dir");
+        let p = PathBuf::from(&dir);
+
+        // Everything install_local_full needs must be present.
+        for rel in [
+            "turdmod-service.exe",
+            "TurdMOD-Setup.exe",
+            "turdmod_server_loader.dll",
+            "VERSION.json",
+            "UE4SS/UE4SS.dll",
+            "UE4SS/Mods/TurdMODEngineBridge/dlls/main.dll",
+        ] {
+            let f = p.join(rel.replace('/', std::path::MAIN_SEPARATOR_STR));
+            assert!(f.is_file(), "pack is missing {rel}");
+            println!("  ok {rel}");
+        }
+
+        // find_artifacts_dir keys on turdmod-service.exe adjacency.
+        println!("VERSION.json: {}", std::fs::read_to_string(p.join("VERSION.json")).unwrap().trim());
+
+        std::fs::remove_dir_all(&p).unwrap();
+        println!("cleaned up {dir}");
     }
 }

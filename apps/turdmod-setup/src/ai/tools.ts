@@ -194,6 +194,22 @@ export function buildTools(store: SetupStore): ToolSpec[] {
 
     {
       def: {
+        name: "download_pack",
+        description:
+          "Download the Server Pack from turdmod.com and extract it, so the install can proceed without the user fetching it by hand. Use this when prepare_config reports no artifacts_dir. About 16 MB.",
+        parameters: { type: "object", properties: {} },
+      },
+      destructive: true,
+      summarize: () => "Download the TurdMOD Server Pack (~16 MB) from turdmod.com",
+      run: async () => {
+        const r = await api.downloadPack();
+        if (r.artifacts_dir) set({ artifactsDir: r.artifacts_dir });
+        return r;
+      },
+    },
+
+    {
+      def: {
         name: "check_for_update",
         description:
           "Ask turdmod.com whether a newer TurdMOD build is published, and compare it to what's installed here. Returns state 'current', 'available', or 'unknown'. 'unknown' means we genuinely couldn't tell — never tell the user they're up to date on an 'unknown'.",

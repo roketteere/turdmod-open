@@ -124,6 +124,9 @@ export const api = {
 
   checkForUpdate: () => invoke<UpdateReport>("check_for_update"),
 
+  downloadPack: () =>
+    invoke<{ steps: StepResult[]; artifacts_dir: string | null }>("download_pack"),
+
   clientPlan: (source: string) => invoke<ClientPlan>("client_plan", { source }),
   clientCreateCopy: (source: string, dest: string) =>
     invoke<StepResult[]>("client_create_copy", { source, dest }),

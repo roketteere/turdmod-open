@@ -4,7 +4,7 @@
 //       work" reports. Nothing on this screen is required input.
 
 import { useEffect, useState } from "react";
-import { api } from "../lib/api";
+import { api, type StepResult } from "../lib/api";
 import { useSetup } from "../lib/setup-state";
 
 export function Configure() {
@@ -12,6 +12,27 @@ export function Configure() {
   const [loading, setLoading] = useState(false);
   const [showToken, setShowToken] = useState(false);
   const [port, setPort] = useState(String(state.port));
+  const [downloading, setDownloading] = useState(false);
+  const [downloadSteps, setDownloadSteps] = useState<StepResult[]>([]);
+
+  // A bare Setup.exe has no pack beside it — fetch it rather than sending the
+  // user back to the website to do it by hand.
+  async function download() {
+    setDownloading(true);
+    setDownloadSteps([]);
+    try {
+      const r = await api.downloadPack();
+      setDownloadSteps(r.steps);
+      if (r.artifacts_dir) {
+        set({ artifactsDir: r.artifacts_dir, lastError: "" });
+        await prepare(state.port);
+      }
+    } catch (e) {
+      set({ lastError: String(e) });
+    } finally {
+      setDownloading(false);
+    }
+  }
 
   async function prepare(p: number) {
     setLoading(true);
@@ -79,11 +100,28 @@ export function Configure() {
               {state.artifactsDir ? (
                 <span className="mono">{state.artifactsDir}</span>
               ) : (
-                "Not found. Download the Server Pack from turdmod.com/downloads, extract it, and put this app in the same folder — then click Re-check."
+                <>
+                  Not here yet — but we can fetch them for you.
+                  <div style={{ marginTop: 10 }}>
+                    <button className="btn small primary" onClick={() => void download()} disabled={downloading}>
+                      {downloading ? "Downloading…" : "Download the Server Pack (~16 MB)"}
+                    </button>
+                  </div>
+                </>
               )}
             </div>
           </div>
         </div>
+
+        {downloadSteps.map((r, i) => (
+          <div key={`${r.step}-${i}`} className={`result ${r.ok ? "yes" : "no"}`}>
+            <span className="mark">{r.ok ? "✓" : "✕"}</span>
+            <div className="body">
+              <div className="t">{r.step}</div>
+              <div className="d">{r.detail}</div>
+            </div>
+          </div>
+        ))}
 
         <div className="result yes">
           <span className="mark">✓</span>
