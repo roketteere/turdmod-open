@@ -25,7 +25,7 @@ const TS_RE = /^(\d{4}\.\d{2}\.\d{2}-\d{2}\.\d{2}\.\d{2}):\s*(.*)$/;
 
 const LOGIN_RE = /'(?<ip>[^ ]+)\s+(?<steam>\d+):(?<player>[^']+)'\s+logged in at:\s+X=(?<x>-?\d+\.?\d*)\s+Y=(?<y>-?\d+\.?\d*)\s+Z=(?<z>-?\d+\.?\d*)/;
 // Logout lines mirror login (with the same `127.0.0.1 ` IP prefix inside the quotes):
-//   '127.0.0.1 YOUR_STEAM_ID_1:YOUR_OWNER_NAME(2)' logged out at: X=... Y=... Z=...
+//   '127.0.0.1 76561198000000001:SampleAdmin(2)' logged out at: X=... Y=... Z=...
 const LOGOUT_RE = /'(?<ip>[^ ]+)\s+(?<steam>\d+):(?<player>[^']+)'\s+logged out/;
 
 const VEHICLE_RE = /\[(?<event>Destroyed|Failed to spawn|Disappeared)\]\s+(?<vclass>[A-Za-z0-9_]+)\.\s+VehicleId:\s+(?<vid>\d+)\.\s+Owner:\s+(?<owner>[^.]+?)\.\s+Location:\s+X=(?<x>-?\d+\.?\d*)\s+Y=(?<y>-?\d+\.?\d*)\s+Z=(?<z>-?\d+\.?\d*)/;
@@ -42,8 +42,8 @@ const KILL_KLOC_RE = /Killer\s+Location:\s*X=(?<x>-?\d+\.?\d*)\s+Y=(?<y>-?\d+\.?
 const KILL_VLOC_RE = /Victim\s+Location:\s*X=(?<x>-?\d+\.?\d*)\s+Y=(?<y>-?\d+\.?\d*)\s+Z=(?<z>-?\d+\.?\d*)/i;
 
 // chat.log (actual format confirmed 2026-05-24):
-//   'YOUR_STEAM_ID_1:YOUR_OWNER_NAME(3)' 'Global: !balance'
-//   'YOUR_STEAM_ID_1:YOUR_OWNER_NAME(3)' 'Local: hey nearby'
+//   '76561198000000001:SampleAdmin(3)' 'Global: !balance'
+//   '76561198000000001:SampleAdmin(3)' 'Local: hey nearby'
 const CHAT_RE = /'(?<steam>\d+):(?<player>[^']+)'\s+'(?<channel>Local|Global|Squad):\s*(?<text>[^']*)'/;
 
 function vec(g: Record<string, string | undefined>, prefix = ""): Vec3 {

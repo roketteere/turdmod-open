@@ -334,7 +334,7 @@ export function EngineConsolePage() {
                   ? 'border-red-500/60 focus:border-red-400'
                   : 'border-turd-bronze/40 focus:border-turd-mustard'
               }`}
-              placeholder='{"name":"YOUR_OWNER_NAME","x":428844,"y":586315,"z":200}'
+              placeholder='{"name":"SampleAdmin","x":428844,"y":586315,"z":200}'
             />
             {paramsError && (
               <p className="mt-1 font-mono text-[10px] text-red-400">

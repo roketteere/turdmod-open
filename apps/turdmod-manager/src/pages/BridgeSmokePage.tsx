@@ -227,7 +227,7 @@ function PlayerPicker({
         label="Player name (no roster loaded — type manually)"
         value={value}
         onChange={onChange}
-        placeholder="YOUR_OWNER_NAME"
+        placeholder="SampleAdmin"
       />
     );
   }

@@ -127,7 +127,7 @@ interface CommandSpec {
 // SCUM's #SetCurrencyBalance / #ChangeCurrencyBalance expect the LITERAL
 // strings `Normal` or `Gold` — not 0/1. Verified 2026-05-18 from SCUM's
 // in-game `#help` autocomplete (Joel confirmed `ChangeCurrencyBalance
-// Normal 5000 YOUR_OWNER_NAME` worked while the 0/1 form silently rejected).
+// Normal 5000 SampleAdmin` worked while the 0/1 form silently rejected).
 const CURRENCY_OPTIONS: ArgHint['options'] = [
   { value: 'Normal', label: 'Normal (cash)' },
   { value: 'Gold', label: 'Gold' },
@@ -206,23 +206,23 @@ const ARG_HINTS: Record<string, ArgHint[]> = {
   // KickPlayer, SilencePlayer, SetPrisonerImmortality, etc.); the live
   // bridge dump has the correct names + arg signatures so let it drive.
   SetGodMode: [
-    { name: 'player', hint: 'YOUR_OWNER_NAME', kind: 'player' },
+    { name: 'player', hint: 'SampleAdmin', kind: 'player' },
     { name: 'enabled', hint: 'on/off', defaultValue: '1', kind: 'bool' },
   ],
   SetInfiniteAmmo: [
-    { name: 'player', hint: 'YOUR_OWNER_NAME', kind: 'player' },
+    { name: 'player', hint: 'SampleAdmin', kind: 'player' },
     { name: 'enabled', hint: 'on/off', defaultValue: '1', kind: 'bool' },
   ],
   SetSuperJump: [
-    { name: 'player', hint: 'YOUR_OWNER_NAME', kind: 'player' },
+    { name: 'player', hint: 'SampleAdmin', kind: 'player' },
     { name: 'enabled', hint: 'on/off', defaultValue: '1', kind: 'bool' },
   ],
   SetAllInventoryAccess: [
-    { name: 'player', hint: 'YOUR_OWNER_NAME', kind: 'player' },
+    { name: 'player', hint: 'SampleAdmin', kind: 'player' },
     { name: 'enabled', hint: 'on/off', defaultValue: '1', kind: 'bool' },
   ],
   SetSkillLevel: [
-    { name: 'player', hint: 'YOUR_OWNER_NAME', kind: 'player' },
+    { name: 'player', hint: 'SampleAdmin', kind: 'player' },
     { name: 'skill', hint: 'skill name', defaultValue: 'Rifles', kind: 'enum', options: SKILL_NAME_OPTIONS },
     { name: 'level', hint: 'rank 0-4', defaultValue: '1', kind: 'enum', options: SKILL_LEVEL_OPTIONS },
   ],
@@ -257,9 +257,9 @@ const ARG_HINTS: Record<string, ArgHint[]> = {
     { name: 'y', hint: 'world Y', kind: 'number' },
     { name: 'z', hint: 'world Z', defaultValue: '0', kind: 'number' },
   ],
-  TeleportTo: [{ name: 'player', hint: 'YOUR_OWNER_NAME', kind: 'player' }],
+  TeleportTo: [{ name: 'player', hint: 'SampleAdmin', kind: 'player' }],
   SetGender: [
-    { name: 'player', hint: 'YOUR_OWNER_NAME', kind: 'player' },
+    { name: 'player', hint: 'SampleAdmin', kind: 'player' },
     {
       name: 'gender',
       hint: 'M/F',
@@ -272,7 +272,7 @@ const ARG_HINTS: Record<string, ArgHint[]> = {
     },
   ],
   SetBodyType: [
-    { name: 'player', hint: 'YOUR_OWNER_NAME', kind: 'player' },
+    { name: 'player', hint: 'SampleAdmin', kind: 'player' },
     {
       name: 'bodyType',
       hint: 'body type',
@@ -287,15 +287,15 @@ const ARG_HINTS: Record<string, ArgHint[]> = {
     },
   ],
   SetFakeName: [
-    { name: 'player', hint: 'YOUR_OWNER_NAME', kind: 'player' },
+    { name: 'player', hint: 'SampleAdmin', kind: 'player' },
     { name: 'fakeName', hint: 'display name' },
   ],
   SendNotification: [
-    { name: 'player', hint: 'YOUR_OWNER_NAME', kind: 'player' },
+    { name: 'player', hint: 'SampleAdmin', kind: 'player' },
     { name: 'message', hint: 'Notification text' },
   ],
   SetGardenPlantGrowthStage: [
-    { name: 'player', hint: 'YOUR_OWNER_NAME (near a garden)', kind: 'player' },
+    { name: 'player', hint: 'SampleAdmin (near a garden)', kind: 'player' },
     {
       name: 'stage',
       hint: 'growth stage',
@@ -311,7 +311,7 @@ const ARG_HINTS: Record<string, ArgHint[]> = {
     },
   ],
   SetGardenPlantingTime: [
-    { name: 'player', hint: 'YOUR_OWNER_NAME (near a garden)', kind: 'player' },
+    { name: 'player', hint: 'SampleAdmin (near a garden)', kind: 'player' },
     { name: 'minutes', hint: 'minutes until ready', defaultValue: '0', kind: 'number' },
   ],
   ScheduleCargoDrop: [
@@ -427,7 +427,7 @@ const PLAYER_RADIUS_VERBS = new Set<string>([
 function autoHintsForVerb(verb: string): ArgHint[] | undefined {
   if (PLAYER_BOOL_VERBS.has(verb)) {
     return [
-      { name: 'player', hint: 'YOUR_OWNER_NAME', kind: 'player' },
+      { name: 'player', hint: 'SampleAdmin', kind: 'player' },
       { name: 'enabled', hint: 'on/off', defaultValue: '1', kind: 'bool' },
     ];
   }
@@ -435,7 +435,7 @@ function autoHintsForVerb(verb: string): ArgHint[] | undefined {
     return [{ name: 'enabled', hint: 'on/off', defaultValue: '1', kind: 'bool' }];
   }
   if (PLAYER_ONLY_VERBS.has(verb)) {
-    return [{ name: 'player', hint: 'YOUR_OWNER_NAME', kind: 'player' }];
+    return [{ name: 'player', hint: 'SampleAdmin', kind: 'player' }];
   }
   if (SPAWN_VERBS.has(verb)) {
     return [
@@ -445,7 +445,7 @@ function autoHintsForVerb(verb: string): ArgHint[] | undefined {
   }
   if (PLAYER_RADIUS_VERBS.has(verb)) {
     return [
-      { name: 'player', hint: 'YOUR_OWNER_NAME (centerpoint)', kind: 'player' },
+      { name: 'player', hint: 'SampleAdmin (centerpoint)', kind: 'player' },
       { name: 'radius', hint: 'meters', defaultValue: '50', kind: 'number' },
     ];
   }

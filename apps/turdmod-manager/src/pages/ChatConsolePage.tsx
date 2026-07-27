@@ -320,7 +320,7 @@ export function ChatConsolePage() {
             value={input}
             onChange={(e) => { setInput(e.target.value); setHistIdx(null); }}
             onKeyDown={onKeyDown}
-            placeholder="#SetGodMode YOUR_OWNER_NAME 1   ·   !kit   ·   or just chat…"
+            placeholder="#SetGodMode SampleAdmin 1   ·   !kit   ·   or just chat…"
             autoComplete="off"
             spellCheck={false}
             className="ml-2 flex-1 bg-transparent font-mono text-sm text-turd-cream outline-none placeholder:text-turd-cream-dim/50"

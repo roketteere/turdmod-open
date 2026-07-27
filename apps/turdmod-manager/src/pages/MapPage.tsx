@@ -870,7 +870,7 @@ export function MapPage() {
         await navigator.clipboard.writeText(`X=${pos.x} Y=${pos.y} Z=0`);
         setActionResult('Coordinates copied');
       } else if (action === 'tp-self') {
-        await tp('YOUR_OWNER_NAME');
+        await tp('SampleAdmin');
         setActionResult(`Teleported to ${contextMenu.sector}`);
       } else if (action === 'tp-all') {
         const res = await engineRpc<{ players: OnlinePlayer[] }>('getOnlinePlayers');

@@ -1339,7 +1339,7 @@ fn read_beam_color() -> (f32, f32, f32) {
 
 /// GAME-THREAD ONLY. PRECISE livery: classify every material SLOT by its parent
 /// material name and paint only the targeted ones —
-///   • Bumper part            -> "YOUR_OWNER_NAME" name (whole bumper, 1 slot)
+///   • Bumper part            -> "SampleAdmin" name (whole bumper, 1 slot)
 ///   • Wheel slot, parent Metal -> PR flag (the RIM, not the rubber tire)
 ///   • any slot, parent Glass   -> translucent window tint
 /// Everything else (body paint, interior, tires, lights, engine) is LEFT ALONE so

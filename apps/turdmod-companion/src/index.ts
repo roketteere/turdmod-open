@@ -284,14 +284,14 @@ function runDemoLoop(runtime: ReturnType<typeof createCompanionRuntime>) {
   console.log("[companion] DEMO MODE — synthetic events every ~3s. Ctrl+C to stop.");
   const players = [
     { steam: "76561198000000001", player: "PlayerAlpha" },
-    { steam: "76561198000000002", player: "YOUR_OWNER_NAME" },
+    { steam: "76561198000000002", player: "SampleAdmin" },
     { steam: "76561198000000003", player: "PlayerBeta"      },
   ];
   const events: ServerEvent[] = [
     { kind: "login",  ts: "2026.05.09-00.00.00", ip: "127.0.0.1", steam: players[0]!.steam, player: players[0]!.player, pos: { x: -200000, y:  100000, z: 9000 } },
     { kind: "login",  ts: "2026.05.09-00.00.05", ip: "127.0.0.1", steam: players[1]!.steam, player: players[1]!.player, pos: { x: -180000, y:  120000, z: 9100 } },
     { kind: "login",  ts: "2026.05.09-00.00.10", ip: "127.0.0.1", steam: players[2]!.steam, player: players[2]!.player, pos: { x:   50000, y: -200000, z: 9050 } },
-    { kind: "kill",   ts: "2026.05.09-00.01.00", victim: "PlayerAlpha", victimSteam: players[0]!.steam, killer: "YOUR_OWNER_NAME", killerSteam: players[1]!.steam, weapon: "AK-47", distanceM: 152, headshot: true },
+    { kind: "kill",   ts: "2026.05.09-00.01.00", victim: "PlayerAlpha", victimSteam: players[0]!.steam, killer: "SampleAdmin", killerSteam: players[1]!.steam, weapon: "AK-47", distanceM: 152, headshot: true },
     { kind: "vehicle", ts: "2026.05.09-00.02.00", event: "Destroyed", vclass: "Kinglet_Duster_ES", vid: "160035", owner: players[1]!.steam, pos: { x: 399256, y: -39481, z: 13724 } },
     { kind: "bunker",  ts: "2026.05.09-00.03.00", bid: "C4", state: "Active", pos: { x: 446323, y: 263051, z: 18552 } },
     { kind: "logout",  ts: "2026.05.09-00.04.00", steam: players[0]!.steam, player: players[0]!.player },

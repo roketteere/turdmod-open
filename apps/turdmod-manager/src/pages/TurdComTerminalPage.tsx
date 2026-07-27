@@ -310,7 +310,7 @@ export function TurdComTerminalPage() {
               value={inputValue}
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
-              placeholder="SetGodMode YOUR_OWNER_NAME 1"
+              placeholder="SetGodMode SampleAdmin 1"
               className="ml-1 flex-1 bg-transparent font-mono text-sm text-turd-cream outline-none placeholder:text-turd-cream-dim/60"
               autoComplete="off"
               spellCheck={false}
