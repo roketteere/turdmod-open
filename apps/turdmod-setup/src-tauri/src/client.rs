@@ -31,6 +31,24 @@ use std::path::{Path, PathBuf};
 /// dumps, imgui.ini, shader caches).
 const IMMUTABLE_EXTS: &[&str] = &["pak", "ucas", "utoc", "sig"];
 
+/// Folders left out of the modded copy entirely.
+///
+/// @inv: BattlEye must be OFF on the modded side. Not copying it is the
+///   strongest form of that — the copy physically cannot start BE, so there's
+///   no flag to get out of sync and nothing to accidentally re-enable. The
+///   Steam install keeps its own BattlEye untouched, which is what lets the
+///   Play button still work on official servers.
+/// @dep: turdmod-loader/launcher::scum_install_has_battleye looks for a folder
+///   named exactly this next to SCUM.exe.
+const EXCLUDED_DIRS: &[&str] = &["BattlEye"];
+
+fn is_excluded_dir(p: &Path) -> bool {
+    p.file_name()
+        .and_then(|n| n.to_str())
+        .map(|n| EXCLUDED_DIRS.iter().any(|x| x.eq_ignore_ascii_case(n)))
+        .unwrap_or(false)
+}
+
 #[derive(Debug, Clone, Serialize)]
 pub struct DriveInfo {
     /// "C:" etc.
@@ -92,7 +110,11 @@ fn measure(source: &Path) -> (u64, u64, usize) {
         for e in entries.flatten() {
             let p = e.path();
             match e.file_type() {
-                Ok(t) if t.is_dir() => stack.push(p),
+                Ok(t) if t.is_dir() => {
+                    if !is_excluded_dir(&p) {
+                        stack.push(p);
+                    }
+                }
                 Ok(t) if t.is_file() => {
                     let len = e.metadata().map(|m| m.len()).unwrap_or(0);
                     count += 1;
@@ -217,6 +239,7 @@ pub fn create_modded_copy(source: &str, dest: &str, mf: &mut Manifest) -> Vec<St
     let mut copied = 0usize;
     let mut bytes_copied = 0u64;
     let mut failures = 0usize;
+    let mut skipped_battleye = false;
     let mut first_error = String::new();
 
     let mut stack = vec![src.clone()];
@@ -229,6 +252,11 @@ pub fn create_modded_copy(source: &str, dest: &str, mf: &mut Manifest) -> Vec<St
 
             match e.file_type() {
                 Ok(t) if t.is_dir() => {
+                    // BattlEye never makes it into the modded copy.
+                    if is_excluded_dir(&p) {
+                        skipped_battleye = true;
+                        continue;
+                    }
                     let _ = std::fs::create_dir_all(&target);
                     stack.push(p);
                 }
@@ -277,6 +305,12 @@ pub fn create_modded_copy(source: &str, dest: &str, mf: &mut Manifest) -> Vec<St
                 human(bytes_copied)
             ),
         ));
+        if skipped_battleye {
+            r.push(StepResult::ok(
+                "BattlEye",
+                "left out of the modded copy — it can't run there. Your Steam install keeps its own, so official servers still work.",
+            ));
+        }
     }
     r
 }
@@ -323,6 +357,44 @@ mod tests {
             assert!(!is_immutable(Path::new(&format!("a.{ext}"))), "{ext} must be a real copy");
         }
         assert!(!is_immutable(Path::new("no_extension")));
+    }
+
+    /// @inv: BattlEye must never reach the modded copy — and must never be
+    ///   removed from the Steam install, which is what keeps official servers
+    ///   playable.
+    #[test]
+    fn battleye_is_left_out_of_the_copy_and_left_alone_in_the_source() {
+        let d = std::env::temp_dir().join("tm-client-be");
+        let _ = std::fs::remove_dir_all(&d);
+        let w = d.join("src").join("SCUM").join("Binaries").join("Win64");
+        std::fs::create_dir_all(&w).unwrap();
+        std::fs::write(w.join("SCUM.exe"), b"exe").unwrap();
+        let be = w.join("BattlEye");
+        std::fs::create_dir_all(&be).unwrap();
+        std::fs::write(be.join("BEClient_x64.dll"), b"be").unwrap();
+
+        let dest = d.join("dest");
+        let mut mf = Manifest::new_in("t", d.clone());
+        let r = create_modded_copy(&d.join("src").display().to_string(), &dest.display().to_string(), &mut mf);
+        assert!(r[0].ok, "{}", r[0].detail);
+
+        assert!(dest.join("SCUM").join("Binaries").join("Win64").join("SCUM.exe").is_file());
+        assert!(
+            !dest.join("SCUM").join("Binaries").join("Win64").join("BattlEye").exists(),
+            "BattlEye must not exist in the modded copy"
+        );
+        assert!(be.join("BEClient_x64.dll").is_file(), "the Steam install keeps its BattlEye");
+        assert!(r.iter().any(|s| s.step == "BattlEye"), "and we say we did it");
+
+        std::fs::remove_dir_all(&d).unwrap();
+    }
+
+    #[test]
+    fn excluded_dir_matching_is_case_insensitive_and_exact() {
+        assert!(is_excluded_dir(Path::new(r"C:\g\BattlEye")));
+        assert!(is_excluded_dir(Path::new(r"C:\g\battleye")));
+        assert!(!is_excluded_dir(Path::new(r"C:\g\BattlEyeNotes")), "must be the folder, not a prefix");
+        assert!(!is_excluded_dir(Path::new(r"C:\g\Binaries")));
     }
 
     #[test]

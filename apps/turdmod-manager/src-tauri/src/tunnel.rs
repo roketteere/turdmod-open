@@ -54,13 +54,40 @@ impl TunnelConfig {
 static CHILD: OnceLock<Mutex<Option<Child>>> = OnceLock::new();
 fn child() -> &'static Mutex<Option<Child>> { CHILD.get_or_init(|| Mutex::new(None)) }
 
+/// First local port we can actually bind, starting at `preferred`.
+///
+/// @ctx: the local end used to be fixed. When something already holds it —
+///   including an ORPHANED socket left behind by a dead ssh, which is exactly
+///   what happened on the dev box — ssh exits 255 instantly and every remote
+///   call fails with no explanation. Probing costs microseconds and removes a
+///   whole class of "the Manager just doesn't work" reports.
+fn free_local_port(preferred: u16) -> Option<u16> {
+    use std::net::TcpListener;
+    (0..20).find_map(|i| {
+        let p = preferred.checked_add(i)?;
+        TcpListener::bind(("127.0.0.1", p)).ok().map(|l| {
+            drop(l);
+            p
+        })
+    })
+}
+
 pub fn start(cfg: &TunnelConfig) -> Result<(), String> {
     stop();
+
+    let port = free_local_port(cfg.local_port).ok_or_else(|| {
+        format!(
+            "no free local port near {} — something is holding that range. Close other TurdMOD \
+             windows, or reboot if a dead process left the socket behind.",
+            cfg.local_port
+        )
+    })?;
+
     // Forward to 127.0.0.1 (not "localhost") — avoids remote server resolving to ::1 where the service
     // (bound 0.0.0.0) isn't reachable. Verified working 2026-06-10.
-    let fwd = format!("{}:127.0.0.1:{}", cfg.local_port, cfg.remote_port);
+    let fwd = format!("{}:127.0.0.1:{}", port, cfg.remote_port);
     let target = format!("{}@{}", cfg.ssh_user, cfg.ssh_host);
-    let c = Command::new("ssh")
+    let mut c = Command::new("ssh")
         .args([
             "-N",
             "-o", "StrictHostKeyChecking=accept-new",
@@ -75,14 +102,33 @@ pub fn start(cfg: &TunnelConfig) -> Result<(), String> {
         .stderr(Stdio::null())
         .spawn()
         .map_err(|e| format!("spawn ssh: {}", e))?;
+
+    // @inv: do NOT report success — or repoint remote.json — until ssh has
+    //   actually stayed up. With ExitOnForwardFailure it dies in well under a
+    //   second when the forward can't be established, and this used to return
+    //   Ok() regardless: remote.json then advertised a live tunnel while every
+    //   call silently failed, which reads to the user as "remote mode is broken".
+    std::thread::sleep(std::time::Duration::from_millis(1200));
+    match c.try_wait() {
+        Ok(Some(status)) => {
+            return Err(format!(
+                "ssh tunnel to {} exited immediately ({}). Check the SSH key at {} and that the \
+                 server is reachable.",
+                cfg.ssh_host, status, cfg.ssh_key
+            ))
+        }
+        Err(e) => return Err(format!("couldn't check the ssh tunnel: {e}")),
+        Ok(None) => {}
+    }
+
     *child().lock().unwrap() = Some(c);
 
     // repoint remote.json at the tunnel's local end, preserving the token
     let mut rc = crate::remote::RemoteConfig::load_raw().unwrap_or(crate::remote::RemoteConfig {
-        host: "127.0.0.1".into(), port: cfg.local_port, token: String::new(), enabled: true,
+        host: "127.0.0.1".into(), port, token: String::new(), enabled: true,
     });
     rc.host = "127.0.0.1".into();
-    rc.port = cfg.local_port;
+    rc.port = port;
     rc.enabled = true;
     let _ = crate::remote::save_config(&rc);
     Ok(())
@@ -104,4 +150,29 @@ pub fn is_running() -> bool {
         }
     }
     false
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::net::TcpListener;
+
+    /// The bug this guards: a squatted local port made ssh exit instantly while
+    /// start() still reported success.
+    #[test]
+    fn skips_a_port_that_is_already_taken() {
+        let held = TcpListener::bind(("127.0.0.1", 0)).unwrap();
+        let taken = held.local_addr().unwrap().port();
+        let got = free_local_port(taken).expect("should find one nearby");
+        assert_ne!(got, taken, "must not hand back a port we cannot bind");
+        assert!(got > taken && got <= taken + 20);
+    }
+
+    #[test]
+    fn uses_the_preferred_port_when_it_is_free() {
+        let probe = TcpListener::bind(("127.0.0.1", 0)).unwrap();
+        let p = probe.local_addr().unwrap().port();
+        drop(probe); // now free
+        assert_eq!(free_local_port(p), Some(p));
+    }
 }
