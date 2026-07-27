@@ -194,6 +194,47 @@ export function buildTools(store: SetupStore): ToolSpec[] {
 
     {
       def: {
+        name: "uninstall_plan",
+        description:
+          "See exactly what removing TurdMOD would do, without doing it. Tells you which files get restored from backup, which get deleted, and whether an install record exists. Always call this before uninstall_run so you can tell the user what's about to happen.",
+        parameters: { type: "object", properties: {} },
+      },
+      destructive: false,
+      summarize: () => "Check what removing TurdMOD would do",
+      run: async () => api.uninstallPlan(),
+    },
+
+    {
+      def: {
+        name: "uninstall_run",
+        description:
+          "Remove TurdMOD: stop and unregister the service, restore every file we replaced from backup, delete every file we added, and take the bridge out of UE4SS's mods.txt. Keeps service.json by default so a reinstall remembers their settings — pass remove_settings true only if they explicitly want a clean slate. This stops their game server.",
+        parameters: {
+          type: "object",
+          properties: {
+            remove_settings: {
+              type: "boolean",
+              description: "Also delete service.json (token, ports, tuning). Default false.",
+            },
+          },
+        },
+      },
+      destructive: true,
+      summarize: (a) =>
+        `Remove TurdMOD from this PC${a.remove_settings === true ? ", including your saved settings" : " (keeping your settings)"}${state.serviceState === "running" ? " — this stops the running server" : ""}`,
+      run: async (a) => {
+        const results = await api.uninstallRun(a.remove_settings === true);
+        const failed = results.filter((r) => !r.ok);
+        set({
+          installResults: results,
+          lastError: failed.map((r) => `${r.step}: ${r.detail}`).join("; "),
+        });
+        return results;
+      },
+    },
+
+    {
+      def: {
         name: "path_exists",
         description: "Check whether a file or folder exists.",
         parameters: {

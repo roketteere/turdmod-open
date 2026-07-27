@@ -10,10 +10,13 @@
 //   <root>/SCUM/Binaries/Win64/UE4SS/Mods/TurdMODEngineBridge/dlls/main.dll
 //   <root>/SCUM/Binaries/Win64/UE4SS/Mods/TurdMODEngineBridge/enabled.txt
 
+use crate::manifest::Manifest;
 use serde::Serialize;
 use std::path::{Path, PathBuf};
 
 const TURDMOD_DIR: &str = r"C:\TurdMOD";
+/// @dep: must match the folder name under UE4SS\Mods and the mods.txt entry.
+pub const MOD_NAME: &str = "TurdMODEngineBridge";
 
 #[derive(Debug, Clone, Serialize)]
 pub struct StepResult {
@@ -23,10 +26,10 @@ pub struct StepResult {
 }
 
 impl StepResult {
-    fn ok(step: &str, detail: impl Into<String>) -> Self {
+    pub fn ok(step: &str, detail: impl Into<String>) -> Self {
         Self { step: step.into(), ok: true, detail: detail.into() }
     }
-    fn fail(step: &str, detail: impl Into<String>) -> Self {
+    pub fn fail(step: &str, detail: impl Into<String>) -> Self {
         Self { step: step.into(), ok: false, detail: detail.into() }
     }
 }
@@ -137,7 +140,15 @@ pub fn merge_config(existing: &serde_json::Value, fresh: &serde_json::Value) -> 
     out
 }
 
-fn copy_into(src: &Path, dst: &Path, results: &mut Vec<StepResult>, label: &str) -> bool {
+/// @inv: every write goes through the manifest first. If the original can't be
+///   backed up we REFUSE to write rather than destroy a file we can't restore.
+fn copy_into(
+    src: &Path,
+    dst: &Path,
+    results: &mut Vec<StepResult>,
+    label: &str,
+    mf: &mut Manifest,
+) -> bool {
     if !src.exists() {
         results.push(StepResult::fail(label, format!("missing source: {}", src.display())));
         return false;
@@ -147,6 +158,10 @@ fn copy_into(src: &Path, dst: &Path, results: &mut Vec<StepResult>, label: &str)
             results.push(StepResult::fail(label, format!("mkdir failed: {e}")));
             return false;
         }
+    }
+    if let Err(e) = mf.before_write(dst) {
+        results.push(StepResult::fail(label, format!("{e} — refusing to overwrite it")));
+        return false;
     }
     match std::fs::copy(src, dst) {
         Ok(_) => {
@@ -167,7 +182,7 @@ fn copy_into(src: &Path, dst: &Path, results: &mut Vec<StepResult>, label: &str)
 }
 
 /// Copy artifacts into the server install. Does not touch the service.
-pub fn place_artifacts(server_root: &str, artifacts: &Path) -> Vec<StepResult> {
+pub fn place_artifacts(server_root: &str, artifacts: &Path, mf: &mut Manifest) -> Vec<StepResult> {
     let mut r = Vec::new();
     let w = win64(server_root);
 
@@ -176,11 +191,12 @@ pub fn place_artifacts(server_root: &str, artifacts: &Path) -> Vec<StepResult> {
         &w.join("turdmod_server_loader.dll"),
         &mut r,
         "Loader DLL",
+        mf,
     );
 
     let ue4ss_src = artifacts.join("UE4SS").join("UE4SS.dll");
     if ue4ss_src.exists() {
-        copy_into(&ue4ss_src, &w.join("UE4SS").join("UE4SS.dll"), &mut r, "UE4SS");
+        copy_into(&ue4ss_src, &w.join("UE4SS").join("UE4SS.dll"), &mut r, "UE4SS", mf);
     } else {
         r.push(StepResult::ok("UE4SS", "not in pack — assuming already installed"));
     }
@@ -196,9 +212,10 @@ pub fn place_artifacts(server_root: &str, artifacts: &Path) -> Vec<StepResult> {
         &bridge_dst,
         &mut r,
         "Engine bridge",
+        mf,
     );
 
-    r.push(enable_bridge_mod(&w));
+    r.push(enable_bridge_mod(&w, mf));
 
     r
 }
@@ -212,13 +229,15 @@ pub fn place_artifacts(server_root: &str, artifacts: &Path) -> Vec<StepResult> {
 ///   mods.txt line for the ones that don't.
 /// @brk: if UE4SS ever changes the `Name : 1` line format, this silently
 ///   stops enabling the bridge.
-fn enable_bridge_mod(win64: &Path) -> StepResult {
-    const MOD_NAME: &str = "TurdMODEngineBridge";
+fn enable_bridge_mod(win64: &Path, mf: &mut Manifest) -> StepResult {
     let mods_dir = win64.join("UE4SS").join("Mods");
     let _ = std::fs::create_dir_all(mods_dir.join(MOD_NAME));
 
     // Belt: some UE4SS builds look for this marker file.
-    let _ = std::fs::write(mods_dir.join(MOD_NAME).join("enabled.txt"), "");
+    let enabled = mods_dir.join(MOD_NAME).join("enabled.txt");
+    if mf.before_write(&enabled).is_ok() {
+        let _ = std::fs::write(&enabled, "");
+    }
 
     // Braces: the controlling list. Preserve every other entry and comment —
     // operators run other mods (UsmapDumper etc.) and we must not disable them.
@@ -241,6 +260,9 @@ fn enable_bridge_mod(win64: &Path) -> StepResult {
         lines.push(format!("{MOD_NAME} : 1"));
     }
 
+    if let Err(e) = mf.before_write(&path) {
+        return StepResult::fail("Enable bridge", format!("{e} — refusing to edit it"));
+    }
     let out = format!("{}\r\n", lines.join("\r\n"));
     match std::fs::write(&path, out) {
         Ok(_) => StepResult::ok(
@@ -256,7 +278,11 @@ fn enable_bridge_mod(win64: &Path) -> StepResult {
 }
 
 /// Write C:\TurdMOD\service.json and copy the service exe next to it.
-pub fn place_service(artifacts: &Path, config: &serde_json::Value) -> Vec<StepResult> {
+pub fn place_service(
+    artifacts: &Path,
+    config: &serde_json::Value,
+    mf: &mut Manifest,
+) -> Vec<StepResult> {
     let mut r = Vec::new();
     let dir = PathBuf::from(TURDMOD_DIR);
 
@@ -270,9 +296,14 @@ pub fn place_service(artifacts: &Path, config: &serde_json::Value) -> Vec<StepRe
         &dir.join("turdmod-service.exe"),
         &mut r,
         "Service executable",
+        mf,
     );
 
     let cfg_path = dir.join("service.json");
+    if let Err(e) = mf.before_write(&cfg_path) {
+        r.push(StepResult::fail("Configuration", format!("{e} — refusing to overwrite it")));
+        return r;
+    }
     match serde_json::to_string_pretty(config) {
         Ok(s) => match std::fs::write(&cfg_path, s) {
             Ok(_) => r.push(StepResult::ok("Configuration", cfg_path.display().to_string())),
@@ -371,7 +402,7 @@ pub fn stop_service_for_update() -> Vec<StepResult> {
 /// Register the service if it isn't already, then start it. Requires elevation.
 /// Safe to call on an update — an existing registration is left alone.
 #[cfg(windows)]
-pub fn install_service() -> Vec<StepResult> {
+pub fn install_service(mf: &mut Manifest) -> Vec<StepResult> {
     use std::process::Command;
     let mut r = Vec::new();
     let exe = PathBuf::from(TURDMOD_DIR).join("turdmod-service.exe");
@@ -382,6 +413,9 @@ pub fn install_service() -> Vec<StepResult> {
     }
 
     if service_state() == ServiceState::Missing {
+        // @inv: only set when WE register it. A service that predates us is not
+        // ours to unregister on uninstall.
+        mf.service_registered = true;
         match Command::new(&exe).arg("--install").output() {
             Ok(out) if out.status.success() => {
                 r.push(StepResult::ok("Install service", "registered as TurdMODService"))
@@ -426,29 +460,12 @@ pub fn install_service() -> Vec<StepResult> {
 }
 
 #[cfg(not(windows))]
-pub fn install_service() -> Vec<StepResult> {
+pub fn install_service(_mf: &mut Manifest) -> Vec<StepResult> {
     vec![StepResult::fail("Install service", "Windows only")]
 }
 
-/// Back up the current service exe + config before an update overwrites them.
-/// Cheap insurance: if a new build is broken, the operator has the one that worked.
-pub fn backup_existing() -> Vec<StepResult> {
-    let dir = PathBuf::from(TURDMOD_DIR);
-    let mut r = Vec::new();
-    for name in ["turdmod-service.exe", "service.json"] {
-        let src = dir.join(name);
-        if !src.exists() {
-            continue;
-        }
-        let dst = dir.join(format!("{name}.bak-preupdate"));
-        match std::fs::copy(&src, &dst) {
-            Ok(_) => r.push(StepResult::ok("Back up", dst.display().to_string())),
-            // A failed backup shouldn't block the update, but say so out loud.
-            Err(e) => r.push(StepResult::ok("Back up", format!("skipped {name}: {e}"))),
-        }
-    }
-    r
-}
+// Backups are handled by manifest::Manifest::before_write — every write is
+// snapshotted, not just the two files the old backup_existing() knew about.
 
 #[cfg(test)]
 mod tests {
@@ -502,7 +519,7 @@ mod tests {
         )
         .unwrap();
 
-        let res = enable_bridge_mod(&root);
+        let res = enable_bridge_mod(&root, &mut Manifest::new_in("test", root.clone()));
         assert!(res.ok, "{}", res.detail);
 
         let txt = std::fs::read_to_string(mods.join("mods.txt")).unwrap();
@@ -523,7 +540,7 @@ mod tests {
         std::fs::create_dir_all(&mods).unwrap();
         std::fs::write(mods.join("mods.txt"), "TurdMODEngineBridge : 0\r\n").unwrap();
 
-        assert!(enable_bridge_mod(&root).ok);
+        assert!(enable_bridge_mod(&root, &mut Manifest::new_in("test", root.clone())).ok);
         let txt = std::fs::read_to_string(mods.join("mods.txt")).unwrap();
         assert!(txt.contains("TurdMODEngineBridge : 1"));
         assert!(!txt.contains(": 0"), "the disabled entry must be replaced, not duplicated: {txt}");
@@ -537,7 +554,7 @@ mod tests {
         let _ = std::fs::remove_dir_all(&root);
         std::fs::create_dir_all(root.join("UE4SS").join("Mods")).unwrap();
 
-        assert!(enable_bridge_mod(&root).ok);
+        assert!(enable_bridge_mod(&root, &mut Manifest::new_in("test", root.clone())).ok);
         let txt = std::fs::read_to_string(root.join("UE4SS").join("Mods").join("mods.txt")).unwrap();
         assert_eq!(txt, "TurdMODEngineBridge : 1\r\n");
 

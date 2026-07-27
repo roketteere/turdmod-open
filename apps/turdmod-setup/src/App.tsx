@@ -12,12 +12,16 @@ import { Capability } from "./steps/Capability";
 import { Configure } from "./steps/Configure";
 import { Detect } from "./steps/Detect";
 import { Install } from "./steps/Install";
+import { Uninstall } from "./steps/Uninstall";
 import { Verify } from "./steps/Verify";
 import { Welcome } from "./steps/Welcome";
 
 export function App() {
   const [state, setState] = useState<SetupState>(initialState);
   const [aiOpen, setAiOpen] = useState(false);
+  // Outside the numbered flow — reachable any time, so backing out is never
+  // a thing you have to hunt for.
+  const [removing, setRemoving] = useState(false);
   /** Furthest step reached — lets the rail act as back-navigation. */
   const [reached, setReached] = useState<StepId>("welcome");
 
@@ -63,9 +67,12 @@ export function App() {
             return (
               <button
                 key={s.id}
-                className={`railstep${state.step === s.id ? " active" : ""}${done ? " done" : ""}`}
+                className={`railstep${state.step === s.id && !removing ? " active" : ""}${done ? " done" : ""}`}
                 disabled={!visitable}
-                onClick={() => go(s.id)}
+                onClick={() => {
+                  setRemoving(false);
+                  go(s.id);
+                }}
               >
                 <span className="dot">{done ? "✓" : i + 1}</span>
                 {s.label}
@@ -77,16 +84,30 @@ export function App() {
             <button className="btn small" onClick={() => setAiOpen((v) => !v)}>
               {aiOpen ? "Hide assistant" : "Ask the assistant"}
             </button>
+            <button
+              className={`railstep${removing ? " active" : ""}`}
+              style={{ marginTop: 8, width: "100%" }}
+              onClick={() => setRemoving(true)}
+            >
+              <span className="dot">↺</span>
+              Remove TurdMOD
+            </button>
           </div>
         </nav>
 
         <main className="main">
-          {state.step === "welcome" && <Welcome />}
-          {state.step === "detect" && <Detect />}
-          {state.step === "capability" && <Capability />}
-          {state.step === "configure" && <Configure />}
-          {state.step === "install" && <Install />}
-          {state.step === "verify" && <Verify />}
+          {removing ? (
+            <Uninstall onClose={() => setRemoving(false)} />
+          ) : (
+            <>
+              {state.step === "welcome" && <Welcome />}
+              {state.step === "detect" && <Detect />}
+              {state.step === "capability" && <Capability />}
+              {state.step === "configure" && <Configure />}
+              {state.step === "install" && <Install />}
+              {state.step === "verify" && <Verify />}
+            </>
+          )}
         </main>
 
         {aiOpen && <AiPanel onClose={() => setAiOpen(false)} />}

@@ -6,14 +6,19 @@
 
 mod capability;
 mod detect;
+mod handoff;
 mod install_local;
+mod manifest;
+mod uninstall;
 mod verify;
 
 use capability::{CapabilityReport, HostKind};
 use detect::DetectedInstalls;
 use install_local::StepResult;
+use manifest::Manifest;
 use serde::Serialize;
 use std::path::PathBuf;
+use uninstall::UninstallPlan;
 use verify::VerifyReport;
 
 // ─── Detect ────────────────────────────────────────────────────────────────
@@ -127,10 +132,9 @@ fn install_local_full(
         }
     };
 
-    // Update path: back up what's there, then stop the service so the DLLs it
-    // loaded into the game aren't locked when we replace them.
-    let mut results = install_local::backup_existing();
-    results.extend(install_local::stop_service_for_update());
+    // Stop the service first: the engine DLLs are loaded into the running game
+    // and can't be replaced while it holds them.
+    let mut results = install_local::stop_service_for_update();
     if results.iter().any(|r| !r.ok) {
         results.push(StepResult {
             step: "Install".into(),
@@ -141,13 +145,18 @@ fn install_local_full(
         return results;
     }
 
-    results.extend(install_local::place_artifacts(&server_root, &artifacts));
-    results.extend(install_local::place_service(&artifacts, &config));
+    // @inv: every write below is recorded here first, so uninstall can reverse
+    // it. The manifest is saved even on failure — a half-done install still
+    // needs to be undoable.
+    let mut mf = Manifest::new(&server_root);
+
+    results.extend(install_local::place_artifacts(&server_root, &artifacts, &mut mf));
+    results.extend(install_local::place_service(&artifacts, &config, &mut mf));
 
     // Only attempt the service if every file landed — a half-copied install
     // that starts is worse than one that stops here with a clear error.
     if results.iter().all(|r| r.ok) {
-        results.extend(install_local::install_service());
+        results.extend(install_local::install_service(&mut mf));
     } else {
         results.push(StepResult {
             step: "Install service".into(),
@@ -155,7 +164,31 @@ fn install_local_full(
             detail: "Skipped — fix the errors above first.".into(),
         });
     }
+
+    if let Err(e) = mf.save() {
+        results.push(StepResult {
+            step: "Install record".into(),
+            ok: false,
+            detail: format!("{e} — uninstall won't be able to reverse this automatically"),
+        });
+    }
+
+    // Point Manager at what we just installed. Never fails the install.
+    results.push(handoff::configure_manager(&server_root));
+
     results
+}
+
+// ─── Uninstall ─────────────────────────────────────────────────────────────
+
+#[tauri::command]
+fn uninstall_plan() -> UninstallPlan {
+    uninstall::plan()
+}
+
+#[tauri::command]
+fn uninstall_run(remove_settings: Option<bool>) -> Vec<StepResult> {
+    uninstall::run(remove_settings.unwrap_or(false))
 }
 
 // ─── Verify ────────────────────────────────────────────────────────────────
@@ -221,6 +254,8 @@ pub fn run() {
             capability_report,
             prepare_config,
             install_local_full,
+            uninstall_plan,
+            uninstall_run,
             verify_install,
             read_text_file,
             tail_log,
@@ -297,7 +332,8 @@ mod live {
         std::fs::write(w.join("GameServer.exe"), b"stub").unwrap();
         assert!(detect::validate_install_path(&root.display().to_string()));
 
-        let results = install_local::place_artifacts(&root.display().to_string(), &pack);
+        let mut mf = Manifest::new(&root.display().to_string());
+        let results = install_local::place_artifacts(&root.display().to_string(), &pack, &mut mf);
         for r in &results {
             println!("{:<16} {:<5} {}", r.step, r.ok, r.detail);
         }
@@ -404,5 +440,28 @@ summary: {}", rep.summary);
         }
         println!("
 summary: {}", rep.summary);
+    }
+
+    /// Show what an uninstall would do on this machine, without doing it.
+    ///   cargo test --lib live_uninstall_plan -- --ignored --nocapture
+    #[test]
+    #[ignore = "reads live install state on this machine"]
+    fn live_uninstall_plan() {
+        let p = uninstall::plan();
+        println!("has_manifest: {}", p.has_manifest);
+        println!("service: {:?}", p.service_state);
+        println!("restore: {}  remove: {}", p.files_to_restore, p.files_to_remove);
+        if !p.warning.is_empty() { println!("WARNING: {}", p.warning); }
+        for (i, s) in p.steps.iter().enumerate() { println!("  {}. {}", i + 1, s); }
+    }
+
+    /// Actually reverse the install on this machine.
+    ///   cargo test --lib live_uninstall_run -- --ignored --nocapture
+    #[test]
+    #[ignore = "removes TurdMOD from this machine"]
+    fn live_uninstall_run() {
+        for r in uninstall::run(false) {
+            println!("{:<22} {:<5} {}", r.step, r.ok, r.detail);
+        }
     }
 }

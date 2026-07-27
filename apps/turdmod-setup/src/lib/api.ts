@@ -60,6 +60,16 @@ export interface VerifyReport {
   summary: string;
 }
 
+export interface UninstallPlan {
+  steps: string[];
+  has_manifest: boolean;
+  service_state: ServiceState;
+  files_to_restore: number;
+  files_to_remove: number;
+  /** Non-empty when we can't fully reverse — show it before they start. */
+  warning: string;
+}
+
 export const api = {
   detectInstalls: () => invoke<DetectedInstalls>("detect_installs"),
 
@@ -78,6 +88,10 @@ export const api = {
 
   verify: (port: number, token: string, serverRoot?: string) =>
     invoke<VerifyReport>("verify_install", { port, token, serverRoot }),
+
+  uninstallPlan: () => invoke<UninstallPlan>("uninstall_plan"),
+  uninstallRun: (removeSettings?: boolean) =>
+    invoke<StepResult[]>("uninstall_run", { removeSettings }),
 
   // Assistant helpers
   readTextFile: (path: string) => invoke<string>("read_text_file", { path }),
