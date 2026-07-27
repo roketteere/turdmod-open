@@ -74,8 +74,9 @@ impl Manifest {
         }
     }
 
-    /// Same, but backups land under `root`. Tests only — keeps fixtures out of
-    /// the real C:\TurdMOD.
+    /// Same, but backups land under `root`. Tests and the live harness only —
+    /// keeps fixtures out of the real C:\TurdMOD.
+    #[allow(dead_code)]
     pub fn new_in(server_root: &str, root: PathBuf) -> Self {
         let mut m = Self::new(server_root);
         m.root = Some(root);

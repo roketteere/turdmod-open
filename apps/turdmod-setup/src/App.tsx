@@ -110,7 +110,7 @@ export function App() {
           {view === "client" && <Client onClose={() => setView("flow")} />}
           {view === "flow" && (
             <>
-              {state.step === "welcome" && <Welcome />}
+              {state.step === "welcome" && <Welcome onPickClient={() => setView("client")} />}
               {state.step === "detect" && <Detect />}
               {state.step === "capability" && <Capability />}
               {state.step === "configure" && <Configure />}

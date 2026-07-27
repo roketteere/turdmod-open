@@ -89,6 +89,20 @@ export interface ClientPlan {
   drives: DriveInfo[];
 }
 
+export interface VersionInfo {
+  build: string;
+  released: string;
+  engine_built: string;
+}
+
+export interface UpdateReport {
+  state: "current" | "available" | "unknown";
+  installed: VersionInfo | null;
+  latest: VersionInfo | null;
+  summary: string;
+  download_url: string;
+}
+
 export const api = {
   detectInstalls: () => invoke<DetectedInstalls>("detect_installs"),
 
@@ -107,6 +121,8 @@ export const api = {
 
   verify: (port: number, token: string, serverRoot?: string) =>
     invoke<VerifyReport>("verify_install", { port, token, serverRoot }),
+
+  checkForUpdate: () => invoke<UpdateReport>("check_for_update"),
 
   clientPlan: (source: string) => invoke<ClientPlan>("client_plan", { source }),
   clientCreateCopy: (source: string, dest: string) =>

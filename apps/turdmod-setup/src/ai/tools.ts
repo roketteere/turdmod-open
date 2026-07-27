@@ -194,6 +194,18 @@ export function buildTools(store: SetupStore): ToolSpec[] {
 
     {
       def: {
+        name: "check_for_update",
+        description:
+          "Ask turdmod.com whether a newer TurdMOD build is published, and compare it to what's installed here. Returns state 'current', 'available', or 'unknown'. 'unknown' means we genuinely couldn't tell — never tell the user they're up to date on an 'unknown'.",
+        parameters: { type: "object", properties: {} },
+      },
+      destructive: false,
+      summarize: () => "Check whether a newer TurdMOD is available",
+      run: async () => api.checkForUpdate(),
+    },
+
+    {
+      def: {
         name: "client_plan",
         description:
           "For the modded client: measure the user's SCUM game install and list every drive with free space, showing what a modded copy would cost on each. A drive on the same volume as the game can share the read-only game content, so it costs ~1 GB and takes seconds instead of ~89 GB. Call this before offering to build a copy.",

@@ -217,6 +217,22 @@ You should see `{"result":{"pong":true}}`.
 Set-Content -Encoding utf8 -Path (Join-Path $stage 'QUICK-START.md') -Value $quickstart
 Write-Host "  + QUICK-START.md"
 
+# 6b. VERSION.json — what this pack IS. Setup records it at install time so it
+# can later compare against /releases/latest.json and offer an update.
+# @dep: apps/turdmod-setup/src-tauri/src/update.rs reads both; key names must match.
+$bridgeStamp = (Get-Item $BridgeDll).LastWriteTime.ToString('yyyy-MM-dd')
+$versionJson = @"
+{
+  "build": "$ts",
+  "released": "$(Get-Date -Format 'yyyy-MM-dd')",
+  "engine_built": "$bridgeStamp",
+  "pack": "TurdMOD-Server-Pack-latest.zip",
+  "setup": "TurdMOD-Setup-latest.exe"
+}
+"@
+Set-Content -Encoding utf8 -Path (Join-Path $stage 'VERSION.json') -Value $versionJson
+Write-Host "  + VERSION.json ($ts)"
+
 # 7. License
 Copy-Item (Join-Path $Repo 'LICENSE.md') (Join-Path $stage 'LICENSE.md')
 Copy-Item (Join-Path $Repo 'NOTICE.md') (Join-Path $stage 'NOTICE.md')
@@ -230,6 +246,13 @@ Compress-Archive -Path "$stage\*" -DestinationPath $zipPath -CompressionLevel Op
 $sizeMB = [math]::Round((Get-Item $zipPath).Length / 1MB, 1)
 Write-Host ""
 Write-Host "[pack] Server Pack ready: $zipPath ($sizeMB MB)" -ForegroundColor Green
+
+# latest.json — what turdmod.com advertises as current. Setup polls this.
+# @inv: must be uploaded alongside the artifacts or the update check reports a
+#   stale build forever. upload-release.ps1 pushes it.
+$latest = Join-Path $ReleaseDir 'latest.json'
+Set-Content -Encoding utf8 -Path $latest -Value $versionJson
+Write-Host "[pack] latest.json written ($ts)"
 
 # Also stage Setup as a standalone download (turdmod.com/downloads links it directly)
 if (Test-Path $SetupExe) {

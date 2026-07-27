@@ -11,6 +11,7 @@ mod handoff;
 mod install_local;
 mod manifest;
 mod uninstall;
+mod update;
 mod verify;
 
 use capability::{CapabilityReport, HostKind};
@@ -174,6 +175,10 @@ fn install_local_full(
         });
     }
 
+    // Remember which pack this was, so the update check has something to
+    // compare against on later runs.
+    update::record_installed_version(&artifacts);
+
     // Point Manager at what we just installed. Never fails the install.
     results.push(handoff::configure_manager(&server_root));
 
@@ -203,6 +208,13 @@ fn client_create_copy(source: String, dest: String) -> Vec<StepResult> {
         ));
     }
     r
+}
+
+// ─── Update check ──────────────────────────────────────────────────────────
+
+#[tauri::command]
+async fn check_for_update() -> update::UpdateReport {
+    update::check().await
 }
 
 // ─── Uninstall ─────────────────────────────────────────────────────────────
@@ -282,6 +294,7 @@ pub fn run() {
             install_local_full,
             client_plan,
             client_create_copy,
+            check_for_update,
             uninstall_plan,
             uninstall_run,
             verify_install,
@@ -514,5 +527,94 @@ summary: {}", rep.summary);
         }
         assert!(p.total_bytes > 0, "must measure something");
         assert!(!p.drives.is_empty(), "must find at least one drive");
+    }
+
+    /// Build a REAL modded copy on this machine and prove the safety
+    /// properties, then clean it up.
+    ///   set TURDMOD_CLIENT_DEST=C:\SCUM-Modded-Test
+    ///   cargo test --lib live_client_copy -- --ignored --nocapture
+    #[test]
+    #[ignore = "creates a real modded game copy on this machine"]
+    fn live_client_copy() {
+        let dest = std::env::var("TURDMOD_CLIENT_DEST")
+            .expect("set TURDMOD_CLIENT_DEST to a folder that does not exist yet");
+        let game = detect::detect_all().game.expect("no SCUM client found");
+        let dest_p = PathBuf::from(&dest);
+        assert!(!dest_p.exists(), "{dest} already exists — pick a fresh path");
+
+        // Fingerprint a source pak so we can prove the copy never mutates it.
+        let paks = PathBuf::from(&game).join("SCUM").join("Content").join("Paks");
+        let sample = std::fs::read_dir(&paks).unwrap().flatten()
+            .map(|e| e.path())
+            .find(|p| p.extension().and_then(|e| e.to_str()) == Some("pak"))
+            .expect("no pak in the source install");
+        let before_len = std::fs::metadata(&sample).unwrap().len();
+        println!("source pak: {} ({} bytes)", sample.display(), before_len);
+
+        let mut mf = Manifest::new_in("client-test", std::env::temp_dir().join("tm-client-live"));
+        let start = std::time::Instant::now();
+        let results = client::create_modded_copy(&game, &dest, &mut mf);
+        let elapsed = start.elapsed();
+        for r in &results { println!("{:<14} {:<5} {}", r.step, r.ok, r.detail); }
+        assert!(results.iter().all(|r| r.ok), "copy must succeed");
+        println!("elapsed: {:.1}s", elapsed.as_secs_f64());
+
+        // The copy must be a usable game install.
+        let exe = dest_p.join("SCUM").join("Binaries").join("Win64").join("SCUM.exe");
+        assert!(exe.is_file(), "copy has no SCUM.exe");
+
+        // The source pak must be untouched.
+        assert_eq!(std::fs::metadata(&sample).unwrap().len(), before_len,
+                   "source pak changed size — the copy corrupted the vanilla install");
+
+        let cfg = client::write_client_config(&dest);
+        println!("{:<14} {:<5} {}", cfg.step, cfg.ok, cfg.detail);
+
+        // Tear down and prove deleting the copy leaves the source intact —
+        // hardlinks are equal references, so this is the property that matters.
+        std::fs::remove_dir_all(&dest_p).unwrap();
+        assert!(!dest_p.exists());
+        assert!(sample.is_file(), "deleting the copy removed the source pak!");
+        assert_eq!(std::fs::metadata(&sample).unwrap().len(), before_len,
+                   "source pak damaged by deleting the copy");
+        println!("cleaned up; source pak intact at {} bytes", before_len);
+    }
+
+    /// Exercise the update check against the LIVE turdmod.com endpoint in all
+    /// three states, restoring whatever was there before.
+    ///   cargo test --lib live_update_check -- --ignored --nocapture
+    #[tokio::test]
+    #[ignore = r"hits turdmod.com and touches C:\TurdMOD\VERSION.json"]
+    async fn live_update_check() {
+        let vpath = PathBuf::from(r"C:\TurdMOD").join("VERSION.json");
+        let saved = std::fs::read(&vpath).ok();
+        let _ = std::fs::create_dir_all(r"C:\TurdMOD");
+
+        // 1. No local version at all -> must NOT claim we're current.
+        let _ = std::fs::remove_file(&vpath);
+        let r = update::check().await;
+        println!("[no local version] {:?} :: {}", r.state, r.summary);
+        assert_ne!(r.state, update::UpdateState::Current, "unknown local must never read as current");
+        let live = r.latest.clone().expect("turdmod.com should be serving latest.json");
+
+        // 2. Local matches what's published -> current.
+        std::fs::write(&vpath, serde_json::to_string(&live).unwrap()).unwrap();
+        let r = update::check().await;
+        println!("[matching]         {:?} :: {}", r.state, r.summary);
+        assert_eq!(r.state, update::UpdateState::Current);
+
+        // 3. Local is an older build -> update offered.
+        let old = update::VersionInfo { build: "19700101-0000".into(), ..live.clone() };
+        std::fs::write(&vpath, serde_json::to_string(&old).unwrap()).unwrap();
+        let r = update::check().await;
+        println!("[stale]            {:?} :: {}", r.state, r.summary);
+        assert_eq!(r.state, update::UpdateState::Available);
+        assert!(r.summary.contains(&live.build), "must name the new build");
+
+        match saved {
+            Some(bytes) => std::fs::write(&vpath, bytes).unwrap(),
+            None => { let _ = std::fs::remove_file(&vpath); }
+        }
+        println!("restored prior state");
     }
 }
