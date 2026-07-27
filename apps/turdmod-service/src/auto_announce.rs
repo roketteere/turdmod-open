@@ -8,7 +8,6 @@ use crate::events::GameEvent;
 use crate::pipe_rpc;
 use crate::registry::{Mod, ModCtx, Outcome};
 
-const OWNER_IDS: [&str; 2] = ["YOUR_STEAM_ID_1", "YOUR_STEAM_ID_2"];
 const INTERVAL: Duration = Duration::from_secs(30 * 60);
 
 const MESSAGES: &[&str] = &[
@@ -28,7 +27,7 @@ async fn online_player() -> Option<String> {
     let r = pipe_rpc::call("getOnlinePlayers", Some(serde_json::json!({}))).await.ok()?;
     let players = r.get("players")?.as_array()?;
     for p in players {
-        if OWNER_IDS.contains(&p.get("steamId").and_then(|v| v.as_str()).unwrap_or("")) {
+        if crate::owner::is_owner_steam(p.get("steamId").and_then(|v| v.as_str()).unwrap_or("")) {
             if let Some(n) = p.get("name").and_then(|v| v.as_str()).filter(|s| !s.is_empty()) {
                 return Some(n.to_string());
             }

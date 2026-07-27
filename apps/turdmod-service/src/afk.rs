@@ -12,7 +12,6 @@ const AFK_WARN_SECS: u64 = 900;
 const AFK_KICK_SECS: u64 = 1200;
 const CHECK_INTERVAL: Duration = Duration::from_secs(60);
 const MIN_MOVE_DISTANCE: f64 = 100.0;
-const OWNER_STEAM_ID: &str = "YOUR_STEAM_ID_1";
 
 async fn reply(msg: &str, player: &str) {
     let params = serde_json::json!({ "message": msg, "playerName": player, "channel": "4" });
@@ -37,7 +36,7 @@ impl Mod for Afk {
         let mut to_kick: Vec<String> = Vec::new();
         let mut to_warn: Vec<(String, u64, u64)> = Vec::new();
         for p in &snapshot.players {
-            if p.steam_id == OWNER_STEAM_ID || p.steam_id == "YOUR_STEAM_ID_2" { continue; }
+            if crate::owner::is_owner_steam(&p.steam_id) { continue; }
             let entry = tracked.entry(p.name.clone()).or_insert_with(|| PlayerTrack { x: p.x, y: p.y, last_move: Instant::now(), warned: false });
             let dx = p.x - entry.x; let dy = p.y - entry.y;
             if (dx * dx + dy * dy).sqrt() > MIN_MOVE_DISTANCE {

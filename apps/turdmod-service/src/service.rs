@@ -46,6 +46,12 @@ fn service_main(args: Vec<OsString>) {
 
 fn run_service(instance: &str) -> anyhow::Result<()> {
     let cfg = Config::load_or_default(instance);
+    // Same as run_console — the service path must install owner identity too,
+    // or a service-mode start silently loses owner recognition.
+    crate::owner::init(cfg.owner_steam_ids.clone(), cfg.owner_name.clone());
+    if crate::owner::is_unconfigured() {
+        tracing::warn!("no owner_steam_ids/owner_name in service.json — owner-gated mods will ignore everyone");
+    }
     crate::restore_campaign::set_instance(&cfg.instance_id);
     let state = new_state();
     let (shutdown, shutdown_rx) = Shutdown::new();

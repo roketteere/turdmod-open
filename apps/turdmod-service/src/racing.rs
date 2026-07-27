@@ -10,8 +10,6 @@ use crate::events::GameEvent;
 use crate::pipe_rpc;
 use crate::registry::{Mod, ModCtx, Outcome};
 
-const OWNER_STEAM_ID: &str = "YOUR_STEAM_ID_1";
-const OWNER_NAME: &str = "YOUR_OWNER_NAME";
 const STATE_PATH: &str = r"C:\TurdMOD\data\races.json";
 const RATE_LIMIT: Duration = Duration::from_secs(3);
 const CHECKPOINT_RADIUS: f64 = 3000.0; // 30m
@@ -59,7 +57,7 @@ fn save(state: &RaceState) {
 }
 
 fn is_owner(steam: &str, player: &str) -> bool {
-    steam == OWNER_STEAM_ID || steam == "YOUR_STEAM_ID_2" || player == OWNER_NAME
+    crate::owner::is_owner(steam, player)
 }
 
 async fn reply(msg: &str, player: &str) {

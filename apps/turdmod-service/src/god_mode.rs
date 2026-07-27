@@ -10,17 +10,10 @@ use crate::events::GameEvent;
 use crate::pipe_rpc;
 use crate::registry::{Mod, ModCtx, Outcome};
 
-const OWNER_NAME: &str = "YOUR_OWNER_NAME";
 const REAPPLY_INTERVAL: Duration = Duration::from_secs(30);
 
-// God-mode (!god / !hulk) authorized Steam IDs.
-const GOD_STEAM_IDS: &[&str] = &[
-    "YOUR_STEAM_ID_1", // YOUR_OWNER_NAME (Joel)
-    "YOUR_STEAM_ID_2", // Zilla (co-owner) — added 2026-06-11
-];
-
 fn is_owner(steam: &str, player: &str) -> bool {
-    GOD_STEAM_IDS.contains(&steam) || player == OWNER_NAME
+    crate::owner::is_owner(steam, player)
 }
 
 async fn reply(msg: &str, player: &str) {

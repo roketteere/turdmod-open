@@ -11,8 +11,6 @@ use crate::events::GameEvent;
 use crate::pipe_rpc;
 use crate::registry::{Mod, ModCtx, Outcome};
 
-const OWNER_STEAM_ID: &str = "YOUR_STEAM_ID_1";
-const OWNER_NAME: &str = "YOUR_OWNER_NAME";
 const STATE_PATH: &str = r"C:\TurdMOD\data\safe_zones.json";
 const CHECK_INTERVAL: Duration = Duration::from_secs(5);
 const RATE_LIMIT: Duration = Duration::from_secs(3);
@@ -53,7 +51,7 @@ async fn reply(msg: &str, player: &str) {
 }
 
 fn is_owner(steam: &str, player: &str) -> bool {
-    steam == OWNER_STEAM_ID || steam == "YOUR_STEAM_ID_2" || player == OWNER_NAME
+    crate::owner::is_owner(steam, player)
 }
 
 fn in_zone(px: f64, py: f64, zone: &SafeZone) -> bool {
@@ -72,7 +70,6 @@ async fn set_god(player: &str, enable: bool) {
 // Admins own their god flag via god_mode (!god) — the safe-zone sweep must NEVER
 // touch their flags, or it would strip an intentional !god. Steam IDs confirmed
 // by Joel (his own + Zilla).
-const ADMIN_STEAM_IDS: &[&str] = &["YOUR_STEAM_ID_1", "YOUR_STEAM_ID_2"];
 
 pub struct SafeZones {
     state: Mutex<ZoneState>,
@@ -109,7 +106,7 @@ impl Mod for SafeZones {
         let mut cleared = self.cleared.lock().await;
         for p in &snapshot.players {
             // Admins own their god via !god (god_mode) — never touch their flags here.
-            if ADMIN_STEAM_IDS.contains(&p.steam_id.as_str()) { continue; }
+            if crate::owner::is_owner_steam(&p.steam_id) { continue; }
             let in_safe = zones.iter().any(|z| in_zone(p.x, p.y, z));
             if in_safe {
                 cleared.remove(&p.name);

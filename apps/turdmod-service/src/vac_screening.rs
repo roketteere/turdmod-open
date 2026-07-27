@@ -8,7 +8,6 @@ use crate::events::GameEvent;
 use crate::pipe_rpc;
 use crate::registry::{Mod, ModCtx, Outcome};
 
-const OWNER_STEAM_ID: &str = "YOUR_STEAM_ID_1";
 const API_KEY_PATH: &str = r"C:\TurdMOD\data\steam-api-key.txt";
 const BANS_URL: &str = "https://api.steampowered.com/ISteamUser/GetPlayerBans/v1/";
 const RECENT_BAN_DAYS: i64 = 365;
@@ -23,13 +22,13 @@ async fn alert_owner(msg: &str) {
         Ok(resp) => {
             resp.get("players").and_then(|v| v.as_array()).and_then(|arr| {
                 arr.iter().find_map(|p| {
-                    if p.get("steam").and_then(|v| v.as_str()) == Some(OWNER_STEAM_ID) {
+                    if p.get("steam").and_then(|v| v.as_str()) == Some(crate::owner::primary_id()) {
                         p.get("name").and_then(|v| v.as_str()).map(String::from)
                     } else { None }
                 })
-            }).unwrap_or_else(|| "YOUR_OWNER_NAME".into())
+            }).unwrap_or_else(|| crate::owner::name().to_string())
         }
-        Err(_) => "YOUR_OWNER_NAME".into(),
+        Err(_) => crate::owner::name().to_string(),
     };
     reply(msg, &owner_name).await;
 }
@@ -72,7 +71,7 @@ impl Mod for VacScreening {
 
                 let player = ev.data.get("player").and_then(|v| v.as_str()).unwrap_or("").to_string();
                 let steam = ev.data.get("steam").and_then(|v| v.as_str()).unwrap_or("").to_string();
-                if steam.is_empty() || steam == OWNER_STEAM_ID || steam == "YOUR_STEAM_ID_2" {
+                if steam.is_empty() || crate::owner::is_owner_steam(&steam) {
                     return Outcome::Ignored;
                 }
 
@@ -110,7 +109,7 @@ impl Mod for VacScreening {
 
             "chat" => {
                 let steam = ev.data.get("steam").and_then(|v| v.as_str()).unwrap_or("");
-                if steam != OWNER_STEAM_ID && steam != "YOUR_STEAM_ID_2" { return Outcome::Ignored; }
+                if !crate::owner::is_owner_steam(steam) { return Outcome::Ignored; }
                 let text = ev.data.get("text").and_then(|v| v.as_str()).unwrap_or("").trim();
                 let player = ev.data.get("player").and_then(|v| v.as_str()).unwrap_or("").to_string();
 

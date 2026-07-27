@@ -8,7 +8,6 @@ use crate::events::GameEvent;
 use crate::pipe_rpc;
 use crate::registry::{Mod, ModCtx, Outcome};
 
-const OWNER_STEAM_ID: &str = "YOUR_STEAM_ID_1";
 const STATE_PATH: &str = r"C:\TurdMOD\data\teleports.json";
 const RATE_LIMIT: Duration = Duration::from_secs(3);
 
@@ -94,7 +93,7 @@ impl Mod for Teleport {
 
         match cmd.as_str() {
             "!setpoint" => {
-                if steam != OWNER_STEAM_ID && steam != "YOUR_STEAM_ID_2" {
+                if !crate::owner::is_owner_steam(&steam) {
                     reply("[TP] Owner only.", &player).await;
                     return Outcome::Handled;
                 }
@@ -183,7 +182,7 @@ impl Mod for Teleport {
             }
 
             "!delpoint" => {
-                if steam != OWNER_STEAM_ID && steam != "YOUR_STEAM_ID_2" {
+                if !crate::owner::is_owner_steam(&steam) {
                     reply("[TP] Owner only.", &player).await;
                     return Outcome::Handled;
                 }

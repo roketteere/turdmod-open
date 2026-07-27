@@ -14,10 +14,9 @@ use crate::events::GameEvent;
 use crate::pipe_rpc;
 use crate::registry::{Mod, ModCtx, Outcome};
 
-const OWNER_IDS: [&str; 2] = ["YOUR_STEAM_ID_1", "YOUR_STEAM_ID_2"];
 
 fn is_owner(steam: &str, player: &str) -> bool {
-    OWNER_IDS.contains(&steam) || player == "YOUR_OWNER_NAME"
+    crate::owner::is_owner_steam(steam) || player == crate::owner::name()
 }
 
 async fn do_repair() -> i64 {

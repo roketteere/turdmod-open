@@ -11,7 +11,6 @@ use crate::registry::{Mod, ModCtx, Outcome};
 
 const MUTE_DURATION: Duration = Duration::from_secs(300); // 5 min
 const STRIKE_THRESHOLD: u32 = 3;
-const OWNER_STEAM_ID: &str = "YOUR_STEAM_ID_1";
 
 const BLOCKED_WORDS: &[&str] = &[
     // Slurs and hate speech - server admin can extend via config file.
@@ -48,7 +47,7 @@ impl Mod for ChatFilter {
         let text = ev.data.get("text").and_then(|v| v.as_str()).unwrap_or("").to_string();
         let player = ev.data.get("player").and_then(|v| v.as_str()).unwrap_or("").to_string();
         let steam = ev.data.get("steam").and_then(|v| v.as_str()).unwrap_or("").to_string();
-        if steam.is_empty() || steam == OWNER_STEAM_ID || steam == "YOUR_STEAM_ID_2" { return Outcome::Ignored; }
+        if steam.is_empty() || crate::owner::is_owner_steam(&steam) { return Outcome::Ignored; }
         if text.starts_with('!') { return Outcome::Ignored; } // don't filter commands
 
         let mut replies: Vec<String> = Vec::new();

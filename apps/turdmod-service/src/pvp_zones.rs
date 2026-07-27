@@ -14,8 +14,6 @@ use crate::events::GameEvent;
 use crate::pipe_rpc;
 use crate::registry::{Mod, ModCtx, Outcome};
 
-const OWNER_STEAM_ID: &str = "YOUR_STEAM_ID_1";
-const OWNER_NAME: &str = "YOUR_OWNER_NAME";
 const STATE_PATH: &str = r"C:\TurdMOD\data\pvp_zones.json";
 const CHECK_INTERVAL: Duration = Duration::from_secs(5);
 const RATE_LIMIT: Duration = Duration::from_secs(3);
@@ -73,7 +71,7 @@ async fn broadcast(msg: &str) {
     let params = serde_json::json!({ "text": msg });
     pipe_rpc::call("broadcastChat", Some(params)).await.ok();
 }
-fn is_owner(steam: &str, player: &str) -> bool { steam == OWNER_STEAM_ID || steam == "YOUR_STEAM_ID_2" || player == OWNER_NAME }
+fn is_owner(steam: &str, player: &str) -> bool { crate::owner::is_owner(steam, player) }
 
 fn credit(steam: &str, amount: i64) {
     let path = r"C:\TurdMOD\data\economy.json";

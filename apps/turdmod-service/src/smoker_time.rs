@@ -19,9 +19,6 @@ use crate::events::GameEvent;
 use crate::pipe_rpc;
 use crate::registry::{Mod, ModCtx, Outcome};
 
-const OWNER_STEAM_ID: &str = "YOUR_STEAM_ID_1"; // YOUR_OWNER_NAME (Joel)
-const ZILLA_STEAM_ID: &str = "YOUR_STEAM_ID_2"; // co-owner
-const OWNER_NAME: &str = "YOUR_OWNER_NAME";
 const STATE_PATH: &str = r"C:\TurdMOD\data\smoker_time.json";
 const DEFAULT_SECS: f64 = 36000.0; // 10 hours
 // The router drops the first immediate tick, so we wake on a SHORT cadence (apply soon after a
@@ -34,7 +31,7 @@ const SWEEP_EVERY: Duration = Duration::from_secs(1800); // re-pin every 30 min
 const MAX_SECS: f64 = 864_000.0; // 10 days, a sane ceiling
 
 fn is_owner(steam: &str, player: &str) -> bool {
-    steam == OWNER_STEAM_ID || steam == ZILLA_STEAM_ID || player == OWNER_NAME
+    crate::owner::is_owner(steam, player)
 }
 
 #[derive(serde::Serialize, serde::Deserialize)]

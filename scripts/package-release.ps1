@@ -173,6 +173,9 @@ Copy the DLLs to your game server directory:
 - Copy `service.json.template` to `service.json`
 - Edit `service.json`:
   - Set `scum_server_exe` to the full path of your game server executable
+  - Set `owner_steam_ids` to your Steam64 ID(s) and `owner_name` to your in-game name.
+    Owner-only mods (god mode, safe zones, teleport, spa, warzone...) match against these —
+    leave them blank and those mods will ignore everyone, including you.
   - Set `token` to a random secret string (this is your API password)
   - Adjust `inject_dlls` paths to match your server layout
 

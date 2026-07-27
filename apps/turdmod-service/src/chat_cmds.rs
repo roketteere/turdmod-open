@@ -8,7 +8,7 @@ use tokio::sync::Mutex;
 
 use crate::events::GameEvent;
 use crate::pipe_rpc;
-use crate::bridge::{fmt_reply, reply, Command, OWNER_NAME, OWNER_STEAM_ID};
+use crate::bridge::{fmt_reply, reply, Command};
 use crate::registry::{Mod, ModCtx, Outcome};
 
 const RATE_LIMIT: Duration = Duration::from_secs(3);
@@ -336,7 +336,7 @@ impl Mod for ChatCmds {
             }
 
             "!!forcerepo" | "!!repo" => {
-                let is_admin = steam == OWNER_STEAM_ID || steam == "YOUR_STEAM_ID_2" || player == OWNER_NAME;
+                let is_admin = crate::owner::is_owner(&steam, &player);
                 if !is_admin {
                     reply("[Car Repo] Admin only. Use !repos to view repo history.", &player).await;
                     return Outcome::Handled;
@@ -407,7 +407,7 @@ impl Mod for ChatCmds {
                 let sub_args = args.splitn(2, char::is_whitespace).nth(1).unwrap_or("").trim().to_string();
                 let mut own_db = read_json(OWN_PATH);
                 let vehicles_arr: Vec<serde_json::Value> = own_db["vehicles"].as_array().cloned().unwrap_or_default();
-                let is_admin = steam == OWNER_STEAM_ID || steam == "YOUR_STEAM_ID_2" || player == OWNER_NAME;
+                let is_admin = crate::owner::is_owner(&steam, &player);
 
                 if matches!(sub.as_str(), "out" | "in") && !is_admin {
                     let cd = read_json(COOLDOWN_PATH);

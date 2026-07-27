@@ -19,12 +19,11 @@ use crate::registry::{Mod, ModCtx, Outcome};
 
 const MORNING_HOUR: u32 = 7;
 const FORCED_NIGHT_COOLDOWN: Duration = Duration::from_secs(3600); // ~one in-game day-night cycle
-const OWNER_IDS: [&str; 2] = ["YOUR_STEAM_ID_1", "YOUR_STEAM_ID_2"];
 
 async fn online_admin() -> Option<String> {
     let r = pipe_rpc::call("getOnlinePlayers", Some(serde_json::json!({}))).await.ok()?;
     for p in r.get("players")?.as_array()? {
-        if OWNER_IDS.contains(&p.get("steamId").and_then(|v| v.as_str()).unwrap_or("")) {
+        if crate::owner::is_owner_steam(p.get("steamId").and_then(|v| v.as_str()).unwrap_or("")) {
             return p.get("name").and_then(|v| v.as_str()).map(String::from);
         }
     }

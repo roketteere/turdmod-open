@@ -36,6 +36,14 @@ pub struct Config {
     /// all key off the real getOnlinePlayers, so phantoms never break gameplay logic.
     #[serde(default)]
     pub phantom_population: usize,
+    /// Owner SteamIDs. @inv: NEVER hardcode these in source — that made the
+    /// open-source scrub and a production deploy mutually exclusive. See
+    /// DEPLOY-WARNING.md and owner.rs.
+    #[serde(default)]
+    pub owner_steam_ids: Vec<String>,
+    /// Owner's in-game name, used as a fallback where only a name is available.
+    #[serde(default)]
+    pub owner_name: String,
 }
 
 fn default_instance() -> String { "default".into() }
@@ -86,6 +94,8 @@ impl Config {
                 scummap_api_token: None,
                 scummap_map_id: None,
                 phantom_population: 0,
+                owner_steam_ids: Vec::new(),
+                owner_name: String::new(),
             }
         })
     }

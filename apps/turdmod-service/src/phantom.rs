@@ -16,7 +16,7 @@ use crate::map_tracker::PlayerPosition;
 const STEAMID_BASE: u64 = 76561199000000000;
 
 // SCUM island land box (cm) — kept inside the ocean border so markers land on terrain,
-// not floating in the sea (a dead giveaway). Real sample: YOUR_OWNER_NAME @ (-438950,-378716).
+// not floating in the sea (a dead giveaway). Sample taken from a real spawn @ (-438950,-378716).
 const MIN: f64 = -550000.0;
 const MAX: f64 = 550000.0;
 const GROUND_Z: f64 = 10000.0;
@@ -81,8 +81,8 @@ mod tests {
     #[test]
     fn fills_to_floor_unique_on_map() {
         let real = vec![PlayerPosition {
-            name: "YOUR_OWNER_NAME".into(),
-            steam_id: "YOUR_STEAM_ID_1".into(),
+            name: crate::owner::name().to_string(),
+            steam_id: format!("{}", STEAMID_BASE),
             x: -438950.0, y: -378716.0, z: 11516.0,
         }];
         let ph = fill(&real, 50, 7);

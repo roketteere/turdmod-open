@@ -10,8 +10,6 @@ use crate::events::GameEvent;
 use crate::pipe_rpc;
 use crate::registry::{Mod, ModCtx, Outcome};
 
-const OWNER_STEAM_ID: &str = "YOUR_STEAM_ID_1";
-const OWNER_NAME: &str = "YOUR_OWNER_NAME";
 const WARZONE_DURATION: Duration = Duration::from_secs(600); // 10 min
 const REWARD_PER_KILL: i64 = 50;
 const SURVIVAL_BONUS: i64 = 100;
@@ -31,7 +29,7 @@ struct ActiveWarzone {
 }
 
 fn is_owner(steam: &str, player: &str) -> bool {
-    steam == OWNER_STEAM_ID || steam == "YOUR_STEAM_ID_2" || player == OWNER_NAME
+    crate::owner::is_owner(steam, player)
 }
 
 async fn reply(msg: &str, player: &str) {

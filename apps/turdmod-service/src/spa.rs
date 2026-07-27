@@ -16,11 +16,10 @@ use crate::pipe_rpc;
 use crate::registry::{Mod, ModCtx, Outcome};
 
 const SPA_INTERVAL: Duration = Duration::from_secs(2 * 60 * 60); // every 2h
-const OWNER_IDS: [&str; 2]   = ["YOUR_STEAM_ID_1", "YOUR_STEAM_ID_2"];
 const BANNER: &str           = "So Fresh, So Clean!";
 
 fn is_owner(steam: &str, player: &str) -> bool {
-    OWNER_IDS.contains(&steam) || player == "YOUR_OWNER_NAME"
+    crate::owner::is_owner_steam(steam) || player == crate::owner::name()
 }
 
 /// Clean clothes + restore stamina for every online player, then fire the banner.

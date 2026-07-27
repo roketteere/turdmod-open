@@ -8,7 +8,6 @@ use crate::events::GameEvent;
 use crate::pipe_rpc;
 use crate::registry::{Mod, ModCtx, Outcome};
 
-const OWNER_STEAM_ID: &str = "YOUR_STEAM_ID_1";
 const RATE_LIMIT: Duration = Duration::from_secs(3);
 
 const VEHICLES: &[(&str, &str)] = &[
@@ -65,7 +64,7 @@ impl Mod for Vehicles {
             None => (text.to_lowercase(), String::new()),
         };
 
-        let is_owner = steam == OWNER_STEAM_ID || steam == "YOUR_STEAM_ID_2";
+        let is_owner = crate::owner::is_owner_steam(&steam);
 
         match cmd.as_str() {
             "!vehicles" => {

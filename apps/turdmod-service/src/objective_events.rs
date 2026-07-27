@@ -12,8 +12,6 @@ use crate::events::GameEvent;
 use crate::pipe_rpc;
 use crate::registry::{Mod, ModCtx, Outcome};
 
-const OWNER_STEAM_ID: &str = "YOUR_STEAM_ID_1";
-const OWNER_NAME: &str = "YOUR_OWNER_NAME";
 const CFG_PATH: &str = r"C:\TurdMOD\data\objectives.json";
 const DURATION: Duration = Duration::from_secs(15 * 60); // 15 min to complete
 const RATE_LIMIT: Duration = Duration::from_secs(3);
@@ -98,7 +96,7 @@ async fn reply(msg: &str, player: &str) {
     pipe_rpc::call("sendChatLineToPlayer", Some(params)).await.ok();
 }
 fn is_owner(steam: &str, player: &str) -> bool {
-    steam == OWNER_STEAM_ID || steam == "YOUR_STEAM_ID_2" || player == OWNER_NAME
+    crate::owner::is_owner(steam, player)
 }
 
 struct ObjState {

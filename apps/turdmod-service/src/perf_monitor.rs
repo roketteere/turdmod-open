@@ -10,7 +10,6 @@ use crate::registry::{Mod, ModCtx, Outcome};
 
 const CHECK_INTERVAL: Duration = Duration::from_secs(60);
 const MEM_WARN_MB: f64 = 24_000.0;
-const OWNER_NAME: &str = "YOUR_OWNER_NAME";
 const ANALYTICS_DIR: &str = r"C:\TurdMOD\data\analytics";
 
 async fn reply(msg: &str, player: &str) {
@@ -55,7 +54,7 @@ impl Mod for PerfMonitor {
             } else if *warned && priv_mb < MEM_WARN_MB * 0.9 { *warned = false; Some(format!("[MEM] recovered to {:.0} MB", priv_mb)) } else { None }
         };
         if priv_mb >= MEM_WARN_MB { tracing::warn!("perf: HIGH MEM priv={:.0}MB uobjects={:.0} uptime={:.1}h", priv_mb, uobjects, uptime_s / 3600.0); }
-        if let Some(msg) = alert_msg { reply(&msg, OWNER_NAME).await; }
+        if let Some(msg) = alert_msg { reply(&msg, crate::owner::name()).await; }
 
         let line = serde_json::json!({
             "t": std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap_or_default().as_secs(),

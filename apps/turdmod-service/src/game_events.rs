@@ -7,7 +7,6 @@ use crate::events::GameEvent;
 use crate::pipe_rpc;
 use crate::registry::{Mod, ModCtx, Outcome};
 
-const OWNER_STEAM_ID: &str = "YOUR_STEAM_ID_1";
 const CFG_PATH: &str = r"C:\TurdMOD\data\announcements.json";
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
@@ -118,7 +117,7 @@ impl Mod for GameEvents {
     async fn handle(&self, ev: &GameEvent, _ctx: &ModCtx) -> Outcome {
         if ev.event != "chat" { return Outcome::Ignored; }
         let steam = ev.data.get("steam").and_then(|v| v.as_str()).unwrap_or("");
-        if steam != OWNER_STEAM_ID && steam != "YOUR_STEAM_ID_2" { return Outcome::Ignored; }
+        if !crate::owner::is_owner_steam(steam) { return Outcome::Ignored; }
 
         let text = ev.data.get("text").and_then(|v| v.as_str()).unwrap_or("").trim().to_string();
         let player = ev.data.get("player").and_then(|v| v.as_str()).unwrap_or("").to_string();

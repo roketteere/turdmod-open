@@ -9,9 +9,6 @@ use std::time::Duration;
 
 use crate::pipe_rpc;
 
-pub const OWNER_STEAM_ID: &str = "YOUR_STEAM_ID_1";
-pub const OWNER_NAME: &str = "YOUR_OWNER_NAME";
-
 /// Normalized command — the "bytecode" the router interprets.
 #[derive(Clone, Debug)]
 pub struct Command {
@@ -32,7 +29,7 @@ pub enum Bridge {
 
 /// True if this caller is the server owner/admin.
 pub fn is_admin(steam: &str, player: &str) -> bool {
-    steam == OWNER_STEAM_ID || steam == "YOUR_STEAM_ID_2" || player == OWNER_NAME
+    crate::owner::is_owner(steam, player)
 }
 
 /// EnginePipe bridge: invoke a bridge handler over the named pipe.

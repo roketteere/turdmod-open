@@ -6,8 +6,6 @@ use crate::events::GameEvent;
 use crate::pipe_rpc;
 use crate::registry::{Mod, ModCtx, Outcome};
 
-const OWNER_STEAM_ID: &str = "YOUR_STEAM_ID_1";
-const OWNER_NAME: &str = "YOUR_OWNER_NAME";
 const DATA_DIR: &str = r"C:\TurdMOD\data";
 const BACKUP_DIR: &str = r"C:\TurdMOD\backups";
 const BACKUP_INTERVAL: Duration = Duration::from_secs(1800);
@@ -70,7 +68,7 @@ impl Mod for Backup {
         if text.to_lowercase() != "!backup" { return Outcome::Ignored; }
         let player = ev.data.get("player").and_then(|v| v.as_str()).unwrap_or("").to_string();
         let steam = ev.data.get("steam").and_then(|v| v.as_str()).unwrap_or("").to_string();
-        if steam != OWNER_STEAM_ID && steam != "YOUR_STEAM_ID_2" && player != OWNER_NAME {
+        if !crate::owner::is_owner_steam(&steam) && player != crate::owner::name() {
             reply("[Backup] Admin only.", &player).await;
             return Outcome::Handled;
         }

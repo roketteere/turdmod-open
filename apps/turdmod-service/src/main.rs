@@ -3,6 +3,7 @@
 // Console mode: --console. Install: --install. Multi-instance: --instance <name>.
 
 mod achievements;
+mod owner;
 mod admin_files;
 mod admin_log;
 mod afk;
@@ -175,6 +176,12 @@ fn main() -> anyhow::Result<()> {
 #[tokio::main]
 async fn run_console(instance: &str) -> anyhow::Result<()> {
     let cfg = Config::load_or_default(instance);
+    // @inv: install owner identity BEFORE any mod starts — owner-gated mods
+    //   match nobody until this runs, which is the safe direction but useless.
+    owner::init(cfg.owner_steam_ids.clone(), cfg.owner_name.clone());
+    if owner::is_unconfigured() {
+        tracing::warn!("no owner_steam_ids/owner_name in service.json — owner-gated mods will ignore everyone");
+    }
     // Resolve the SCUM.db path process-wide so mods that call scumdb::db_path(None)
     // (chat_cmds profile/lock lookups, etc.) read the configured DB, not the hardcoded default.
     scumdb::set_db_path(&cfg.scumdb_path);

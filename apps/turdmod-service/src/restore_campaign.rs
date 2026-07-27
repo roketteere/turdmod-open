@@ -283,7 +283,6 @@ pub fn status_json(instance: &str) -> serde_json::Value {
 // admin chat command. The actual restore fires in the restart stop-window (run_in_stop_window) —
 // this mod is the in-game query/observability surface, not the restore engine itself.
 
-const ADMIN_STEAMS: &[&str] = &["YOUR_STEAM_ID_1", "YOUR_STEAM_ID_2"]; // YOUR_OWNER_NAME, Zilla
 
 async fn reply(msg: &str, player: &str) {
     let params = serde_json::json!({ "message": msg, "playerName": player, "channel": "4" });
@@ -305,7 +304,7 @@ impl crate::registry::Mod for RestoreCampaignMod {
         if cmd != "!restores" && cmd != "!restorestatus" { return Outcome::Ignored; }
         let player = ev.data.get("player").and_then(|v| v.as_str()).unwrap_or("").to_string();
         let steam = ev.data.get("steam").and_then(|v| v.as_str()).unwrap_or("");
-        if !ADMIN_STEAMS.contains(&steam) {
+        if !crate::owner::is_owner_steam(steam) {
             reply("Admin only.", &player).await;
             return Outcome::Handled;
         }

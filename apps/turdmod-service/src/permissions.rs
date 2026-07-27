@@ -17,8 +17,6 @@ use crate::pipe_rpc;
 use crate::registry::{Mod, ModCtx, Outcome};
 
 const STATE_PATH: &str = r"C:\TurdMOD\data\permissions.json";
-const OWNER_STEAM_ID: &str = "YOUR_STEAM_ID_1";
-const OWNER_NAME: &str = "YOUR_OWNER_NAME";
 const RATE_LIMIT: Duration = Duration::from_secs(3);
 
 // Tier ladder (low -> high). Donor levels (Bronze..Diamond) are the "premium
@@ -127,8 +125,8 @@ impl Default for PermState {
         for m in admin_cmds { mods.insert(m.into(), ModConfig { enabled: true, required_tier: Tier::Admin }); }
 
         let mut players = HashMap::new();
-        players.insert(OWNER_STEAM_ID.into(), PlayerPerms {
-            name: OWNER_NAME.into(),
+        players.insert(crate::owner::primary_id().into(), PlayerPerms {
+            name: crate::owner::name().into(),
             tier: Tier::Admin,
             mod_overrides: HashMap::new(),
         });
@@ -166,7 +164,7 @@ fn save(state: &PermState) {
 
 /// Check if a player can use a mod. Called by every module.
 pub fn can(state: &PermState, steam: &str, mod_name: &str) -> bool {
-    if steam == OWNER_STEAM_ID || steam == "YOUR_STEAM_ID_2" { return true; }
+    if crate::owner::is_owner_steam(steam) { return true; }
 
     let mod_cfg = state.mods.get(mod_name);
     if let Some(cfg) = mod_cfg {
@@ -210,12 +208,12 @@ pub fn cmd_denial(state: &PermState, steam: &str, cmd: &str) -> Option<String> {
 
 /// A player's effective tier (owner Steam IDs always resolve to Admin).
 pub fn player_tier(state: &PermState, steam: &str) -> Tier {
-    if steam == OWNER_STEAM_ID || steam == "YOUR_STEAM_ID_2" { return Tier::Admin; }
+    if crate::owner::is_owner_steam(steam) { return Tier::Admin; }
     state.players.get(steam).map(|p| p.tier).unwrap_or(Tier::Free)
 }
 
 fn is_admin(steam: &str) -> bool {
-    steam == OWNER_STEAM_ID || steam == "YOUR_STEAM_ID_2"
+    crate::owner::is_owner_steam(steam)
 }
 
 async fn say(player: &str, lines: &[&str]) {

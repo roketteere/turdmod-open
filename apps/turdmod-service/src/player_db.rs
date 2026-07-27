@@ -11,7 +11,6 @@ use crate::registry::{Mod, ModCtx, Outcome};
 
 const DB_PATH: &str = r"C:\TurdMOD\data\players.json";
 const RATE_LIMIT: Duration = Duration::from_secs(3);
-const ADMIN_IDS: &[&str] = &["YOUR_STEAM_ID_1"];
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 struct PlayerRecord {
@@ -50,7 +49,7 @@ fn save(db: &HashMap<String, PlayerRecord>) {
     }
 }
 
-pub fn is_admin(steam_id: &str) -> bool { ADMIN_IDS.contains(&steam_id) }
+pub fn is_admin(steam_id: &str) -> bool { crate::owner::is_owner_steam(steam_id) }
 
 #[derive(serde::Serialize)]
 pub struct PlayerSummary {

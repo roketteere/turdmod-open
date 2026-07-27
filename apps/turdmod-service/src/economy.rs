@@ -9,7 +9,6 @@ use crate::events::GameEvent;
 use crate::pipe_rpc;
 use crate::registry::{Mod, ModCtx, Outcome};
 
-const OWNER_STEAM_ID: &str = "YOUR_STEAM_ID_1";
 const STATE_PATH: &str = r"C:\TurdMOD\data\economy.json";
 const DAILY_COINS: i64 = 100;
 const MIN_TRANSFER: i64 = 10;

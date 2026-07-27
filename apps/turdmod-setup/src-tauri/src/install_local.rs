@@ -148,6 +148,12 @@ pub fn build_service_config(server_root: &str, token: &str, port: u16) -> serde_
         "scumdb_path": Path::new(server_root)
             .join("SCUM").join("Saved").join("SaveFiles").join("SCUM.db")
             .display().to_string(),
+        // @dep: turdmod-service/src/owner.rs. Emitted empty because Setup can't
+        // know their Steam64 ID — the service warns at startup while these are
+        // blank, and owner-gated mods match NOBODY until they're filled in.
+        // @inv: never hardcode an ID here; that is the bug this shape replaced.
+        "owner_steam_ids": [],
+        "owner_name": "",
     })
 }
 
@@ -180,7 +186,8 @@ pub fn merge_config(existing: &serde_json::Value, fresh: &serde_json::Value) -> 
         }
     }
     // Fill only what's missing — never clobber an operator's choice.
-    for key in ["port", "token", "scum_server_args", "auto_restart", "restart_delay_secs", "scumdb_path"] {
+    for key in ["port", "token", "scum_server_args", "auto_restart", "restart_delay_secs",
+                "scumdb_path", "owner_steam_ids", "owner_name"] {
         if !out_map.contains_key(key) {
             if let Some(v) = fresh_map.get(key) {
                 out_map.insert(key.to_string(), v.clone());
