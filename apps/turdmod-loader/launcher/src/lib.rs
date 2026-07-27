@@ -190,10 +190,22 @@ pub fn resolve_scum(arg: Option<&Path>) -> Result<PathBuf, String> {
             return Ok(p);
         }
     }
-    // @inv: modded launcher prefers the ISOLATED modded client copy (F:\SCUM-Modded) over
-    // the Steam-managed vanilla install. NEVER mod the Steam copy in-place — hijacking its
-    // pak slots corrupts vanilla + forces a multi-GB Steam re-validate. Vanilla = Steam "Play";
-    // modded = this launcher -> F:\SCUM-Modded. See reference_modded_client_isolated_copy.
+    // @inv: modded launcher prefers the ISOLATED modded client copy over the
+    // Steam-managed vanilla install. NEVER mod the Steam copy in-place —
+    // hijacking its pak slots corrupts vanilla + forces a multi-GB Steam
+    // re-validate. Vanilla = Steam "Play"; modded = this launcher.
+    // See reference_modded_client_isolated_copy.
+    //
+    // @dep: TurdMOD Setup writes %LOCALAPPDATA%\TurdMOD\client.json when it
+    //   builds the modded copy, so whichever drive the user picked is honoured.
+    //   The hardcoded list below is a last-resort fallback — it used to be the
+    //   ONLY source, which meant a modded copy anywhere but F: was silently
+    //   ignored and the launcher fell through to the Steam install.
+    if let Some(p) = scum_from_client_config() {
+        if p.is_file() {
+            return Ok(p);
+        }
+    }
     let candidates = [
         r"F:\SCUM-Modded\SCUM\Binaries\Win64\SCUM.exe",
         r"C:\Program Files (x86)\Steam\steamapps\common\SCUM\SCUM\Binaries\Win64\SCUM.exe",
@@ -206,6 +218,31 @@ pub fn resolve_scum(arg: Option<&Path>) -> Result<PathBuf, String> {
         }
     }
     Err("could not locate SCUM.exe — pass --scum <path> or set SCUM_EXE".into())
+}
+
+/// The modded-client location TurdMOD Setup recorded, if any.
+///
+/// Hand-rolled rather than pulling serde into the launcher core for two string
+/// fields. @dep: key name must stay in sync with
+/// apps/turdmod-setup/src-tauri/src/client.rs::write_client_config.
+fn scum_from_client_config() -> Option<PathBuf> {
+    let local = std::env::var("LOCALAPPDATA").ok()?;
+    let raw = std::fs::read_to_string(PathBuf::from(local).join("TurdMOD").join("client.json")).ok()?;
+    parse_scum_exe(&raw).map(PathBuf::from)
+}
+
+fn parse_scum_exe(json: &str) -> Option<String> {
+    let key = "\"scum_exe\"";
+    let after = json.find(key).map(|i| &json[i + key.len()..])?;
+    let after = after.trim_start().strip_prefix(':')?.trim_start();
+    let body = after.strip_prefix('"')?;
+    let end = body.find('"')?;
+    let val = body[..end].replace("\\\\", "\\");
+    if val.is_empty() {
+        None
+    } else {
+        Some(val)
+    }
 }
 
 pub fn resolve_dll(arg: Option<&Path>) -> Result<PathBuf, String> {
@@ -603,5 +640,27 @@ mod tests {
     #[test]
     fn allowlist_allows_none() {
         assert!(assert_server_allowed(None).is_ok());
+    }
+
+    /// @dep: apps/turdmod-setup/src-tauri/src/client.rs::write_client_config
+    /// writes this file. If the key name drifts, the launcher silently falls
+    /// back to the hardcoded paths and ignores the user's modded copy.
+    #[test]
+    fn reads_the_modded_client_path_setup_wrote() {
+        let json = r#"{
+  "modded_root": "D:\SCUM-Modded",
+  "scum_exe": "D:\SCUM-Modded\SCUM\Binaries\Win64\SCUM.exe"
+}"#;
+        assert_eq!(
+            parse_scum_exe(json).as_deref(),
+            Some(r"D:\SCUM-Modded\SCUM\Binaries\Win64\SCUM.exe")
+        );
+    }
+
+    #[test]
+    fn a_missing_or_broken_client_config_is_ignored_not_fatal() {
+        assert!(parse_scum_exe("{}").is_none());
+        assert!(parse_scum_exe("not json at all").is_none());
+        assert!(parse_scum_exe(r#"{"scum_exe": ""}"#).is_none());
     }
 }

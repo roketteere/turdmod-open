@@ -70,6 +70,25 @@ export interface UninstallPlan {
   warning: string;
 }
 
+export interface DriveInfo {
+  name: string;
+  free_bytes: number;
+  total_bytes: number;
+  fits: boolean;
+  /** Same volume as the game — paks are shared, so it costs almost nothing. */
+  can_hardlink: boolean;
+  note: string;
+}
+
+export interface ClientPlan {
+  source: string;
+  total_bytes: number;
+  linkable_bytes: number;
+  copy_bytes: number;
+  file_count: number;
+  drives: DriveInfo[];
+}
+
 export const api = {
   detectInstalls: () => invoke<DetectedInstalls>("detect_installs"),
 
@@ -88,6 +107,10 @@ export const api = {
 
   verify: (port: number, token: string, serverRoot?: string) =>
     invoke<VerifyReport>("verify_install", { port, token, serverRoot }),
+
+  clientPlan: (source: string) => invoke<ClientPlan>("client_plan", { source }),
+  clientCreateCopy: (source: string, dest: string) =>
+    invoke<StepResult[]>("client_create_copy", { source, dest }),
 
   uninstallPlan: () => invoke<UninstallPlan>("uninstall_plan"),
   uninstallRun: (removeSettings?: boolean) =>

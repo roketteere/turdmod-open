@@ -4,6 +4,7 @@
 //       rented FTP-only host spending an hour on an install that physically
 //       cannot work. Telling them in 30 seconds is the whole point of the app.
 
+import { open as openUrl } from "@tauri-apps/plugin-shell";
 import { useEffect, useState } from "react";
 import type { Support } from "../lib/api";
 import { api } from "../lib/api";
@@ -103,11 +104,27 @@ export function Capability() {
           </div>
 
           {!rep.engine_supported && (
-            <div className="note" style={{ marginTop: 22 }}>
-              This isn't something we can work around, and it isn't your fault — it's how rented game
-              hosting works. If you want the full engine, the usual move is a cheap VPS you control, or
-              running the server on a PC at home. Ask the assistant about either.
-            </div>
+            <>
+              <div className="note" style={{ marginTop: 22 }}>
+                This isn&apos;t something we can work around, and it isn&apos;t your fault — it&apos;s
+                how rented game hosting works. If you want the full engine, the usual move is a cheap
+                VPS you control, or running the server on a PC at home. Ask the assistant about either.
+              </div>
+              {/* Don't leave them with only bad news — Lite exists for exactly
+                  this audience and is free. */}
+              <h2>What to use instead</h2>
+              <div className="note">
+                <b>TurdMOD Lite</b> is built for hosts like yours — G-Portal, Nitrado, Host Havoc,
+                GTX, PingPerfect. It works over FTP and RCON, and covers most of what admins
+                actually do: server settings, loot and economy, raid times, banner messages, admin
+                and ban lists, live chat and kill logs. It&apos;s free.
+                <div style={{ marginTop: 10 }}>
+                  <button className="btn small" onClick={() => void openUrl("https://turdmod.com/downloads")}>
+                    Get TurdMOD Lite
+                  </button>
+                </div>
+              </div>
+            </>
           )}
         </>
       )}

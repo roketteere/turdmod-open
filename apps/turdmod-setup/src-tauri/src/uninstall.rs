@@ -45,7 +45,15 @@ pub fn plan() -> UninstallPlan {
                 steps.push(format!("Restore {restore} file(s) we replaced, from backup"));
             }
             if remove > 0 {
-                steps.push(format!("Remove {remove} file(s) we added"));
+                steps.push(format!("Remove {remove} item(s) we added"));
+            }
+            // The modded game copy is big and worth naming explicitly rather
+            // than hiding inside a file count.
+            for e in m.created() {
+                let p = Path::new(&e.path);
+                if p.is_dir() {
+                    steps.push(format!("Delete the modded game copy at {}", p.display()));
+                }
             }
             steps.push(format!("Take {MOD_NAME} back out of UE4SS's mods.txt, leaving your other mods alone"));
             (restore, remove, String::new())
@@ -211,7 +219,10 @@ pub fn run(remove_settings: bool) -> Vec<StepResult> {
         if !p.exists() {
             continue;
         }
-        match std::fs::remove_file(p) {
+        // @inv: created entries can be directories — the modded client copy is
+        // recorded as its root folder. remove_file fails on those.
+        let res = if p.is_dir() { std::fs::remove_dir_all(p) } else { std::fs::remove_file(p) };
+        match res {
             Ok(_) => r.push(StepResult::ok("Remove", p.display().to_string())),
             Err(err) => r.push(StepResult::fail("Remove", format!("{}: {err}", p.display()))),
         }
@@ -283,6 +294,30 @@ mod tests {
         assert!(txt.contains("TheirNewMod : 1"), "a later addition must survive: {txt}");
         assert!(!txt.contains("TurdMODEngineBridge"), "ours must still go: {txt}");
         assert!(!at_install_time.contains("TheirNewMod"), "sanity: the backup predates their mod");
+
+        std::fs::remove_dir_all(&root).unwrap();
+    }
+
+    /// Regression: the modded client copy is recorded as a directory, and the
+    /// removal loop used remove_file — which fails on directories, leaving an
+    /// 89 GB folder behind and reporting a failed uninstall.
+    #[test]
+    fn a_created_directory_is_removed_not_just_files() {
+        let root = std::env::temp_dir().join("tm-uninstall-dir");
+        let _ = std::fs::remove_dir_all(&root);
+        let copy = root.join("SCUM-Modded").join("SCUM").join("Content");
+        std::fs::create_dir_all(&copy).unwrap();
+        std::fs::write(copy.join("a.pak"), b"x").unwrap();
+
+        let target = root.join("SCUM-Modded");
+        assert!(target.is_dir());
+        let res = if target.is_dir() {
+            std::fs::remove_dir_all(&target)
+        } else {
+            std::fs::remove_file(&target)
+        };
+        assert!(res.is_ok(), "a created directory must be removable: {res:?}");
+        assert!(!target.exists());
 
         std::fs::remove_dir_all(&root).unwrap();
     }

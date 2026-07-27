@@ -5,6 +5,7 @@
 // what a manual install does.
 
 mod capability;
+mod client;
 mod detect;
 mod handoff;
 mod install_local;
@@ -179,6 +180,31 @@ fn install_local_full(
     results
 }
 
+// ─── Modded client ─────────────────────────────────────────────────────────
+
+/// What building a modded copy would cost, and which drives can take it.
+#[tauri::command]
+fn client_plan(source: String) -> client::ClientPlan {
+    client::plan(&source)
+}
+
+/// Build the isolated copy. @inv: never touches the Steam install.
+#[tauri::command]
+fn client_create_copy(source: String, dest: String) -> Vec<StepResult> {
+    let mut mf = Manifest::load().unwrap_or_else(|| Manifest::new(&source));
+    let mut r = client::create_modded_copy(&source, &dest, &mut mf);
+    if r.iter().all(|s| s.ok) {
+        r.push(client::write_client_config(&dest));
+    }
+    if let Err(e) = mf.save() {
+        r.push(StepResult::fail(
+            "Install record",
+            format!("{e} — uninstall won't know about this copy"),
+        ));
+    }
+    r
+}
+
 // ─── Uninstall ─────────────────────────────────────────────────────────────
 
 #[tauri::command]
@@ -254,6 +280,8 @@ pub fn run() {
             capability_report,
             prepare_config,
             install_local_full,
+            client_plan,
+            client_create_copy,
             uninstall_plan,
             uninstall_run,
             verify_install,
@@ -463,5 +491,28 @@ summary: {}", rep.summary);
         for r in uninstall::run(false) {
             println!("{:<22} {:<5} {}", r.step, r.ok, r.detail);
         }
+    }
+
+    /// Real sizing + drive scan for the modded client copy on this machine.
+    ///   cargo test --lib live_client_plan -- --ignored --nocapture
+    #[test]
+    #[ignore = "reads the real SCUM client install and all drives"]
+    fn live_client_plan() {
+        let game = detect::detect_all().game.expect("no SCUM client found");
+        let p = client::plan(&game);
+        let gb = |b: u64| b as f64 / 1024.0 / 1024.0 / 1024.0;
+        println!("source     : {}", p.source);
+        println!("files      : {}", p.file_count);
+        println!("total      : {:.1} GB", gb(p.total_bytes));
+        println!("linkable   : {:.1} GB  ({:.1}%)", gb(p.linkable_bytes),
+                 p.linkable_bytes as f64 / p.total_bytes as f64 * 100.0);
+        println!("real copy  : {:.1} GB", gb(p.copy_bytes));
+        println!("--- drives ---");
+        for d in &p.drives {
+            println!("  {}  free {:.0} GB  fits={} hardlink={}  {}",
+                     d.name, gb(d.free_bytes), d.fits, d.can_hardlink, d.note);
+        }
+        assert!(p.total_bytes > 0, "must measure something");
+        assert!(!p.drives.is_empty(), "must find at least one drive");
     }
 }

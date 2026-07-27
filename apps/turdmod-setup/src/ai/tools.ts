@@ -194,6 +194,51 @@ export function buildTools(store: SetupStore): ToolSpec[] {
 
     {
       def: {
+        name: "client_plan",
+        description:
+          "For the modded client: measure the user's SCUM game install and list every drive with free space, showing what a modded copy would cost on each. A drive on the same volume as the game can share the read-only game content, so it costs ~1 GB and takes seconds instead of ~89 GB. Call this before offering to build a copy.",
+        parameters: {
+          type: "object",
+          properties: { source: { type: "string", description: "The SCUM game (client) folder." } },
+          required: ["source"],
+        },
+      },
+      destructive: false,
+      summarize: () => "Check what a modded game copy would cost",
+      run: async (a) => api.clientPlan(str(a.source, state.detected?.game ?? "")),
+    },
+
+    {
+      def: {
+        name: "client_create_copy",
+        description:
+          "Build the isolated modded copy of the game at `dest`. Never modifies the Steam install — that's what keeps official-server play safe. Refuses a destination that already exists and isn't empty. Also tells the Launcher where the copy lives. Use client_plan first and pick a drive that fits.",
+        parameters: {
+          type: "object",
+          properties: {
+            source: { type: "string" },
+            dest: { type: "string", description: "e.g. C:\\SCUM-Modded" },
+          },
+          required: ["source", "dest"],
+        },
+      },
+      destructive: true,
+      summarize: (a) => `Build a modded copy of the game at ${str(a.dest)} (your Steam install is not touched)`,
+      run: async (a) => {
+        const results = await api.clientCreateCopy(
+          str(a.source, state.detected?.game ?? ""),
+          str(a.dest),
+        );
+        set({
+          installResults: results,
+          lastError: results.filter((r) => !r.ok).map((r) => `${r.step}: ${r.detail}`).join("; "),
+        });
+        return results;
+      },
+    },
+
+    {
+      def: {
         name: "uninstall_plan",
         description:
           "See exactly what removing TurdMOD would do, without doing it. Tells you which files get restored from backup, which get deleted, and whether an install record exists. Always call this before uninstall_run so you can tell the user what's about to happen.",

@@ -9,6 +9,7 @@ import {
   type StepId,
 } from "./lib/setup-state";
 import { Capability } from "./steps/Capability";
+import { Client } from "./steps/Client";
 import { Configure } from "./steps/Configure";
 import { Detect } from "./steps/Detect";
 import { Install } from "./steps/Install";
@@ -19,9 +20,9 @@ import { Welcome } from "./steps/Welcome";
 export function App() {
   const [state, setState] = useState<SetupState>(initialState);
   const [aiOpen, setAiOpen] = useState(false);
-  // Outside the numbered flow — reachable any time, so backing out is never
-  // a thing you have to hunt for.
-  const [removing, setRemoving] = useState(false);
+  // Side views live outside the numbered flow — the modded client is a parallel
+  // track, and "remove" must never be something you have to hunt for.
+  const [view, setView] = useState<"flow" | "client" | "uninstall">("flow");
   /** Furthest step reached — lets the rail act as back-navigation. */
   const [reached, setReached] = useState<StepId>("welcome");
 
@@ -67,10 +68,10 @@ export function App() {
             return (
               <button
                 key={s.id}
-                className={`railstep${state.step === s.id && !removing ? " active" : ""}${done ? " done" : ""}`}
+                className={`railstep${state.step === s.id && view === "flow" ? " active" : ""}${done ? " done" : ""}`}
                 disabled={!visitable}
                 onClick={() => {
-                  setRemoving(false);
+                  setView("flow");
                   go(s.id);
                 }}
               >
@@ -85,9 +86,18 @@ export function App() {
               {aiOpen ? "Hide assistant" : "Ask the assistant"}
             </button>
             <button
-              className={`railstep${removing ? " active" : ""}`}
+              className={`railstep${view === "client" ? " active" : ""}`}
               style={{ marginTop: 8, width: "100%" }}
-              onClick={() => setRemoving(true)}
+              onClick={() => setView("client")}
+            >
+              {/* Plain glyphs, not emoji — 🤖 rendered as tofu in WebView2. */}
+              <span className="dot">▶</span>
+              Modded client
+            </button>
+            <button
+              className={`railstep${view === "uninstall" ? " active" : ""}`}
+              style={{ width: "100%" }}
+              onClick={() => setView("uninstall")}
             >
               <span className="dot">↺</span>
               Remove TurdMOD
@@ -96,9 +106,9 @@ export function App() {
         </nav>
 
         <main className="main">
-          {removing ? (
-            <Uninstall onClose={() => setRemoving(false)} />
-          ) : (
+          {view === "uninstall" && <Uninstall onClose={() => setView("flow")} />}
+          {view === "client" && <Client onClose={() => setView("flow")} />}
+          {view === "flow" && (
             <>
               {state.step === "welcome" && <Welcome />}
               {state.step === "detect" && <Detect />}
