@@ -168,6 +168,19 @@ export function Install() {
               use pak mods and config tuning.
             </div>
           )}
+          {/* Said before they commit, not discovered afterwards. */}
+          {state.battleyeWillBeDisabled && (
+            <div className="verdict warn">
+              <b>Heads up: this turns BattlEye off on your server.</b>
+              <div style={{ marginTop: 8 }}>
+                TurdMOD needs it off — the modded client refuses to connect to a BattlEye server, so
+                leaving it on means client mods silently don&apos;t work. We&apos;re telling you
+                rather than doing it quietly, and <b>removing TurdMOD turns it back on</b>, exactly
+                as you had it.
+              </div>
+            </div>
+          )}
+
           {state.isUpdate ? (
             <>
               {state.serviceState === "running" && (

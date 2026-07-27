@@ -140,6 +140,7 @@ export function buildTools(store: SetupStore): ToolSpec[] {
           isUpdate: cfg.is_update,
           tokenPreserved: cfg.token_preserved,
           serviceState: cfg.service_state,
+          battleyeWillBeDisabled: cfg.battleye_will_be_disabled,
           serverRoot: str(a.server_root, state.serverRoot),
         });
         // Never echo the token back to the model — it's a live credential.

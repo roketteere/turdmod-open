@@ -47,6 +47,9 @@ pub fn plan() -> UninstallPlan {
             if remove > 0 {
                 steps.push(format!("Remove {remove} item(s) we added"));
             }
+            if m.added_no_battleye {
+                steps.push("Turn BattlEye back on — it was on before TurdMOD was installed".into());
+            }
             // The modded game copy is big and worth naming explicitly rather
             // than hiding inside a file count.
             for e in m.created() {
@@ -114,6 +117,48 @@ fn remove_from_mods_txt(server_root: &str) -> StepResult {
     match std::fs::write(&path, out) {
         Ok(_) => StepResult::ok("Mod list", format!("removed {MOD_NAME}, kept {} other line(s)", kept.len())),
         Err(e) => StepResult::fail("Mod list", format!("{}: {e}", path.display())),
+    }
+}
+
+/// Put BattlEye back the way we found it by stripping the arg we added.
+fn restore_battleye() -> StepResult {
+    let path = PathBuf::from(TURDMOD_DIR).join("service.json");
+    let Ok(raw) = std::fs::read_to_string(&path) else {
+        return StepResult::ok("BattlEye", "no service.json — nothing to restore");
+    };
+    let Ok(mut cfg) = serde_json::from_str::<serde_json::Value>(raw.trim_start_matches('\u{feff}'))
+    else {
+        return StepResult::ok("BattlEye", "couldn't read service.json — left it alone");
+    };
+    if !install_local::remove_no_battleye(&mut cfg) {
+        return StepResult::ok("BattlEye", "already back to your setting");
+    }
+    match serde_json::to_string_pretty(&cfg).map(|s| std::fs::write(&path, s)) {
+        Ok(Ok(())) => StepResult::ok("BattlEye", "turned BattlEye back on, as it was before"),
+        _ => StepResult::fail("BattlEye", format!("couldn't write {}", path.display())),
+    }
+}
+
+/// Remove the bridge's own folders once their files are gone.
+///
+/// @inv: uses remove_dir (NOT remove_dir_all), which fails on a non-empty
+///   directory. That's the safety property — if anything is still in there,
+///   it isn't ours and we leave it completely alone.
+/// @ctx: without this an empty TurdMODEngineBridge/ survives an uninstall, so
+///   "is TurdMOD installed?" still looks like yes.
+fn prune_empty_mod_dirs(server_root: &str, r: &mut Vec<StepResult>) {
+    let mods = Path::new(server_root)
+        .join("SCUM").join("Binaries").join("Win64")
+        .join("UE4SS").join("Mods");
+    // Deepest first — a parent can only go once its child has.
+    let mut pruned = 0;
+    for dir in [mods.join(MOD_NAME).join("dlls"), mods.join(MOD_NAME)] {
+        if dir.exists() && std::fs::remove_dir(&dir).is_ok() {
+            pruned += 1;
+        }
+    }
+    if pruned > 0 {
+        r.push(StepResult::ok("Tidy up", format!("removed {pruned} empty TurdMOD folder(s)")));
     }
 }
 
@@ -229,6 +274,14 @@ pub fn run(remove_settings: bool) -> Vec<StepResult> {
     }
 
     r.push(remove_from_mods_txt(&mf.server_root));
+    prune_empty_mod_dirs(&mf.server_root, &mut r);
+
+    // @inv: if we turned BattlEye off, turn it back on — even when keeping
+    //   service.json, which the restore loop deliberately skips. Without this
+    //   an uninstall would leave their anticheat disabled forever.
+    if mf.added_no_battleye && !remove_settings {
+        r.push(restore_battleye());
+    }
 
     // Only drop the manifest once everything it described actually reversed —
     // otherwise a retry has nothing to work from.
@@ -319,6 +372,41 @@ mod tests {
         assert!(res.is_ok(), "a created directory must be removable: {res:?}");
         assert!(!target.exists());
 
+        std::fs::remove_dir_all(&root).unwrap();
+    }
+
+    #[test]
+    fn pruning_removes_our_empty_folders_but_never_touches_occupied_ones() {
+        let root = std::env::temp_dir().join("tm-uninstall-prune");
+        let _ = std::fs::remove_dir_all(&root);
+        let mods = root.join("SCUM").join("Binaries").join("Win64").join("UE4SS").join("Mods");
+        std::fs::create_dir_all(mods.join(MOD_NAME).join("dlls")).unwrap();
+        // Someone else's mod, with content — must survive untouched.
+        std::fs::create_dir_all(mods.join("UsmapDumper")).unwrap();
+        std::fs::write(mods.join("UsmapDumper").join("main.lua"), b"x").unwrap();
+
+        let mut r = Vec::new();
+        prune_empty_mod_dirs(&root.display().to_string(), &mut r);
+
+        assert!(!mods.join(MOD_NAME).exists(), "our empty folder should be gone");
+        assert!(mods.join("UsmapDumper").join("main.lua").exists(), "other mods untouched");
+        std::fs::remove_dir_all(&root).unwrap();
+    }
+
+    /// remove_dir refuses non-empty dirs — that's what makes this safe even if
+    /// the user dropped their own file into our folder.
+    #[test]
+    fn pruning_leaves_our_folder_alone_if_it_still_has_something_in_it() {
+        let root = std::env::temp_dir().join("tm-uninstall-prune2");
+        let _ = std::fs::remove_dir_all(&root);
+        let mods = root.join("SCUM").join("Binaries").join("Win64").join("UE4SS").join("Mods");
+        std::fs::create_dir_all(mods.join(MOD_NAME)).unwrap();
+        std::fs::write(mods.join(MOD_NAME).join("their-notes.txt"), b"mine").unwrap();
+
+        let mut r = Vec::new();
+        prune_empty_mod_dirs(&root.display().to_string(), &mut r);
+
+        assert!(mods.join(MOD_NAME).join("their-notes.txt").exists(), "must not delete their file");
         std::fs::remove_dir_all(&root).unwrap();
     }
 

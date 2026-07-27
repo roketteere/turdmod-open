@@ -46,6 +46,7 @@ export function Configure() {
         isUpdate: cfg.is_update,
         tokenPreserved: cfg.token_preserved,
         serviceState: cfg.service_state,
+        battleyeWillBeDisabled: cfg.battleye_will_be_disabled,
         lastError: "",
       });
     } catch (e) {

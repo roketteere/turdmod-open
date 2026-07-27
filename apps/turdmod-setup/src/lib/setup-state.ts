@@ -41,6 +41,8 @@ export interface SetupState {
   /** The existing access key was kept, so Manager keeps connecting. */
   tokenPreserved: boolean;
   serviceState: ServiceState;
+  /** Installing will turn BattlEye off. Stated up front, restored on uninstall. */
+  battleyeWillBeDisabled: boolean;
   /** Last error text — fed to the assistant so it can diagnose without asking. */
   lastError: string;
 }
@@ -60,6 +62,7 @@ export const initialState: SetupState = {
   isUpdate: false,
   tokenPreserved: false,
   serviceState: "missing",
+  battleyeWillBeDisabled: false,
   lastError: "",
 };
 
@@ -99,6 +102,7 @@ export function describeState(s: SetupState): string {
     `Config prepared: ${s.config ? "yes" : "no"}`,
     `Existing TurdMOD install: ${s.isUpdate ? "YES — this is an UPDATE, not a fresh install" : "no"}`,
     `Windows service: ${s.serviceState}`,
+    `BattlEye: ${s.battleyeWillBeDisabled ? "currently ON — installing will turn it off, and uninstall turns it back on" : "already off, or unchanged"}`,
   ];
   if (s.isUpdate) {
     lines.push(

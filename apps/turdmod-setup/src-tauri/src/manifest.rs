@@ -44,6 +44,12 @@ pub struct Manifest {
     /// True only if WE registered the Windows service. If it was already there
     /// we leave it alone on uninstall — it may predate us.
     pub service_registered: bool,
+    /// True if WE added -NoBattlEye to the operator's launch args. Uninstall
+    /// takes it back out.
+    /// @inv: only set when the operator had BattlEye ON. If it was already off
+    ///   that was their choice and we must not "restore" it to on.
+    #[serde(default)]
+    pub added_no_battleye: bool,
     #[serde(skip)]
     backup_dir: Option<PathBuf>,
     /// Where backups go. Overridable so tests never write into the real
@@ -69,6 +75,7 @@ impl Manifest {
             server_root: server_root.to_string(),
             entries: Vec::new(),
             service_registered: false,
+            added_no_battleye: false,
             backup_dir: None,
             root: None,
         }

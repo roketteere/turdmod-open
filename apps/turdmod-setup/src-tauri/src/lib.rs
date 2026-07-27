@@ -62,6 +62,9 @@ struct PreparedConfig {
     /// True when the existing access key was reused rather than regenerated.
     token_preserved: bool,
     service_state: install_local::ServiceState,
+    /// True when the operator currently has BattlEye ON and installing will
+    /// turn it off. The UI MUST say so before they commit.
+    battleye_will_be_disabled: bool,
 }
 
 /// Build the config for this install.
@@ -101,6 +104,11 @@ fn prepare_config(server_root: String, port: Option<u16>) -> PreparedConfig {
         None => (fresh, fresh_token, false),
     };
 
+    // @inv: TurdMOD needs BattlEye off. We change it, say so up front, and put
+    //   it back on uninstall — never a silent anticheat change.
+    let mut config = config;
+    let battleye_will_be_disabled = install_local::ensure_no_battleye(&mut config);
+
     let svc = install_local::service_state();
     PreparedConfig {
         config,
@@ -110,6 +118,7 @@ fn prepare_config(server_root: String, port: Option<u16>) -> PreparedConfig {
         is_update: existing.is_some() || svc != install_local::ServiceState::Missing,
         token_preserved,
         service_state: svc,
+        battleye_will_be_disabled,
     }
 }
 
@@ -152,6 +161,11 @@ fn install_local_full(
     // it. The manifest is saved even on failure — a half-done install still
     // needs to be undoable.
     let mut mf = Manifest::new(&server_root);
+    // Only claim we changed BattlEye if the operator actually had it on.
+    mf.added_no_battleye = install_local::read_existing_config()
+        .map(|prev| !install_local::has_no_battleye(&prev))
+        .unwrap_or(false)
+        && install_local::has_no_battleye(&config);
 
     results.extend(install_local::place_artifacts(&server_root, &artifacts, &mut mf));
     results.extend(install_local::place_service(&artifacts, &config, &mut mf));
@@ -657,5 +671,109 @@ summary: {}", rep.summary);
 
         std::fs::remove_dir_all(&p).unwrap();
         println!("cleaned up {dir}");
+    }
+
+    /// FIRST-TIME install on a folder with no prior TurdMOD/UE4SS files, using
+    /// a pack downloaded from turdmod.com. Exercises the Created branches that
+    /// an update never touches.
+    ///   cargo test --lib live_clean_install -- --ignored --nocapture
+    #[tokio::test]
+    #[ignore = "installs onto this machine from a downloaded pack"]
+    async fn live_clean_install() {
+        let root = detect::detect_all().server.expect("no SCUM server found");
+
+        let dl = download::fetch_pack().await;
+        for s in &dl.steps { println!("{:<10} {:<5} {}", s.step, s.ok, s.detail); }
+        let pack = dl.artifacts_dir.expect("download failed");
+
+        let prep = prepare_config(root.clone(), None);
+        println!("\nis_update={} token_preserved={} service={:?}",
+                 prep.is_update, prep.token_preserved, prep.service_state);
+        assert!(!prep.is_update, "a clean folder must NOT look like an update");
+        assert!(!prep.token_preserved, "there is no prior token to preserve");
+        assert_ne!(prep.token, "local-dev-token", "must generate a fresh token");
+        assert_eq!(prep.token.len(), 40);
+
+        let results = install_local_full(root.clone(), prep.config.clone(), Some(pack.clone()));
+        println!("\n--- install ---");
+        for r in &results { println!("{:<20} {:<5} {}", r.step, r.ok, r.detail); }
+        assert!(results.iter().all(|r| r.ok), "clean install must succeed");
+
+        // Everything should be recorded as Created, not Replaced — nothing was here.
+        let mf = Manifest::load().expect("manifest must exist");
+        let replaced: Vec<_> = mf.replaced().map(|e| e.path.clone()).collect();
+        println!("\ncreated={} replaced={}", mf.created().count(), replaced.len());
+        assert!(replaced.is_empty(), "nothing pre-existed, so nothing should be Replaced: {replaced:?}");
+        assert!(mf.service_registered, "we registered the service, so we own removing it");
+
+        // mods.txt built from nothing must contain exactly our entry.
+        let mods = PathBuf::from(&root)
+            .join("SCUM").join("Binaries").join("Win64")
+            .join("UE4SS").join("Mods").join("mods.txt");
+        let txt = std::fs::read_to_string(&mods).unwrap();
+        println!("mods.txt: {:?}", txt);
+        assert!(txt.contains("TurdMODEngineBridge : 1"));
+
+        let rep = verify_install(prep.port, prep.token.clone(), Some(root)).await;
+        println!("\n--- verify ---");
+        for c in &rep.checks { println!("{:<28} {:<5} {}", c.label, c.ok, c.detail); }
+
+        let _ = std::fs::remove_dir_all(&pack);
+    }
+
+    /// BattlEye round trip against a real service.json: install must turn it
+    /// OFF and announce it; uninstall must put it back ON.
+    ///   cargo test --lib live_battleye_round_trip -- --ignored --nocapture
+    #[test]
+    #[ignore = r"rewrites C:\TurdMOD\service.json"]
+    fn live_battleye_round_trip() {
+        let vpath = PathBuf::from(r"C:\TurdMOD").join("service.json");
+        let saved = std::fs::read(&vpath).ok();
+        let root = detect::detect_all().server.expect("no server");
+
+        // Operator config with BattlEye ON and a flag of their own.
+        let theirs = serde_json::json!({
+            "port": 9090,
+            "token": "their-token",
+            "scum_server_exe": "x",
+            "scum_server_args": ["-log", "-port=7042", "-TheirOwnFlag"],
+        });
+        let _ = std::fs::create_dir_all(r"C:\TurdMOD");
+        std::fs::write(&vpath, serde_json::to_string_pretty(&theirs).unwrap()).unwrap();
+
+        let prep = prepare_config(root, None);
+        println!("battleye_will_be_disabled = {}", prep.battleye_will_be_disabled);
+        assert!(prep.battleye_will_be_disabled, "must announce the change");
+        assert!(install_local::has_no_battleye(&prep.config), "config must have BE off");
+        assert_eq!(prep.token, "their-token", "token still preserved");
+        println!("args after install: {}", prep.config["scum_server_args"]);
+
+        // Simulate the installed state, then reverse it.
+        std::fs::write(&vpath, serde_json::to_string_pretty(&prep.config).unwrap()).unwrap();
+        let mut live: serde_json::Value =
+            serde_json::from_str(&std::fs::read_to_string(&vpath).unwrap()).unwrap();
+        assert!(install_local::remove_no_battleye(&mut live), "uninstall removes our flag");
+        println!("args after uninstall: {}", live["scum_server_args"]);
+
+        let after: Vec<String> = live["scum_server_args"].as_array().unwrap()
+            .iter().map(|v| v.as_str().unwrap().to_string()).collect();
+        assert_eq!(after, vec!["-log", "-port=7042", "-TheirOwnFlag"],
+                   "must land exactly back on their original args");
+
+        // Already-off config must NOT be announced as a change.
+        let off = serde_json::json!({
+            "port": 9090, "token": "t", "scum_server_exe": "x",
+            "scum_server_args": ["-log", install_local::NO_BATTLEYE],
+        });
+        std::fs::write(&vpath, serde_json::to_string_pretty(&off).unwrap()).unwrap();
+        let prep2 = prepare_config(detect::detect_all().server.unwrap(), None);
+        assert!(!prep2.battleye_will_be_disabled, "already off is their choice — stay quiet");
+        println!("already-off announced? {}", prep2.battleye_will_be_disabled);
+
+        match saved {
+            Some(b) => std::fs::write(&vpath, b).unwrap(),
+            None => { let _ = std::fs::remove_file(&vpath); }
+        }
+        println!("restored original service.json");
     }
 }

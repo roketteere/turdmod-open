@@ -18,6 +18,56 @@ const TURDMOD_DIR: &str = r"C:\TurdMOD";
 /// @dep: must match the folder name under UE4SS\Mods and the mods.txt entry.
 pub const MOD_NAME: &str = "TurdMODEngineBridge";
 
+/// The SCUM launch arg that disables BattlEye.
+///
+/// @ctx: TurdMOD needs this off — the modded client refuses to connect to a
+///   BattlEye server, so leaving it on means client mods silently don't work.
+///   We turn it off, SAY SO before installing, and take it back out on
+///   uninstall. Quietly changing someone's anticheat would not be acceptable.
+pub const NO_BATTLEYE: &str = "-NoBattlEye";
+
+fn args_of(cfg: &serde_json::Value) -> Vec<String> {
+    cfg.get("scum_server_args")
+        .and_then(|v| v.as_array())
+        .map(|a| a.iter().filter_map(|x| x.as_str().map(str::to_string)).collect())
+        .unwrap_or_default()
+}
+
+pub fn has_no_battleye(cfg: &serde_json::Value) -> bool {
+    args_of(cfg).iter().any(|a| a.eq_ignore_ascii_case(NO_BATTLEYE))
+}
+
+/// Add `-NoBattlEye` if absent. Returns true if we ADDED it — i.e. the operator
+/// had BattlEye on and we are about to change that, so they must be told.
+pub fn ensure_no_battleye(cfg: &mut serde_json::Value) -> bool {
+    if has_no_battleye(cfg) {
+        return false;
+    }
+    let mut args = args_of(cfg);
+    args.push(NO_BATTLEYE.to_string());
+    if let Some(m) = cfg.as_object_mut() {
+        m.insert("scum_server_args".into(), serde_json::json!(args));
+    }
+    true
+}
+
+/// Take `-NoBattlEye` back out, leaving every other arg alone.
+///
+/// @inv: surgical, like the mods.txt cleanup — the operator may have changed
+///   other args since install, and a blind restore would revert those too.
+pub fn remove_no_battleye(cfg: &mut serde_json::Value) -> bool {
+    let args = args_of(cfg);
+    let kept: Vec<String> =
+        args.iter().filter(|a| !a.eq_ignore_ascii_case(NO_BATTLEYE)).cloned().collect();
+    if kept.len() == args.len() {
+        return false;
+    }
+    if let Some(m) = cfg.as_object_mut() {
+        m.insert("scum_server_args".into(), serde_json::json!(kept));
+    }
+    true
+}
+
 #[derive(Debug, Clone, Serialize)]
 pub struct StepResult {
     pub step: String,
@@ -88,7 +138,7 @@ pub fn build_service_config(server_root: &str, token: &str, port: u16) -> serde_
         "port": port,
         "token": token,
         "scum_server_exe": w.join("GameServer.exe").display().to_string(),
-        "scum_server_args": ["-log", "-port=7042", "-QueryPort=7044"],
+        "scum_server_args": ["-log", "-port=7042", "-QueryPort=7044", NO_BATTLEYE],
         "inject_dlls": [
             w.join("turdmod_server_loader.dll").display().to_string(),
             w.join("UE4SS").join("UE4SS.dll").display().to_string(),
@@ -559,6 +609,57 @@ mod tests {
         assert_eq!(txt, "TurdMODEngineBridge : 1\r\n");
 
         std::fs::remove_dir_all(&root).unwrap();
+    }
+
+    #[test]
+    fn a_fresh_config_ships_with_battleye_off() {
+        let cfg = build_service_config(r"C:\S", "t", 9090);
+        assert!(has_no_battleye(&cfg), "TurdMOD needs BattlEye off out of the box");
+    }
+
+    #[test]
+    fn turning_battleye_off_reports_whether_it_actually_changed_anything() {
+        // Operator had it ON — we changed it, so they must be told.
+        let mut on = serde_json::json!({ "scum_server_args": ["-log", "-port=7042"] });
+        assert!(ensure_no_battleye(&mut on), "must report the change");
+        assert!(has_no_battleye(&on));
+        // Their other args survive.
+        let args: Vec<String> = on["scum_server_args"].as_array().unwrap()
+            .iter().map(|v| v.as_str().unwrap().to_string()).collect();
+        assert!(args.contains(&"-port=7042".to_string()));
+
+        // Already off — their choice, nothing changed, nothing to announce.
+        let mut off = serde_json::json!({ "scum_server_args": ["-log", NO_BATTLEYE] });
+        assert!(!ensure_no_battleye(&mut off), "no change means no scary message");
+    }
+
+    /// @inv: the round trip must land exactly where it started.
+    #[test]
+    fn battleye_off_then_on_restores_the_original_args() {
+        let original = serde_json::json!({
+            "scum_server_args": ["-log", "-port=7042", "-QueryPort=7044"]
+        });
+        let mut cfg = original.clone();
+        assert!(ensure_no_battleye(&mut cfg));
+        assert!(remove_no_battleye(&mut cfg));
+        assert_eq!(cfg, original, "uninstall must leave args byte-identical to before");
+    }
+
+    #[test]
+    fn restoring_battleye_keeps_args_the_operator_added_afterwards() {
+        let mut cfg = serde_json::json!({
+            "scum_server_args": ["-log", NO_BATTLEYE, "-MyNewFlag"]
+        });
+        assert!(remove_no_battleye(&mut cfg));
+        let args: Vec<String> = cfg["scum_server_args"].as_array().unwrap()
+            .iter().map(|v| v.as_str().unwrap().to_string()).collect();
+        assert_eq!(args, vec!["-log", "-MyNewFlag"], "only our flag comes out");
+    }
+
+    #[test]
+    fn removing_battleye_when_it_isnt_there_is_a_no_op() {
+        let mut cfg = serde_json::json!({ "scum_server_args": ["-log"] });
+        assert!(!remove_no_battleye(&mut cfg), "nothing to remove");
     }
 
     #[test]

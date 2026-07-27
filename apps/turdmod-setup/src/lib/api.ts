@@ -38,6 +38,8 @@ export interface PreparedConfig {
   /** The existing access key was reused, so dashboards keep working. */
   token_preserved: boolean;
   service_state: ServiceState;
+  /** Installing will turn BattlEye off — the user must be told before committing. */
+  battleye_will_be_disabled: boolean;
 }
 
 export interface StepResult {
